@@ -48,7 +48,11 @@ jobs:
         shell: bash
         run: |
           if gh release view "v${{ steps.package.outputs.version }}" >/dev/null 2>&1; then
-            echo "Release v${{ steps.package.outputs.version }} already exists; reusing it."
+            echo "Release v${{ steps.package.outputs.version }} already exists; refreshing its package assets."
+            gh release upload "v${{ steps.package.outputs.version }}" \
+              "build/${{ steps.package.outputs.asset }}" \
+              package.json \
+              --clobber
           else
             gh release create "v${{ steps.package.outputs.version }}" \
               "build/${{ steps.package.outputs.asset }}" \
