@@ -1,0 +1,19 @@
+{
+  "name": "com.mehigosleep.hair-manager",
+  "displayName": "mehigo Hair Manager",
+  "version": "1.0.0",
+  "unity": "2022.3",
+  "description": "Non-destructive hairstyle, BlendShape, material preset, and Modular Avatar setup tool for VRChat avatars.",
+  "author": {
+    "name": "mehigosleep",
+    "email": "mehigosleep@gmail.com",
+    "url": "https://github.com/mehigosleep"
+  },
+  "license": "LicenseRef-All-Rights-Reserved",
+  "changelogUrl": "https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md",
+  "url": "https://github.com/mehigosleep/mehigo-hair-manager/releases/download/v1.0.0/com.mehigosleep.hair-manager-1.0.0.zip",
+  "vpmDependencies": {
+    "com.vrchat.avatars": "3.7.x",
+    "nadena.dev.modular-avatar": ">=1.14.0 <2.0.0-a"
+  }
+}
