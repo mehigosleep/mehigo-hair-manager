@@ -87,7 +87,7 @@ public class MehigoHairProjectDataV4 : ScriptableObject
 public class MehigoHairGeneratorV4 : EditorWindow
 {
     public const string ToolName = "mehigo Hair Manager";
-    public const string ToolVersion = "1.0.0";
+    public const string ToolVersion = "1.0.1";
     [Serializable]
     private class MaterialSlotEntry
     {
@@ -2738,10 +2738,29 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
     private AnimatorController CreateAnimatorController()
     {
-        string path = $"{saveFolder}/mehigo_HairSelector_v4.controller";
+        string path = $"{saveFolder}/mehigo_HairSelector.controller";
+        string legacyPath = $"{saveFolder}/mehigo_HairSelector_v4.controller";
 
         AnimatorController controller =
             AssetDatabase.LoadAssetAtPath<AnimatorController>(path);
+
+        if (controller == null &&
+            AssetDatabase.LoadAssetAtPath<AnimatorController>(legacyPath) != null)
+        {
+            string migrationError = AssetDatabase.MoveAsset(legacyPath, path);
+
+            if (string.IsNullOrEmpty(migrationError))
+            {
+                controller =
+                    AssetDatabase.LoadAssetAtPath<AnimatorController>(path);
+            }
+            else
+            {
+                Debug.LogWarning(
+                    $"[mehigo] Could not rename legacy controller: {migrationError}"
+                );
+            }
+        }
 
         if (controller == null)
             controller = AnimatorController.CreateAnimatorControllerAtPath(path);
