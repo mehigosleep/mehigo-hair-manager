@@ -1,6 +1,6 @@
 # mehigo Hair Manager
 
-**Version 1.0.0**
+**Version 1.0.1**
 
 Unity Editor tool for managing multiple hairstyle setups on VRChat avatars with a non-destructive Modular Avatar workflow.
 
