@@ -1,0 +1,96 @@
+name: Publish VPM Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: vpm-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Read package metadata
+        id: package
+        shell: bash
+        run: |
+          node -e "const p=require('./package.json'); const fs=require('fs'); fs.appendFileSync(process.env.GITHUB_OUTPUT, 'version='+p.version+'\nname='+p.name+'\nasset='+p.name+'-'+p.version+'.zip\n')"
+
+      - name: Build VPM package ZIP
+        shell: bash
+        run: |
+          mkdir -p build/package
+          cp -R Editor package.json README.md README.md.meta CHANGELOG.md CHANGELOG.md.meta LICENSE.md LICENSE.md.meta Editor.meta build/package/
+          cd build/package
+          zip -r "../${{ steps.package.outputs.asset }}" .
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if gh release view "v${{ steps.package.outputs.version }}" >/dev/null 2>&1; then
+            echo "Release v${{ steps.package.outputs.version }} already exists. Bump package.json before publishing again."
+            exit 1
+          fi
+          gh release create "v${{ steps.package.outputs.version }}" \
+            "build/${{ steps.package.outputs.asset }}" \
+            package.json \
+            --title "v${{ steps.package.outputs.version }}" \
+            --notes-file CHANGELOG.md
+
+      - name: Build VPM repository listing
+        env:
+          VERSION: ${{ steps.package.outputs.version }}
+          PACKAGE_NAME: ${{ steps.package.outputs.name }}
+          ASSET_NAME: ${{ steps.package.outputs.asset }}
+        shell: bash
+        run: |
+          mkdir -p build/site
+          cp Website/index.html build/site/index.html
+          sha256sum "build/${ASSET_NAME}" | cut -d ' ' -f 1 > build/sha256.txt
+          node <<'NODE'
+          const fs = require('fs');
+          const manifest = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          const sha = fs.readFileSync('build/sha256.txt', 'utf8').trim();
+          const repo = process.env.GITHUB_REPOSITORY;
+          manifest.url = `https://github.com/${repo}/releases/download/v${process.env.VERSION}/${process.env.ASSET_NAME}`;
+          manifest.zipSHA256 = sha;
+          const listingUrl = `https://${repo.split('/')[0]}.github.io/${repo.split('/')[1]}/vpm.json`;
+          const listing = {
+            name: 'mehigo VPM Repository',
+            id: 'com.mehigosleep.vpm',
+            url: listingUrl,
+            author: 'mehigosleep@gmail.com',
+            packages: {
+              [process.env.PACKAGE_NAME]: {
+                versions: { [process.env.VERSION]: manifest }
+              }
+            }
+          };
+          fs.writeFileSync('build/site/vpm.json', JSON.stringify(listing, null, 2) + '\n');
+          NODE
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/site
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
