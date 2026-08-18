@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - package.json
+      - .github/workflows/release.yml
 
 permissions:
   contents: write
@@ -47,14 +48,14 @@ jobs:
         shell: bash
         run: |
           if gh release view "v${{ steps.package.outputs.version }}" >/dev/null 2>&1; then
-            echo "Release v${{ steps.package.outputs.version }} already exists. Bump package.json before publishing again."
-            exit 1
+            echo "Release v${{ steps.package.outputs.version }} already exists; reusing it."
+          else
+            gh release create "v${{ steps.package.outputs.version }}" \
+              "build/${{ steps.package.outputs.asset }}" \
+              package.json \
+              --title "v${{ steps.package.outputs.version }}" \
+              --notes-file CHANGELOG.md
           fi
-          gh release create "v${{ steps.package.outputs.version }}" \
-            "build/${{ steps.package.outputs.asset }}" \
-            package.json \
-            --title "v${{ steps.package.outputs.version }}" \
-            --notes-file CHANGELOG.md
 
       - name: Build VPM repository listing
         env:
@@ -90,6 +91,8 @@ jobs:
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
