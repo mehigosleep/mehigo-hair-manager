@@ -83,7 +83,7 @@ jobs:
             name: 'mehigo VPM Repository',
             id: 'com.mehigosleep.vpm',
             url: listingUrl,
-            author: 'mehigosleep@gmail.com',
+            author: 'mehigo',
             packages: {
               [process.env.PACKAGE_NAME]: {
                 versions: { [process.env.VERSION]: manifest }
