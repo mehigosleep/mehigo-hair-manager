@@ -7,7 +7,6 @@ Unity Editor tool for managing multiple hairstyle setups on VRChat avatars with 
 ## Features
 
 - Multiple hairstyle selector menu
-- Automatic VRChat Avatar Descriptor detection
 - Modular Avatar Merge Animator / Parameters / Menu Installer workflow
 - Linked objects per hairstyle
 - BlendShape Toggle controls
