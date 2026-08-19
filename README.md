@@ -4,6 +4,10 @@
 
 Unity Editor tool for managing multiple hairstyle setups on VRChat avatars with a non-destructive Modular Avatar workflow.
 
+[คู่มือภาษาไทย](docs/USER_GUIDE_TH.md) · [English User Guide](docs/USER_GUIDE_EN.md) · [Changelog](CHANGELOG.md)
+
+![mehigo Hair Manager with a VRChat avatar](docs/images/01-project-avatar.png)
+
 ## Features
 
 - Multiple hairstyle selector menu
@@ -32,8 +36,8 @@ The experimental mehigo Direct BlendTree optimization remains disabled because a
 ## Requirements
 
 - Unity project configured for VRChat Avatars
-- VRChat Avatars SDK 3.10.4
-- Modular Avatar
+- VRChat Avatars SDK `>=3.10.4 <3.11.0`
+- Modular Avatar `>=1.14.0 <2.0.0-a`
 
 Optional:
 
@@ -66,6 +70,8 @@ Do not keep older mehigo Hair Generator scripts in the project at the same time 
 4. Run the Conflict Scanner on the Generate page when needed.
 5. Generate or update the setup.
 6. Test the generated menu and animations before uploading the avatar.
+
+For the complete illustrated workflow, see the [คู่มือภาษาไทย](docs/USER_GUIDE_TH.md) or [English User Guide](docs/USER_GUIDE_EN.md).
 
 The **Save Folder** is the shared base folder. mehigo automatically creates a stable `Avatar_<id>` subfolder for each avatar instance in the Scene, so even a copied instance of the same Prefab does not overwrite the first avatar's Controller, Animation Clips, Expression Menus, or captured Icons. A Prefab asset opened directly uses its asset GUID.
 
