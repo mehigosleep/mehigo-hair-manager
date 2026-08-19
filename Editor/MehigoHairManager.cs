@@ -87,7 +87,7 @@ public class MehigoHairProjectDataV4 : ScriptableObject
 public class MehigoHairGeneratorV4 : EditorWindow
 {
     public const string ToolName = "mehigo Hair Manager";
-    public const string ToolVersion = "1.0.1";
+    public const string ToolVersion = "1.1.0";
     [Serializable]
     private class MaterialSlotEntry
     {
@@ -114,7 +114,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
     private enum OptimizationMode
     {
-        Safe,
+        Standard,
         Optimized,
         LetAAOHandleIt
     }
@@ -125,8 +125,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
         English
     }
 
-    private EditorLanguage language = EditorLanguage.Thai;
-    private OptimizationMode optimizationMode = OptimizationMode.Safe;
+    private EditorLanguage language = EditorLanguage.English;
+    private OptimizationMode optimizationMode = OptimizationMode.Standard;
 
     private string T(string th, string en)
     {
@@ -191,6 +191,648 @@ public class MehigoHairGeneratorV4 : EditorWindow
         [NonSerialized] public bool materialFoldout;
     }
 
+    public class MenuPreviewWindow : EditorWindow
+    {
+        private enum PreviewLevel
+        {
+            Root,
+            Hair,
+            Material
+        }
+
+        private enum PreviewControlType
+        {
+            Back,
+            Toggle,
+            SubMenu,
+            RadialPuppet,
+            NextPage
+        }
+
+        private class PreviewControl
+        {
+            public string name;
+            public Texture2D icon;
+            public PreviewControlType type;
+            public int hairIndex = -1;
+            public string stateKey;
+        }
+
+        [NonSerialized] private MehigoHairGeneratorV4 owner;
+        private PreviewLevel level;
+        private int selectedHairIndex = -1;
+        private int pageIndex;
+        private string selectedRadialKey;
+        private readonly Dictionary<string, bool> toggleStates = new Dictionary<string, bool>();
+        private readonly Dictionary<string, float> radialValues = new Dictionary<string, float>();
+
+        private GUIStyle previewButtonStyle;
+        private GUIStyle centerStyle;
+        private GUIStyle liveStyle;
+
+        private Texture2D gmDefaultIcon;
+        private Texture2D gmToggleIcon;
+        private Texture2D gmSubMenuIcon;
+        private Texture2D gmRadialIcon;
+        private Texture2D gmBackIcon;
+        private Texture2D gmBackHomeIcon;
+        private bool gmAssetsAvailable;
+
+        private static readonly Color GmMainColor = new Color(0.14f, 0.18f, 0.20f, 1f);
+        private static readonly Color GmBorderColor = new Color(0.10f, 0.35f, 0.38f, 1f);
+        private static readonly Color GmSelectedColor = new Color(0.07f, 0.55f, 0.58f, 1f);
+
+        public static void Open(MehigoHairGeneratorV4 source)
+        {
+            MenuPreviewWindow window = GetWindow<MenuPreviewWindow>(
+                false,
+                source != null && source.language == EditorLanguage.Thai
+                    ? "ตัวอย่าง Menu"
+                    : "Menu Preview",
+                true
+            );
+
+            window.owner = source;
+            window.minSize = new Vector2(520f, 590f);
+            window.Show();
+            window.Focus();
+            window.Repaint();
+        }
+
+        private void OnEnable()
+        {
+            wantsMouseMove = true;
+            LoadGestureManagerAssets();
+        }
+
+        private void Update()
+        {
+            if (owner == null)
+            {
+                owner = Resources.FindObjectsOfTypeAll<MehigoHairGeneratorV4>()
+                    .FirstOrDefault();
+            }
+
+            Repaint();
+        }
+
+        private void InitPreviewStyles()
+        {
+            if (previewButtonStyle != null)
+                return;
+
+            previewButtonStyle = new GUIStyle(GUI.skin.button)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                imagePosition = ImagePosition.ImageAbove,
+                wordWrap = true,
+                fontSize = 11,
+                padding = new RectOffset(6, 6, 5, 5)
+            };
+
+            centerStyle = new GUIStyle(EditorStyles.helpBox)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                imagePosition = ImagePosition.ImageAbove,
+                wordWrap = true,
+                fontStyle = FontStyle.Bold,
+                fontSize = 12
+            };
+
+            liveStyle = new GUIStyle(EditorStyles.miniBoldLabel)
+            {
+                alignment = TextAnchor.MiddleRight
+            };
+
+            LoadGestureManagerAssets();
+        }
+
+        private void LoadGestureManagerAssets()
+        {
+            if (gmAssetsAvailable)
+                return;
+
+            gmDefaultIcon = Resources.Load<Texture2D>("Vrc3/BSX_GM_Default");
+            gmToggleIcon = Resources.Load<Texture2D>("Vrc3/BSX_GM_Toggle");
+            gmSubMenuIcon = Resources.Load<Texture2D>("Vrc3/BSX_GM_Option");
+            gmRadialIcon = Resources.Load<Texture2D>("Vrc3/BSX_GM_Radial");
+            gmBackIcon = Resources.Load<Texture2D>("Vrc3/BSX_GM_Back");
+            gmBackHomeIcon = Resources.Load<Texture2D>("Vrc3/BSX_GM_BackHome");
+
+            gmAssetsAvailable = gmDefaultIcon != null &&
+                gmToggleIcon != null &&
+                gmSubMenuIcon != null &&
+                gmRadialIcon != null;
+        }
+
+        private void OnGUI()
+        {
+            InitPreviewStyles();
+
+            if (owner == null)
+            {
+                EditorGUILayout.HelpBox(
+                    "Open Hair Manager and press Menu Preview again.",
+                    MessageType.Info
+                );
+                return;
+            }
+
+            NormalizeNavigation();
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Radial Menu", EditorStyles.boldLabel);
+            GUILayout.FlexibleSpace();
+            GUILayout.Label(
+                gmAssetsAvailable
+                    ? "● Gesture Manager UI"
+                    : owner.T("● mehigo Preview", "● mehigo Preview"),
+                liveStyle,
+                GUILayout.Width(145)
+            );
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.LabelField(GetTitle(), EditorStyles.miniBoldLabel);
+
+            EditorGUILayout.LabelField(
+                owner.T(
+                    "อัปเดตตามค่าที่กำลังแก้ไข โดยยังไม่สร้างหรือแก้ไข Asset",
+                    "Updates from the current editor values without creating or modifying assets."
+                ),
+                EditorStyles.miniLabel
+            );
+
+            EditorGUILayout.Space(6f);
+
+            Rect canvas = GUILayoutUtility.GetRect(
+                Mathf.Max(500f, position.width - 8f),
+                430f,
+                GUILayout.ExpandWidth(true)
+            );
+
+            Color previousBackground = GUI.backgroundColor;
+            GUI.backgroundColor = gmAssetsAvailable ? GmMainColor : previousBackground;
+            GUI.Box(canvas, GUIContent.none, EditorStyles.helpBox);
+            GUI.backgroundColor = previousBackground;
+            DrawRadialMenu(canvas);
+
+            if (!string.IsNullOrEmpty(selectedRadialKey))
+            {
+                float value = radialValues.TryGetValue(selectedRadialKey, out float current)
+                    ? current
+                    : 0f;
+
+                value = EditorGUILayout.Slider(
+                    owner.T("ตัวอย่างค่า Radial", "Radial Preview Value"),
+                    value,
+                    0f,
+                    1f
+                );
+                radialValues[selectedRadialKey] = value;
+            }
+
+            EditorGUILayout.HelpBox(
+                owner.T(
+                    "การกด Toggle หรือเลื่อน Radial ในหน้าต่างนี้เป็นเพียงการจำลอง Preview และจะไม่เปลี่ยน Avatar",
+                    "Toggle and Radial interactions in this window are preview-only and do not change the avatar."
+                ),
+                MessageType.None
+            );
+
+            if (gmAssetsAvailable)
+            {
+                EditorGUILayout.LabelField(
+                    "Gesture Manager UI assets © BlackStartx — MIT License",
+                    EditorStyles.centeredGreyMiniLabel
+                );
+            }
+        }
+
+        private void NormalizeNavigation()
+        {
+            if (level == PreviewLevel.Root)
+                return;
+
+            if (selectedHairIndex < 0 || selectedHairIndex >= owner.hairs.Count)
+            {
+                level = PreviewLevel.Root;
+                selectedHairIndex = -1;
+                pageIndex = 0;
+                selectedRadialKey = null;
+            }
+        }
+
+        private string GetTitle()
+        {
+            if (level == PreviewLevel.Root)
+                return owner.SafeName(owner.rootMenuName, "Hair Style");
+
+            HairEntry hair = owner.hairs[selectedHairIndex];
+
+            if (level == PreviewLevel.Material)
+                return owner.T("สีผม", "Hair Color");
+
+            return owner.SafeName(hair.menuName, $"Hair {selectedHairIndex}");
+        }
+
+        private List<PreviewControl> BuildControls()
+        {
+            List<PreviewControl> controls = new List<PreviewControl>();
+
+            if (level == PreviewLevel.Root)
+            {
+                for (int i = 0; i < owner.hairs.Count; i++)
+                {
+                    HairEntry hair = owner.hairs[i];
+                    controls.Add(new PreviewControl
+                    {
+                        name = owner.SafeName(hair.menuName, $"Hair {i}"),
+                        icon = hair.icon,
+                        type = hair.blendShapes.Count == 0
+                            ? PreviewControlType.Toggle
+                            : PreviewControlType.SubMenu,
+                        hairIndex = i,
+                        stateKey = $"Hair_{i}"
+                    });
+                }
+
+                return controls;
+            }
+
+            HairEntry selectedHair = owner.hairs[selectedHairIndex];
+
+            if (level == PreviewLevel.Material)
+            {
+                for (int i = 0; i < selectedHair.materialPresets.Count; i++)
+                {
+                    MaterialPreset preset = selectedHair.materialPresets[i];
+                    controls.Add(new PreviewControl
+                    {
+                        name = i == 0
+                            ? owner.T("ค่าเริ่มต้น", "Default")
+                            : owner.SafeName(preset.menuName, $"Preset {i}"),
+                        icon = preset.icon,
+                        type = PreviewControlType.Toggle,
+                        hairIndex = selectedHairIndex,
+                        stateKey = $"Material_{selectedHairIndex}_{i}"
+                    });
+                }
+
+                return controls;
+            }
+
+            controls.Add(new PreviewControl
+            {
+                name = "Use " + owner.SafeName(selectedHair.menuName, $"Hair {selectedHairIndex}"),
+                type = PreviewControlType.Toggle,
+                hairIndex = selectedHairIndex,
+                stateKey = $"Hair_{selectedHairIndex}"
+            });
+
+            for (int i = 0; i < selectedHair.blendShapes.Count; i++)
+            {
+                BlendShapeOption blendShape = selectedHair.blendShapes[i];
+                controls.Add(new PreviewControl
+                {
+                    name = owner.SafeName(blendShape.menuName, $"BlendShape {i + 1}"),
+                    icon = blendShape.icon,
+                    type = blendShape.controlMode == BlendShapeControlMode.RadialPuppet
+                        ? PreviewControlType.RadialPuppet
+                        : PreviewControlType.Toggle,
+                    hairIndex = selectedHairIndex,
+                    stateKey = $"BlendShape_{selectedHairIndex}_{i}"
+                });
+            }
+
+            if (selectedHair.materialPresets.Count > 1)
+            {
+                controls.Add(new PreviewControl
+                {
+                    name = owner.T("สีผม", "Hair Color"),
+                    type = PreviewControlType.SubMenu,
+                    hairIndex = selectedHairIndex,
+                    stateKey = "MaterialMenu"
+                });
+            }
+
+            return controls;
+        }
+
+        private List<PreviewControl> GetCurrentPage(
+            List<PreviewControl> all,
+            out int pageCount)
+        {
+            if (all.Count <= 8)
+            {
+                pageCount = 1;
+                pageIndex = 0;
+                return all;
+            }
+
+            pageCount = Mathf.CeilToInt(all.Count / 7f);
+            pageIndex = Mathf.Clamp(pageIndex, 0, pageCount - 1);
+
+            List<PreviewControl> page = all
+                .Skip(pageIndex * 7)
+                .Take(7)
+                .ToList();
+
+            page.Add(new PreviewControl
+            {
+                name = pageIndex == pageCount - 1 ? "< First Page" : "Next >",
+                type = PreviewControlType.NextPage,
+                stateKey = "NextPage"
+            });
+
+            return page;
+        }
+
+        private void DrawRadialMenu(Rect canvas)
+        {
+            List<PreviewControl> allControls = BuildControls();
+            List<PreviewControl> controls = GetCurrentPage(allControls, out int pageCount);
+
+            controls.Insert(0, new PreviewControl
+            {
+                name = "Back",
+                icon = level == PreviewLevel.Root ? gmBackHomeIcon : gmBackIcon,
+                type = PreviewControlType.Back,
+                stateKey = "Back"
+            });
+
+            Vector2 center = new Vector2(canvas.center.x, canvas.center.y + 4f);
+            float outerRadius = Mathf.Min(canvas.width, canvas.height) * 0.43f;
+            float innerRadius = outerRadius * 0.33f;
+            int hoveredIndex = GetHoveredSlice(
+                Event.current.mousePosition,
+                center,
+                innerRadius,
+                outerRadius,
+                controls.Count
+            );
+
+            for (int i = 0; i < controls.Count; i++)
+                DrawPreviewSlice(
+                    center,
+                    outerRadius,
+                    controls,
+                    i,
+                    hoveredIndex == i
+                );
+
+            DrawGestureManagerCenter(center, innerRadius);
+
+            if (pageCount > 1)
+            {
+                GUI.Label(
+                    new Rect(center.x - 50f, center.y - 10f, 100f, 20f),
+                    $"{pageIndex + 1}/{pageCount}",
+                    EditorStyles.centeredGreyMiniLabel
+                );
+            }
+
+            if (allControls.Count == 0)
+            {
+                GUI.Label(
+                    new Rect(center.x - 130f, center.y + innerRadius + 12f, 260f, 40f),
+                    owner.T("ยังไม่มีปุ่มใน Menu", "No menu controls yet"),
+                    EditorStyles.centeredGreyMiniLabel
+                );
+            }
+
+            if (hoveredIndex >= 0 &&
+                Event.current.type == EventType.MouseDown &&
+                Event.current.button == 0)
+            {
+                HandlePreviewClick(controls[hoveredIndex]);
+                Event.current.Use();
+            }
+        }
+
+        private int GetHoveredSlice(
+            Vector2 mouse,
+            Vector2 center,
+            float innerRadius,
+            float outerRadius,
+            int count)
+        {
+            if (count <= 0)
+                return -1;
+
+            Vector2 delta = mouse - center;
+            float distance = delta.magnitude;
+            if (distance < innerRadius || distance > outerRadius)
+                return -1;
+
+            float step = 360f / count;
+            float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
+            float start = -90f - step * 0.5f;
+            return Mathf.Clamp(
+                Mathf.FloorToInt(Mathf.Repeat(angle - start, 360f) / step),
+                0,
+                count - 1
+            );
+        }
+
+        private void DrawPreviewSlice(
+            Vector2 center,
+            float outerRadius,
+            List<PreviewControl> controls,
+            int index,
+            bool hovered)
+        {
+            PreviewControl control = controls[index];
+            float step = 360f / controls.Count;
+            float centerAngle = -90f + index * step;
+            float startAngle = centerAngle - step * 0.5f;
+            float endAngle = centerAngle + step * 0.5f;
+            const int arcSegments = 18;
+
+            Vector3[] polygon = new Vector3[arcSegments + 2];
+            polygon[0] = center;
+
+            for (int i = 0; i <= arcSegments; i++)
+            {
+                float angle = Mathf.Lerp(startAngle, endAngle, i / (float)arcSegments) * Mathf.Deg2Rad;
+                polygon[i + 1] = new Vector3(
+                    center.x + Mathf.Cos(angle) * outerRadius,
+                    center.y + Mathf.Sin(angle) * outerRadius,
+                    0f
+                );
+            }
+
+            bool active = !string.IsNullOrEmpty(control.stateKey) &&
+                toggleStates.TryGetValue(control.stateKey, out bool value) && value;
+
+            Handles.BeginGUI();
+            if (controls.Count == 1)
+            {
+                Handles.color = GmBorderColor;
+                Handles.DrawSolidDisc(center, Vector3.forward, outerRadius + 2f);
+                Handles.color = hovered || active ? GmSelectedColor : GmMainColor;
+                Handles.DrawSolidDisc(center, Vector3.forward, outerRadius);
+            }
+            else
+            {
+                Handles.color = hovered || active ? GmSelectedColor : GmMainColor;
+                Handles.DrawAAConvexPolygon(polygon);
+
+                Handles.color = GmBorderColor;
+                Handles.DrawAAPolyLine(2f, polygon.Skip(1).ToArray());
+                Handles.DrawAAPolyLine(
+                    2f,
+                    center,
+                    polygon[1]
+                );
+            }
+            Handles.EndGUI();
+
+            float contentRadius = outerRadius * 0.66f;
+            float angleRad = centerAngle * Mathf.Deg2Rad;
+            Vector2 contentCenter = new Vector2(
+                center.x + Mathf.Cos(angleRad) * contentRadius,
+                center.y + Mathf.Sin(angleRad) * contentRadius
+            );
+
+            float iconSize = controls.Count >= 8 ? 38f : 48f;
+            Texture2D mainIcon = control.icon != null
+                ? control.icon
+                : control.type == PreviewControlType.NextPage
+                    ? gmBackHomeIcon
+                    : gmDefaultIcon;
+
+            if (mainIcon != null)
+            {
+                GUI.DrawTexture(
+                    new Rect(
+                        contentCenter.x - iconSize * 0.5f,
+                        contentCenter.y - iconSize * 0.65f,
+                        iconSize,
+                        iconSize
+                    ),
+                    mainIcon,
+                    ScaleMode.ScaleToFit,
+                    true
+                );
+            }
+
+            Texture2D subIcon = GetGestureManagerSubIcon(control.type);
+            if (subIcon != null && control.type != PreviewControlType.NextPage)
+            {
+                float subSize = controls.Count >= 8 ? 18f : 22f;
+                Rect subRect = new Rect(
+                    contentCenter.x + iconSize * 0.18f,
+                    contentCenter.y + iconSize * 0.08f,
+                    subSize,
+                    subSize
+                );
+
+                Handles.BeginGUI();
+                Handles.color = new Color(0.22f, 0.24f, 0.27f, 1f);
+                Handles.DrawSolidDisc(subRect.center, Vector3.forward, subSize * 0.62f);
+                Handles.EndGUI();
+                GUI.DrawTexture(subRect, subIcon, ScaleMode.ScaleToFit, true);
+            }
+
+            GUIStyle labelStyle = new GUIStyle(EditorStyles.miniLabel)
+            {
+                alignment = TextAnchor.UpperCenter,
+                wordWrap = true,
+                fontSize = controls.Count >= 8 ? 9 : 11,
+                normal = { textColor = hovered ? Color.white : new Color(0.75f, 0.78f, 0.78f) }
+            };
+
+            GUI.Label(
+                new Rect(contentCenter.x - 58f, contentCenter.y + 24f, 116f, 38f),
+                control.name,
+                labelStyle
+            );
+        }
+
+        private void DrawGestureManagerCenter(Vector2 center, float innerRadius)
+        {
+            Handles.BeginGUI();
+            Handles.color = GmBorderColor;
+            Handles.DrawSolidDisc(center, Vector3.forward, innerRadius + 2f);
+            Handles.color = new Color(0.21f, 0.24f, 0.27f, 1f);
+            Handles.DrawSolidDisc(center, Vector3.forward, innerRadius);
+
+            float ring = innerRadius * 0.48f;
+            Handles.color = GmBorderColor;
+            Handles.DrawWireDisc(center, Vector3.forward, ring, 2f);
+            Handles.DrawWireDisc(center, Vector3.forward, ring * 0.62f, 2f);
+            Handles.DrawWireDisc(center, Vector3.forward, ring * 0.28f, 2f);
+            Handles.EndGUI();
+        }
+
+        private void HandlePreviewClick(PreviewControl control)
+        {
+            if (control.type == PreviewControlType.Back)
+            {
+                if (level == PreviewLevel.Material)
+                    level = PreviewLevel.Hair;
+                else if (level == PreviewLevel.Hair)
+                {
+                    level = PreviewLevel.Root;
+                    selectedHairIndex = -1;
+                }
+
+                pageIndex = 0;
+                selectedRadialKey = null;
+                return;
+            }
+
+            if (control.type == PreviewControlType.NextPage)
+            {
+                List<PreviewControl> all = BuildControls();
+                int pageCount = Mathf.Max(1, Mathf.CeilToInt(all.Count / 7f));
+                pageIndex = (pageIndex + 1) % pageCount;
+                return;
+            }
+
+            if (control.type == PreviewControlType.SubMenu)
+            {
+                selectedHairIndex = control.hairIndex;
+                level = control.stateKey == "MaterialMenu"
+                    ? PreviewLevel.Material
+                    : PreviewLevel.Hair;
+                pageIndex = 0;
+                selectedRadialKey = null;
+                return;
+            }
+
+            if (control.type == PreviewControlType.RadialPuppet)
+            {
+                selectedRadialKey = control.stateKey;
+                if (!radialValues.ContainsKey(control.stateKey))
+                    radialValues[control.stateKey] = 0f;
+                return;
+            }
+
+            selectedRadialKey = null;
+            bool current = toggleStates.TryGetValue(control.stateKey, out bool value) && value;
+            toggleStates[control.stateKey] = !current;
+        }
+
+        private Texture2D GetGestureManagerSubIcon(PreviewControlType type)
+        {
+            if (!gmAssetsAvailable)
+                return null;
+
+            switch (type)
+            {
+                case PreviewControlType.Toggle:
+                    return gmToggleIcon;
+                case PreviewControlType.SubMenu:
+                    return gmSubMenuIcon;
+                case PreviewControlType.RadialPuppet:
+                    return gmRadialIcon;
+                default:
+                    return null;
+            }
+        }
+    }
+
     private VRCAvatarDescriptor avatar;
     private GameObject existingPrefabOrAvatar;
 
@@ -242,6 +884,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
     private void OnEnable()
     {
         minSize = new Vector2(640, 660);
+        optimizationMode = OptimizationMode.Standard;
     }
 
     private void InitStyles()
@@ -288,6 +931,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
     private void OnGUI()
     {
         InitStyles();
+        optimizationMode = OptimizationMode.Standard;
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField($"{ToolName}  v{ToolVersion}", headerStyle);
@@ -303,7 +947,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         EditorGUILayout.LabelField(
             T(
-                "แก้ไขของเดิม • โหมด Compatibility • ตรวจ Conflict • Modular Avatar",
+                "แก้ไข Setup เดิม • Compatibility Mode • ตรวจสอบ Conflict • Modular Avatar",
                 "Editable Setup • Compatibility Mode • Conflict Scanner • Modular Avatar"
             ),
             EditorStyles.miniLabel
@@ -311,14 +955,14 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         EditorGUILayout.Space(6);
 
+        selectedTab = Mathf.Clamp(selectedTab, 0, 2);
+
         selectedTab = GUILayout.Toolbar(
             selectedTab,
             new[]
             {
                 T("ข้อมูล Avatar", "Avatar Info"),
                 T("ทรงผม", "Hair Styles"),
-                T("ตรวจความเข้ากันได้", "Compatibility"),
-                T("Performance", "Performance"),
                 T("สร้าง / อัปเดต", "Generate")
             },
             GUILayout.Height(28)
@@ -334,9 +978,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         {
             case 0: DrawProjectTab(); break;
             case 1: DrawHairTab(); break;
-            case 2: DrawCompatibilityTab(); break;
-            case 3: DrawPerformanceTab(); break;
-            case 4: DrawGenerateTab(); break;
+            case 2: DrawGenerateTab(); break;
         }
 
         EditorGUILayout.EndScrollView();
@@ -364,7 +1006,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
                 ? (conflicts.Count == 0
                     ? "Conflict 0"
                     : $"Conflict {conflicts.Count}")
-                : T("ยังไม่สแกน", "Not Scanned"),
+                    : T("ยังไม่ได้ตรวจสอบ", "Not Scanned"),
             badgeStyle
         );
 
@@ -409,7 +1051,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         EditorGUILayout.BeginVertical(sectionStyle);
         DrawSectionHeader(
             T("ข้อมูล Avatar", "Avatar Info"),
-            T("เลือก Avatar หรือโหลด setup เดิม", "Select an avatar or load an existing setup")
+            T("เลือก Avatar หรือโหลด Setup เดิม", "Select an avatar or load an existing setup")
         );
 
         GameObject previousPrefabOrAvatar = existingPrefabOrAvatar;
@@ -430,7 +1072,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         GUI.enabled = existingPrefabOrAvatar != null;
 
         if (GUILayout.Button(
-            T("โหลด Existing Setup", "Load Existing Setup"),
+                T("โหลด Setup เดิม", "Load Existing Setup"),
             GUILayout.Height(30)))
         {
             LoadExistingSetup(existingPrefabOrAvatar);
@@ -444,7 +1086,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
             {
                 EditorGUILayout.HelpBox(
                     T(
-                        $"ตรวจพบ Avatar Descriptor: {avatar.name}",
+                            $"พบ Avatar Descriptor: {avatar.name}",
                         $"Detected Avatar Descriptor: {avatar.name}"
                     ),
                     MessageType.Info
@@ -454,7 +1096,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
             {
                 EditorGUILayout.HelpBox(
                     T(
-                        "ไม่พบ VRCAvatarDescriptor ใน Object ที่เลือก",
+                            "ไม่พบ VRCAvatarDescriptor ใน GameObject ที่เลือก",
                         "No VRCAvatarDescriptor was found in the selected object."
                     ),
                     MessageType.Warning
@@ -477,13 +1119,13 @@ public class MehigoHairGeneratorV4 : EditorWindow
             true
         );
 
-        rootMenuName = EditorGUILayout.TextField(
-            T("ชื่อเมนูหลัก", "Root Menu Name"),
+            rootMenuName = EditorGUILayout.TextField(
+                T("ชื่อ Root Menu", "Root Menu Name"),
             rootMenuName
         );
 
-        savedHairParameter = EditorGUILayout.Toggle(
-            T("จำทรงผมที่เลือก", "Save Selected Hair"),
+            savedHairParameter = EditorGUILayout.Toggle(
+                T("บันทึกทรงผมที่เลือก", "Save Selected Hair"),
             savedHairParameter
         );
 
@@ -500,12 +1142,12 @@ public class MehigoHairGeneratorV4 : EditorWindow
             EditorGUILayout.BeginVertical(subtleBoxStyle);
 
             hairParameterName = EditorGUILayout.TextField(
-                T("พารามิเตอร์ทรงผม", "Hair Parameter"),
+                T("Hair Parameter", "Hair Parameter"),
                 hairParameterName
             );
 
             generatedRootName = EditorGUILayout.TextField(
-                T("ชื่อ Object ที่สร้าง", "Generated Object"),
+                T("ชื่อ GameObject ที่สร้าง", "Generated Object"),
                 generatedRootName
             );
 
@@ -513,6 +1155,15 @@ public class MehigoHairGeneratorV4 : EditorWindow
                 T("โฟลเดอร์บันทึก", "Save Folder"),
                 saveFolder
             );
+
+            if (avatar != null)
+            {
+                EditorGUILayout.LabelField(
+                    T("Avatar Output Folder", "Avatar Output Folder"),
+                    GetAvatarScopedSaveFolder(),
+                    EditorStyles.miniLabel
+                );
+            }
 
             EditorGUILayout.EndVertical();
         }
@@ -524,7 +1175,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         EditorGUILayout.HelpBox(
             T(
-                "mehigo สร้าง asset แยก และให้ Modular Avatar merge ตอน build โดยไม่แก้ FX / Parameters / Menu เดิมโดยตรง",
+                    "mehigo สร้าง Asset แยก แล้วให้ Modular Avatar Merge ตอน Build โดยไม่แก้ไข FX Controller, Expression Parameters หรือ Expressions Menu เดิมโดยตรง",
                 "mehigo generates separate assets and lets Modular Avatar merge them at build time without directly editing the original FX / Parameters / Menu."
             ),
             MessageType.Info
@@ -579,6 +1230,21 @@ public class MehigoHairGeneratorV4 : EditorWindow
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.EndVertical();
 
+        if (GUILayout.Button(
+            T("เปิดตัวอย่าง Menu แบบ Real Time", "Open Real-Time Menu Preview"),
+            GUILayout.Height(36)))
+        {
+            MenuPreviewWindow.Open(this);
+        }
+
+        EditorGUILayout.HelpBox(
+            T(
+                "หน้าต่าง Preview จะแสดงปุ่มและ Icon ตามค่าที่กำลังแก้ไขในหน้า Hair Styles",
+                "The Preview window mirrors the current Hair Styles buttons and icons in real time."
+            ),
+            MessageType.None
+        );
+
         int removeIndex = -1;
 
         for (int i = 0; i < hairs.Count; i++)
@@ -619,7 +1285,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
             EditorGUILayout.LabelField(
                 hair.hairObject != null
                     ? hair.hairObject.name
-                    : T("ยังไม่ได้เลือก Object", "No Object"),
+                : T("ยังไม่ได้เลือก GameObject", "No Object"),
                 EditorStyles.miniLabel
             );
 
@@ -627,7 +1293,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
             GUILayout.Label(GetActivationSummary(hair), badgeStyle);
 
             if (hair.materialPresets.Count > 0)
-                GUILayout.Label(T($"สี {hair.materialPresets.Count}", $"Color {hair.materialPresets.Count}"), badgeStyle);
+            GUILayout.Label(T($"Material Preset {hair.materialPresets.Count}", $"Color {hair.materialPresets.Count}"), badgeStyle);
 
             if (hair.blendShapes.Count > 0)
                 GUILayout.Label($"BS {hair.blendShapes.Count}", badgeStyle);
@@ -639,7 +1305,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
             if (hair.foldout)
             {
-                hair.menuName = EditorGUILayout.TextField(T("ชื่อปุ่มเมนู", "Menu Button Name"), hair.menuName);
+            hair.menuName = EditorGUILayout.TextField(T("ชื่อปุ่มใน Menu", "Menu Button Name"), hair.menuName);
 
                 DrawIconSelector(
                     T("ไอคอนปุ่ม", "Button Icon"),
@@ -651,7 +1317,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
                 GameObject oldHair = hair.hairObject;
 
                 hair.hairObject = (GameObject)EditorGUILayout.ObjectField(
-                    T("Object ทรงผม", "Hair Object"),
+                T("Hair Object", "Hair Object"),
                     hair.hairObject,
                     typeof(GameObject),
                     true
@@ -675,7 +1341,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
                     scanComplete = false;
                 }
 
-                if (GUILayout.Button(T("สแกน Material", "Scan Materials"), GUILayout.Height(24)))
+            if (GUILayout.Button(T("ตรวจหา Material", "Scan Materials"), GUILayout.Height(24)))
                 {
                     ScanDefaultMaterialPreset(hair);
                     scanComplete = false;
@@ -722,7 +1388,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         {
             hair.preserveExistingAnimator = EditorGUILayout.Toggle(
                 new GUIContent(
-                    T("รักษา Animator เดิม", "Preserve Existing Animator"),
+                T("คง Animator เดิมไว้", "Preserve Existing Animator"),
                     "mehigo only controls properties explicitly configured here. Existing Animator/MA assets remain untouched."
                 ),
                 hair.preserveExistingAnimator
@@ -738,7 +1404,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
             EditorGUILayout.BeginHorizontal();
 
             if (GUILayout.Button(
-                T("ตรวจอัตโนมัติใหม่", "Re-Detect"),
+                T("ตรวจหาอัตโนมัติอีกครั้ง", "Re-Detect"),
                 GUILayout.Width(110)))
             {
                 AutoDetectActivationMode(hair);
@@ -761,7 +1427,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
                 EditorGUI.BeginDisabledGroup(true);
                 EditorGUILayout.EnumPopup(
-                    T("โหมดที่ตรวจพบ", "Detected Mode"),
+                T("Activation Mode ที่ตรวจพบ", "Detected Mode"),
                     hair.activationMode
                 );
 
@@ -780,11 +1446,11 @@ public class MehigoHairGeneratorV4 : EditorWindow
             {
                 string[] activationLabels =
                     language == EditorLanguage.Thai
-                        ? new[] { "คุม Root ของทรงผม", "คุม Wrapper ที่มีอยู่", "ไม่คุม Object" }
+                    ? new[] { "ควบคุม Hair Root", "ควบคุม Wrapper เดิม", "ไม่ควบคุม Object" }
                         : new[] { "Control Hair Root", "Control Existing Wrapper", "Do Not Control Object" };
 
                 hair.activationMode = (ActivationMode)EditorGUILayout.Popup(
-                    T("โหมดเปิด/ปิด", "Activation Mode"),
+                T("Activation Mode", "Activation Mode"),
                     (int)hair.activationMode,
                     activationLabels
                 );
@@ -813,7 +1479,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
                 case ActivationMode.ControlExistingWrapper:
                     hair.activationTarget = (GameObject)EditorGUILayout.ObjectField(
-                        T("Wrapper ที่มีอยู่แล้ว", "Existing Wrapper"),
+                T("Wrapper เดิม", "Existing Wrapper"),
                         hair.activationTarget,
                         typeof(GameObject),
                         true
@@ -850,7 +1516,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         hair.linkedFoldout = EditorGUILayout.Foldout(
             hair.linkedFoldout,
-            T($"Object ที่ผูกไว้ ({hair.linkedObjects.Count})", $"Linked Objects ({hair.linkedObjects.Count})"),
+            T($"Linked Objects ({hair.linkedObjects.Count})", $"Linked Objects ({hair.linkedObjects.Count})"),
             true
         );
 
@@ -950,11 +1616,11 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
                 string[] controlModeLabels =
                     language == EditorLanguage.Thai
-                        ? new[] { "ปุ่มเปิด/ปิด (Toggle)", "วงล้อปรับค่า (Radial)" }
+                    ? new[] { "Toggle", "Radial Puppet" }
                         : new[] { "Toggle", "Radial Puppet" };
 
                 bs.controlMode = (BlendShapeControlMode)EditorGUILayout.Popup(
-                    T("รูปแบบการควบคุม", "Control Type"),
+                T("Control Type", "Control Type"),
                     (int)bs.controlMode,
                     controlModeLabels
                 );
@@ -993,21 +1659,21 @@ public class MehigoHairGeneratorV4 : EditorWindow
                         bs.blendShapeName = names[selected];
 
                         bs.onValue = EditorGUILayout.Slider(
-                            bs.controlMode == BlendShapeControlMode.RadialPuppet
-                                ? T("ค่าสูงสุดของวงล้อ", "Radial Max Value")
-                                : T("ค่าเมื่อเปิด", "ON Value"),
+                    bs.controlMode == BlendShapeControlMode.RadialPuppet
+                        ? T("ค่าสูงสุดของ Radial Puppet", "Radial Max Value")
+                        : T("ค่าเมื่อ ON", "ON Value"),
                             bs.onValue,
                             0f,
                             100f
                         );
 
-                        bs.saved = EditorGUILayout.Toggle(T("บันทึกค่า", "Saved"), bs.saved);
+                bs.saved = EditorGUILayout.Toggle(T("บันทึกค่า (Saved)", "Saved"), bs.saved);
 
                         if (bs.controlMode == BlendShapeControlMode.RadialPuppet)
                         {
                             EditorGUILayout.HelpBox(
                                 T(
-                                    "วงล้อจะใช้ Float Parameter ค่า 0-1 แล้วแปลงเป็น BlendShape 0 ถึงค่าสูงสุดที่กำหนด",
+                                    "Radial Puppet ใช้ Float Parameter ช่วง 0–1 และแปลงเป็นค่า BlendShape ตั้งแต่ 0 ถึงค่าสูงสุดที่กำหนด",
                                     "Radial Puppet uses a Float parameter from 0-1 and maps it to BlendShape 0 through the configured maximum value."
                                 ),
                                 MessageType.None
@@ -1046,13 +1712,13 @@ public class MehigoHairGeneratorV4 : EditorWindow
         hair.materialFoldout = EditorGUILayout.Foldout(
             hair.materialFoldout,
             T(
-                $"สีผม / Material Preset ({hair.materialPresets.Count})",
+                $"Hair Color / Material Preset ({hair.materialPresets.Count})",
                 $"Hair Color / Material Presets ({hair.materialPresets.Count})"
             ),
             true
         );
 
-        if (GUILayout.Button(T("สแกน Material", "Scan Materials"), GUILayout.Width(110)))
+        if (GUILayout.Button(T("ตรวจหา Material", "Scan Materials"), GUILayout.Width(110)))
         {
             ScanDefaultMaterialPreset(hair);
             scanComplete = false;
@@ -1063,7 +1729,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         {
             EditorGUILayout.HelpBox(
                 T(
-                    "Default Preset จะจำ Material ทุก slot ใต้ Hair Root อัตโนมัติ Preset ใหม่จะคัดลอกรายการนี้มาให้ครบ แล้วแก้ Material เฉพาะส่วนที่ต้องการได้",
+                    "Default Preset จะบันทึก Material ทุก Slot ใต้ Hair Root อัตโนมัติ เมื่อสร้าง Preset ใหม่ ระบบจะคัดลอกรายการ Slot ทั้งหมดมาให้ และสามารถเปลี่ยนเฉพาะ Material ที่ต้องการได้",
                     "Default Preset snapshots every material slot under the Hair Root. New presets copy that slot layout so you can replace only the materials you want."
                 ),
                 MessageType.Info
@@ -1142,7 +1808,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
             string rendererName =
                 slot.renderer != null
                     ? slot.renderer.name
-                    : T("Renderer หาย", "Missing Renderer");
+                        : T("ไม่พบ Renderer", "Missing Renderer");
 
             EditorGUILayout.LabelField(
                 $"{rendererName} [Slot {slot.materialIndex}]",
@@ -1331,7 +1997,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         if (hair == null || hair.hairObject == null)
         {
             EditorGUILayout.HelpBox(
-                T("คำแนะนำ: เลือก Hair Object ก่อน แล้ว mehigo จะช่วยแนะนำโหมดที่เหมาะสม",
+            T("คำแนะนำ: เลือก Hair Object ก่อน แล้ว mehigo จะแนะนำ Activation Mode ที่เหมาะสม",
                   "Recommendation: Select a Hair Object first and mehigo will suggest a suitable mode."),
                 MessageType.None);
             return;
@@ -1365,26 +2031,26 @@ public class MehigoHairGeneratorV4 : EditorWindow
         if (hair.activationMode == ActivationMode.DoNotControlObject)
         {
             msg = T(
-                "เหมาะเมื่อมีระบบอื่นควบคุมการเปิด/ปิดทรงผมอยู่แล้ว mehigo จะไม่ Animate Active ของ Hair Object",
+                    "เหมาะเมื่อมีระบบอื่นควบคุมการเปิด/ปิดทรงผมอยู่แล้ว โดย mehigo จะไม่สร้าง Animation สำหรับ Active State ของ Hair Object",
                 "Use this when another system already controls hair visibility. mehigo will not animate the Hair Object active state.");
         }
         else if (parentLooksLikeWrapper)
         {
             msg = T(
-                $"พบ Parent \"{parent.name}\" ที่มี Object/Renderer อื่นร่วมกับ Hair Root อาจเป็น Wrapper ของชุดผม ลองปิด Parent นี้ใน Hierarchy ถ้าผมหายครบทั้งชุด แนะนำ Control Existing Wrapper",
+                    $"พบ Parent \"{parent.name}\" ที่มี GameObject หรือ Renderer อื่นอยู่ร่วมกับ Hair Root ซึ่งอาจเป็น Wrapper ของชุดผม ลองปิด Parent นี้ใน Hierarchy หากผมหายทั้งชุด แนะนำให้ใช้ Control Existing Wrapper",
                 $"Parent \"{parent.name}\" contains other objects/renderers alongside the Hair Root and may be the hairstyle wrapper. Disable it in the Hierarchy; if the complete hairstyle disappears, Control Existing Wrapper is recommended.");
             type = MessageType.Warning;
         }
         else if (root.childCount > 0 || hasMultipleRenderers || hasAnimator)
         {
             msg = T(
-                "Hair Object ดูเป็น Root ของชุดผมอยู่แล้ว ถ้าปิด Object นี้แล้วผมหายครบทั้งชุด แนะนำ Control Hair Root",
+                    "Hair Object นี้ดูเป็น Root ของชุดผม หากปิด GameObject นี้แล้วผมหายทั้งชุด แนะนำให้ใช้ Control Hair Root",
                 "The selected Hair Object appears to be the hairstyle root. If disabling it hides the complete hairstyle, Control Hair Root is recommended.");
         }
         else
         {
             msg = T(
-                "ลองปิด Hair Object ใน Hierarchy: ถ้าผมหายครบใช้ Control Hair Root ถ้ายังมีชิ้นส่วนเหลือ ให้เลือก Parent ที่ครอบทั้งชุดเป็น Existing Wrapper",
+                    "ลองปิด Hair Object ใน Hierarchy หากผมหายทั้งชุดให้ใช้ Control Hair Root แต่หากยังมีชิ้นส่วนเหลือ ให้เลือก Parent ที่ครอบทั้งชุดเป็น Existing Wrapper",
                 "Disable the Hair Object in the Hierarchy: if the whole hairstyle disappears, use Control Hair Root. If pieces remain, use the parent containing the full set as Existing Wrapper.");
         }
 
@@ -1394,23 +2060,25 @@ public class MehigoHairGeneratorV4 : EditorWindow
     }
 
     // ---------------------------------------------------------------------
-    // COMPATIBILITY TAB
+    // CONFLICT SCANNER
     // ---------------------------------------------------------------------
 
-    private void DrawCompatibilityTab()
+    private void DrawConflictScannerSection()
     {
         EditorGUILayout.BeginVertical(sectionStyle);
-        EditorGUILayout.LabelField(T("ตัวตรวจ Conflict", "Conflict Scanner"), titleStyle);
+        EditorGUILayout.LabelField(T("ตรวจสอบ Conflict", "Conflict Scanner"), titleStyle);
 
         EditorGUILayout.HelpBox(
-            "The scanner looks for Animator Controllers and Modular Avatar Merge Animators under each hair, " +
-            "reads their AnimationClip curve bindings, and compares them with properties mehigo will animate.",
+            T(
+                "Conflict Scanner จะตรวจหา Animator Controller และ Modular Avatar Merge Animator ภายใต้ Hair แต่ละชุด จากนั้นอ่าน AnimationClip curve binding แล้วเปรียบเทียบกับ Property ที่ mehigo จะสร้าง Animation",
+                "The scanner looks for Animator Controllers and Modular Avatar Merge Animators under each hair, reads their AnimationClip curve bindings, and compares them with properties mehigo will animate."
+            ),
             MessageType.Info
         );
 
         GUI.enabled = avatar != null && hairs.Count > 0;
 
-        if (GUILayout.Button(T("สแกน Animator / MA Conflict", "Scan Animator / MA Conflicts"), GUILayout.Height(38)))
+        if (GUILayout.Button(T("ตรวจสอบ Conflict ของ Animator / Modular Avatar", "Scan Animator / MA Conflicts"), GUILayout.Height(38)))
             ScanConflicts();
 
         GUI.enabled = true;
@@ -1421,7 +2089,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         {
             EditorGUILayout.HelpBox(
                 T(
-                "ควรสแกนใหม่หลังเปลี่ยน Hair, Wrapper, Linked Objects หรือ BlendShapes",
+                    "ควรตรวจสอบใหม่หลังจากเปลี่ยน Hair, Wrapper, Linked Objects หรือ BlendShape",
                 "Run the scanner after changing Hair, Wrapper, Linked Objects, or BlendShapes."
             ),
                 MessageType.None
@@ -1433,8 +2101,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
         {
             EditorGUILayout.HelpBox(
                 T(
-                "ไม่พบ property ที่ชนกันโดยตรงใน Animator/MA ที่ v4 ตรวจสอบได้",
-                "No direct property conflicts were found in the Animator/MA controllers that v4 could inspect."
+                    "ไม่พบ Property ที่ซ้ำกันโดยตรงใน Animator หรือ Modular Avatar จากขอบเขตที่ระบบตรวจสอบได้",
+                "No direct property conflicts were found in the Animator/MA controllers that mehigo could inspect."
             ),
                 MessageType.Info
             );
@@ -1695,7 +2363,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         if (optimizationMode == OptimizationMode.Optimized)
         {
-            optimizationMode = OptimizationMode.Safe;
+            optimizationMode = OptimizationMode.Standard;
         }
     }
 
@@ -1708,7 +2376,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         DetectAAOCompatibility();
 
         if (optimizationMode == OptimizationMode.Optimized)
-            optimizationMode = OptimizationMode.Safe;
+            optimizationMode = OptimizationMode.Standard;
 
         int selectorLayers = hairs.Count > 0 ? 1 : 0;
         int blendShapeLayers = CountBlendShapes();
@@ -1735,7 +2403,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         EditorGUILayout.BeginHorizontal();
 
         DrawOptimizationModeCard(
-            OptimizationMode.Safe,
+            OptimizationMode.Standard,
             T("โหมดมาตรฐาน", "Standard"),
             T(
                 "1 BlendShape control = 1 Layer\nRadial ใช้ 1D BlendTree แบบเดิม\nเสถียรและ Debug ง่าย",
@@ -2199,7 +2867,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         EditorGUILayout.BeginVertical(sectionStyle);
         DrawSectionHeader(
             T("ตรวจสอบก่อนสร้าง", "Preflight"),
-            T("เช็กสถานะสำคัญก่อน Generate", "Review key status before generating")
+            T("ตรวจสอบสถานะสำคัญก่อน Generate", "Review key status before generating")
         );
 
         DrawPreflightRow(
@@ -2215,24 +2883,18 @@ public class MehigoHairGeneratorV4 : EditorWindow
         );
 
         DrawPreflightRow(
-            T("Performance", "Performance"),
-            perfAnalyzed
-                ? GetPerformanceImpactLabel()
-                : T("ยังไม่วิเคราะห์", "Not analyzed"),
-            perfAnalyzed
-        );
-
-        DrawPreflightRow(
-            T("Compatibility Scan", "Compatibility Scan"),
+            T("สถานะ Conflict Scan", "Conflict Scan"),
             scanComplete
                 ? (conflicts.Count == 0
                     ? T("ผ่าน", "Passed")
-                    : T($"พบ {conflicts.Count} จุด", $"{conflicts.Count} issue(s)"))
-                : T("ยังไม่สแกน", "Not scanned"),
+                    : T($"พบ {conflicts.Count} รายการ", $"{conflicts.Count} issue(s)"))
+                : T("ยังไม่ได้ตรวจสอบ", "Not scanned"),
             scanComplete && conflicts.Count == 0
         );
 
         EditorGUILayout.EndVertical();
+
+        DrawConflictScannerSection();
 
         EditorGUILayout.BeginVertical(sectionStyle);
 
@@ -2251,43 +2913,23 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         GUI.enabled = true;
 
-        EditorGUILayout.Space(4);
-        EditorGUILayout.BeginHorizontal();
-
-        if (GUILayout.Button(T("สแกน Conflict", "Scan Conflicts"), GUILayout.Height(30)))
-            ScanConflicts();
-
         if (GUILayout.Button(T("บันทึก Config", "Save Config"), GUILayout.Height(30)))
         {
             if (ValidateInput(false))
             {
-                EnsureFolder(saveFolder);
+                EnsureFolder(GetAvatarScopedSaveFolder());
                 SaveProjectData();
                 AssetDatabase.SaveAssets();
                 Debug.Log("[mehigo] Config saved.");
             }
         }
 
-        EditorGUILayout.EndHorizontal();
-
         if (!valid)
         {
             EditorGUILayout.HelpBox(
                 T(
-                    "ข้อมูลยังไม่ครบ กรุณาตรวจ Avatar Info และ Hair Styles",
+                    "ข้อมูลยังไม่ครบ โปรดตรวจสอบ Avatar Info และ Hair Styles",
                     "Required data is missing. Check Avatar Info and Hair Styles."
-                ),
-                MessageType.Warning
-            );
-        }
-
-        if (optimizationMode == OptimizationMode.LetAAOHandleIt &&
-            !aaoTraceAndOptimizeDetected)
-        {
-            EditorGUILayout.HelpBox(
-                T(
-                    "เลือก 'ให้ AAO จัดการ' แต่ยังไม่พบ Trace and Optimize บน Avatar — mehigo จะยังสร้าง Standard Animator ได้ แต่จะไม่มี AAO Animator optimization ต่อจนกว่าจะเพิ่ม Trace and Optimize",
-                    "'Let AAO Handle It' is selected but Trace and Optimize was not found on the avatar — mehigo will still build the Standard Animator, but AAO Animator optimization will not run until Trace and Optimize is added."
                 ),
                 MessageType.Warning
             );
@@ -2297,8 +2939,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
         {
             EditorGUILayout.HelpBox(
                 T(
-                    "พบ Potential Conflict ควรตรวจหน้า Compatibility ก่อน Generate",
-                    "Potential conflicts were found. Review Compatibility before generating."
+                    "พบ Conflict ที่อาจเกิดขึ้น โปรดตรวจสอบ Conflict Scanner ด้านบนก่อน Generate",
+                    "Potential conflicts were found. Review the Conflict Scanner above before generating."
                 ),
                 MessageType.Warning
             );
@@ -2377,7 +3019,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         if (avatar == null) return;
 
-        string avatarGuid = GetAvatarAssetGuid(avatar.gameObject);
+        string avatarGuid = GetAvatarStableId(avatar.gameObject);
         MehigoHairProjectDataV4 data = FindProjectData(avatarGuid);
 
         if (data == null)
@@ -2472,8 +3114,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
     private MehigoHairProjectDataV4 SaveProjectData()
     {
-        string avatarGuid = GetAvatarAssetGuid(avatar.gameObject);
-        string configFolder = saveFolder + "/Config";
+        string avatarGuid = GetAvatarStableId(avatar.gameObject);
+        string configFolder = saveFolder.TrimEnd('/', '\\') + "/Config";
 
         EnsureFolder(configFolder);
 
@@ -2634,6 +3276,32 @@ public class MehigoHairGeneratorV4 : EditorWindow
             : AssetDatabase.AssetPathToGUID(path);
     }
 
+    private string GetAvatarStableId(GameObject avatarObject)
+    {
+        if (avatarObject.scene.IsValid())
+        {
+            GlobalObjectId globalId =
+                GlobalObjectId.GetGlobalObjectIdSlow(avatarObject);
+
+            if (globalId.identifierType != 0)
+                return Hash128.Compute(globalId.ToString()).ToString();
+
+            string instanceFallbackKey =
+                avatarObject.scene.path + "|" +
+                avatarObject.name + "|" +
+                avatarObject.transform.GetSiblingIndex();
+
+            return Hash128.Compute(instanceFallbackKey).ToString();
+        }
+
+        string assetGuid = GetAvatarAssetGuid(avatarObject);
+
+        if (!string.IsNullOrWhiteSpace(assetGuid))
+            return assetGuid;
+
+        return Hash128.Compute(avatarObject.name).ToString();
+    }
+
     private string GetAvatarPath(GameObject go)
     {
         if (go == null || avatar == null) return "";
@@ -2661,6 +3329,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
     private void Generate()
     {
+        optimizationMode = OptimizationMode.Standard;
+
         if (!ValidateInput(true))
             return;
 
@@ -2685,7 +3355,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
             return;
         }
 
-        EnsureFolder(saveFolder);
+        EnsureFolder(GetAvatarScopedSaveFolder());
 
         AnimatorController controller = CreateAnimatorController();
         VRCExpressionsMenu installerMenu = CreateInstallerMenu();
@@ -2738,8 +3408,9 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
     private AnimatorController CreateAnimatorController()
     {
-        string path = $"{saveFolder}/mehigo_HairSelector.controller";
-        string legacyPath = $"{saveFolder}/mehigo_HairSelector_v4.controller";
+        string outputFolder = GetAvatarScopedSaveFolder();
+        string path = $"{outputFolder}/mehigo_HairSelector.controller";
+        string legacyPath = $"{outputFolder}/mehigo_HairSelector_v4.controller";
 
         AnimatorController controller =
             AssetDatabase.LoadAssetAtPath<AnimatorController>(path);
@@ -3213,7 +3884,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         HairEntry hair = hairs[hairIndex];
 
         AnimationClip clip = GetOrCreateClip(
-            $"{saveFolder}/Hair_{hairIndex}_BS_OPT_RESET.anim",
+            $"{GetAvatarScopedSaveFolder()}/Hair_{hairIndex}_BS_OPT_RESET.anim",
             $"Hair_{hairIndex}_BS_OPT_RESET"
         );
 
@@ -3265,7 +3936,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         string suffix = enabled ? "ON" : "OFF";
 
         AnimationClip clip = GetOrCreateClip(
-            $"{saveFolder}/Hair_{hairIndex}_BS_OPT_{blendShapeIndex}_{suffix}.anim",
+            $"{GetAvatarScopedSaveFolder()}/Hair_{hairIndex}_BS_OPT_{blendShapeIndex}_{suffix}.anim",
             $"Hair_{hairIndex}_BS_OPT_{blendShapeIndex}_{suffix}"
         );
 
@@ -3367,7 +4038,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         MaterialPreset preset = hair.materialPresets[presetIndex];
 
         AnimationClip clip = GetOrCreateClip(
-            $"{saveFolder}/Hair_{hairIndex}_Material_{presetIndex}.anim",
+            $"{GetAvatarScopedSaveFolder()}/Hair_{hairIndex}_Material_{presetIndex}.anim",
             $"Hair_{hairIndex}_Material_{presetIndex}"
         );
 
@@ -3407,7 +4078,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
     private AnimationClip CreateHairAnimation(int selectedIndex)
     {
-        string path = $"{saveFolder}/Hair_{selectedIndex}.anim";
+        string path = $"{GetAvatarScopedSaveFolder()}/Hair_{selectedIndex}.anim";
 
         AnimationClip clip =
             GetOrCreateClip(path, $"Hair_{selectedIndex}");
@@ -3469,7 +4140,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         BlendShapeOption bs = hairs[hairIndex].blendShapes[bsIndex];
 
         string path =
-            $"{saveFolder}/BS_{hairIndex}_{bsIndex}_{(enabled ? "ON" : "OFF")}.anim";
+            $"{GetAvatarScopedSaveFolder()}/BS_{hairIndex}_{bsIndex}_{(enabled ? "ON" : "OFF")}.anim";
 
         AnimationClip clip =
             GetOrCreateClip(
@@ -3564,7 +4235,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
     {
         VRCExpressionsMenu hairRoot = CreateHairRootMenu();
 
-        string path = $"{saveFolder}/mehigo_InstallerMenu_v4.asset";
+        string outputFolder = GetAvatarScopedSaveFolder();
+        string path = $"{outputFolder}/mehigo_InstallerMenu_v4.asset";
 
         VRCExpressionsMenu installer =
             GetOrCreateMenuAsset(
@@ -3627,7 +4299,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         }
 
         return BuildPagedMenu(
-            $"{saveFolder}/HairRoot_v4",
+            $"{GetAvatarScopedSaveFolder()}/HairRoot_v4",
             rootMenuName,
             controls
         );
@@ -3706,7 +4378,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         }
 
         return BuildPagedMenu(
-            $"{saveFolder}/Hair_{hairIndex}_Controls_v4",
+            $"{GetAvatarScopedSaveFolder()}/Hair_{hairIndex}_Controls_v4",
             SafeName(hair.menuName, $"Hair {hairIndex}"),
             controls
         );
@@ -3743,7 +4415,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         }
 
         return BuildPagedMenu(
-            $"{saveFolder}/Hair_{hairIndex}_MaterialMenu",
+            $"{GetAvatarScopedSaveFolder()}/Hair_{hairIndex}_MaterialMenu",
             T("สีผม", "Hair Color"),
             controls
         );
@@ -4047,7 +4719,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         string[] modeLabels =
             language == EditorLanguage.Thai
-                ? new[] { "ค่าเริ่มต้น", "เลือก Texture", "Capture จาก Scene" }
+                ? new[] { "Default", "เลือก Texture", "Capture จาก Scene View" }
                 : new[] { "Default", "Custom Texture", "Capture From Scene" };
 
         mode = (IconMode)EditorGUILayout.Popup(
@@ -4062,7 +4734,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
             EditorGUILayout.LabelField(
                 T(
-                    "ใช้ไอคอนค่าเริ่มต้นของ VRChat",
+                    "ใช้ Default Icon ของ VRChat",
                     "Uses VRChat's default button appearance"
                 ),
                 EditorStyles.miniLabel
@@ -4082,7 +4754,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
             EditorGUILayout.BeginHorizontal();
 
             EditorGUILayout.ObjectField(
-                T("รูป Capture", "Captured Icon"),
+                T("Captured Icon", "Captured Icon"),
                 icon,
                 typeof(Texture2D),
                 false
@@ -4094,7 +4766,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
             {
                 MehigoSceneCapturePreviewWindow.Open(
                     captureBaseName,
-                    saveFolder,
+                    GetAvatarScopedSaveFolder(),
                     language == EditorLanguage.Thai
                 );
             }
@@ -4103,7 +4775,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
             EditorGUILayout.HelpBox(
                 T(
-                    "ใช้มุมกล้องจาก Scene View ปัจจุบัน จัดมุมให้เรียบร้อยก่อนกด Capture",
+                    "ใช้มุมกล้องปัจจุบันจาก Scene View โปรดจัดมุมให้เรียบร้อยก่อนกด Capture",
                     "Captures the current Scene View camera. Frame the shot before pressing Capture."
                 ),
                 MessageType.None
@@ -4114,6 +4786,33 @@ public class MehigoHairGeneratorV4 : EditorWindow
     // ---------------------------------------------------------------------
     // VALIDATION / HELPERS
     // ---------------------------------------------------------------------
+
+    private string GetAvatarScopedSaveFolder()
+    {
+        string baseFolder = string.IsNullOrWhiteSpace(saveFolder)
+            ? "Assets/mehigo/HairManager"
+            : saveFolder.Replace('\\', '/').TrimEnd('/');
+
+        if (avatar == null)
+            return baseFolder;
+
+        string stableId = GetAvatarStableId(avatar.gameObject);
+
+        string shortId = stableId.Length > 12
+            ? stableId.Substring(0, 12)
+            : stableId;
+
+        string avatarFolder = "Avatar_" + SanitizeFileName(shortId);
+
+        if (baseFolder.EndsWith(
+            "/" + avatarFolder,
+            StringComparison.OrdinalIgnoreCase))
+        {
+            return baseFolder;
+        }
+
+        return baseFolder + "/" + avatarFolder;
+    }
 
     private bool ValidateInput(bool log)
     {
@@ -4474,7 +5173,7 @@ public class MehigoSceneCapturePreviewWindow : EditorWindow
         MehigoSceneCapturePreviewWindow window =
             GetWindow<MehigoSceneCapturePreviewWindow>(
                 true,
-                thai ? "ตัวอย่างภาพ Capture" : "Capture Preview",
+                thai ? "ตัวอย่าง Capture" : "Capture Preview",
                 true
             );
 
@@ -4526,7 +5225,7 @@ public class MehigoSceneCapturePreviewWindow : EditorWindow
 
         EditorGUILayout.LabelField(
             T(
-                "ภาพนี้คือมุมที่จะถูกใช้เป็นไอคอน 1:1",
+                "ภาพนี้คือมุมที่จะใช้สร้าง Icon อัตราส่วน 1:1",
                 "This is the 1:1 framing that will be used for the icon."
             ),
             EditorStyles.miniLabel
@@ -4602,7 +5301,7 @@ public class MehigoSceneCapturePreviewWindow : EditorWindow
         GUI.enabled = previewTexture != null;
 
         if (GUILayout.Button(
-            T("Capture & ใช้งาน", "Capture & Use"),
+            T("Capture และใช้งาน", "Capture & Use"),
             GUILayout.Height(32)))
         {
             Texture2D captured = SaveCurrentSceneCapture();
@@ -4629,7 +5328,7 @@ public class MehigoSceneCapturePreviewWindow : EditorWindow
 
         EditorGUILayout.HelpBox(
             T(
-                "ถ้าต้องการเปลี่ยนมุม ให้กลับไปขยับ Scene View แล้วกด Refresh Preview อีกครั้ง",
+                "หากต้องการเปลี่ยนมุม ให้ปรับ Scene View แล้วกด Refresh Preview อีกครั้ง",
                 "To change the framing, move the Scene View camera, then press Refresh Preview again."
             ),
             MessageType.None
@@ -4643,7 +5342,7 @@ public class MehigoSceneCapturePreviewWindow : EditorWindow
         if (sceneView == null || sceneView.camera == null)
         {
             statusMessage = T(
-                "ไม่พบ Scene View ที่ใช้งานอยู่",
+                "ไม่พบ Scene View ที่กำลังใช้งาน",
                 "No active Scene View was found."
             );
 
@@ -4673,7 +5372,7 @@ public class MehigoSceneCapturePreviewWindow : EditorWindow
         previewTexture = newPreview;
 
         statusMessage = T(
-            "อัปเดต Preview แล้ว",
+            "อัปเดต Preview เรียบร้อยแล้ว",
             "Preview refreshed."
         );
 
@@ -4689,7 +5388,7 @@ public class MehigoSceneCapturePreviewWindow : EditorWindow
             EditorUtility.DisplayDialog(
                 "mehigo",
                 T(
-                    "ไม่พบ Scene View ที่ใช้งานอยู่",
+                    "ไม่พบ Scene View ที่กำลังใช้งาน",
                     "No active Scene View was found."
                 ),
                 "OK"
