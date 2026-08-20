@@ -12,7 +12,6 @@ on:
     paths:
       - source.json
       - Website/**
-      - docs/images/overview-*.png
       - .github/workflows/build-listing.yml
   workflow_run:
     workflows:
@@ -76,13 +75,6 @@ jobs:
       - name: Preserve the existing VCC repository URL
         shell: bash
         run: cp "${{ env.listPublishDirectory }}/index.json" "${{ env.listPublishDirectory }}/vpm.json"
-
-      - name: Copy landing page images
-        shell: bash
-        run: |
-          mkdir -p "${{ env.listPublishDirectory }}/assets"
-          cp docs/images/overview-simple-mode-editor.png "${{ env.listPublishDirectory }}/assets/"
-          cp docs/images/overview-gesture-manager-test.png "${{ env.listPublishDirectory }}/assets/"
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

@@ -86,15 +86,6 @@ h3 { margin: 0 0 8px; }
 .repo-url { margin: 0; color: var(--muted); font-size: .92rem; }
 .repo-url code { word-break: break-all; color: #ddd6fe; }
 
-.shot {
-  display: block;
-  width: 100%;
-  margin: 42px auto 0;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  box-shadow: 0 28px 90px rgba(0, 0, 0, .42);
-}
-
 section { padding: 64px 0; }
 .section-head { max-width: 760px; margin-bottom: 28px; }
 .section-head p, .card p, .step p { color: var(--muted); }
@@ -122,8 +113,6 @@ section { padding: 64px 0; }
   font-weight: 900;
 }
 
-.split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 36px; }
-.split .shot { margin: 0; }
 .checklist { padding: 0; list-style: none; }
 .checklist li { margin: 10px 0; color: var(--muted); }
 .checklist li::before { content: "✓"; margin-right: 10px; color: var(--success); font-weight: 900; }
@@ -141,9 +130,8 @@ footer { padding: 34px 0 54px; color: var(--muted); border-top: 1px solid var(--
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 
 @media (max-width: 800px) {
-  .grid, .steps, .split { grid-template-columns: 1fr; }
+  .grid, .steps { grid-template-columns: 1fr; }
   .hero { padding-top: 64px; }
   nav { align-items: flex-start; padding: 14px 0; }
   .nav-links { justify-content: flex-end; gap: 10px; }
 }
-
