@@ -2,6 +2,14 @@
 
 **Version 1.2.0**
 
+## Install with VCC
+
+[![Add Repository to VCC](https://img.shields.io/badge/Add_Repository_to_VCC-2f81f7?style=for-the-badge)](https://mehigosleep.github.io/mehigo-hair-manager/)
+
+Repository URL:
+
+`https://mehigosleep.github.io/mehigo-hair-manager/vpm.json`
+
 Unity Editor tool for managing multiple hairstyle setups on VRChat avatars with Modular Avatar. The tool generates separate Animator, menu, parameter, and configuration assets without directly editing the avatar's original FX controller, expression menu, or expression parameters.
 
 [คู่มือ Simple Mode ภาษาไทย](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_TH.md) · [Simple Mode Guide in English](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_EN.md) · [คู่มือฉบับเต็ม](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_TH.md) · [Complete English Guide](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_EN.md) · [Changelog](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md)
