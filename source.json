@@ -1,0 +1,18 @@
+{
+  "name": "mehigo VPM Repository",
+  "id": "com.mehigosleep.vpm",
+  "url": "https://mehigosleep.github.io/mehigo-hair-manager/vpm.json",
+  "author": {
+    "name": "mehigo",
+    "email": "mehigosleep@gmail.com",
+    "url": "https://github.com/mehigosleep"
+  },
+  "description": "VPM repository for mehigo Hair Manager.",
+  "infoLink": {
+    "url": "https://github.com/mehigosleep/mehigo-hair-manager",
+    "text": "View on GitHub"
+  },
+  "githubRepos": [
+    "mehigosleep/mehigo-hair-manager"
+  ]
+}
