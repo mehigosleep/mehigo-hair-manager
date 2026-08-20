@@ -1,6 +1,6 @@
 # mehigo Hair Manager
 
-**Version 1.1.0**
+**Version 1.2.0**
 
 Unity Editor tool for managing multiple hairstyle setups on VRChat avatars with Modular Avatar. The tool generates separate Animator, menu, parameter, and configuration assets without directly editing the avatar's original FX controller, expression menu, or expression parameters.
 
@@ -10,6 +10,13 @@ Unity Editor tool for managing multiple hairstyle setups on VRChat avatars with 
 
 ## Features
 
+- Simple Mode with separate Avatar → Hair & Controls → Preview & Generate pages
+- Advanced Mode with the complete editor controls from earlier versions
+- Add multiple Hair Objects from the Hierarchy selection or by drag and drop
+- Quick Toggle / Radial controls without manually selecting a Renderer first
+- One-click Hair Color preset setup with automatic default material scanning
+- Bundled default icons for Hair menus, hairstyles, BlendShape controls, and Hair Color
+- Default, Project Texture, or Scene Capture hairstyle icons in Simple Mode
 - Multiple hairstyle selector menu
 - Modular Avatar Merge Animator / Parameters / Menu Installer workflow
 - Linked objects per hairstyle
@@ -55,7 +62,7 @@ v1.1.0 was tested with VRChat SDK 3.10.4. Test your avatar after changing SDK or
 
 ## Manual install
 
-1. Copy `Editor/MehigoHairManager.cs` into your Unity project's `Assets` folder (inside an Editor folder is recommended).
+1. Copy the package's complete `Editor` folder, including `MehigoHairManager.cs` and `Icons`, into your Unity project's `Assets` folder.
 2. Make sure Modular Avatar is installed.
 3. Open Unity.
 4. Use **Tools > mehigo > Hair Manager**.
@@ -64,11 +71,11 @@ Do not install the tool through both VCC and the manual method in the same proje
 
 ## Basic workflow
 
-1. Select your avatar or prefab.
-2. Add hairstyle entries.
-3. Configure activation, linked objects, BlendShapes, material presets, and icons.
-4. Run the Conflict Scanner on the Generate page when needed.
-5. Generate or update the setup.
+1. Open Hair Manager in the default **Simple** mode.
+2. On **Avatar**, select the avatar and continue to **Hair & Controls**.
+3. Add Hair Objects, then add Toggle, Radial, or **New Color Button** controls from each Hair card when needed.
+4. Continue to **Preview & Generate**, inspect Menu Preview, and press **Generate / Update Setup**.
+5. Switch to **Advanced** only when manual compatibility, parameter, folder, or detailed control settings are required.
 6. Test the generated menu and animations before uploading the avatar.
 
 For the complete illustrated workflow, see the [คู่มือภาษาไทย](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_TH.md) or [English User Guide](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_EN.md).

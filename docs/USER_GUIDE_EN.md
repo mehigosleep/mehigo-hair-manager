@@ -1,12 +1,20 @@
-# mehigo Hair Manager 1.1.0 User Guide
+# mehigo Hair Manager 1.2.0 User Guide
 
 [ภาษาไทย](USER_GUIDE_TH.md) | [English](USER_GUIDE_EN.md) | [Project page](../README.md)
 
-> For Unity 2022.3 and mehigo Hair Manager 1.1.0
+> For Unity 2022.3 and mehigo Hair Manager 1.2.0
 
 mehigo Hair Manager builds hairstyle menus for VRChat avatars, including linked objects, BlendShapes, material presets, and icons. It uses Modular Avatar so the original FX Controller, Expression Parameters, and Expressions Menu are not edited directly.
 
-## What's new in version 1.1.0
+## What's new in version 1.2.0
+
+- Added **Simple Mode** as separate Avatar → Hair & Controls → Preview & Generate pages.
+- Add multiple Hair Objects from the selection or by drag and drop.
+- Add Toggle and Radial controls from a BlendShape list without selecting a Renderer manually.
+- Add Hair Color presets with automatic default material scanning.
+- The complete previous editor remains available in **Advanced Mode**.
+
+## Features retained from version 1.1.0
 
 - English is now the default editor language; use **ไทย / ENG** to switch.
 - The window now has three tabs: **Avatar Info**, **Hair Styles**, and **Generate**.
@@ -39,7 +47,7 @@ Optional: Avatar Optimizer (AAO) for build-time optimization and Gesture Manager
 ### Manual installation
 
 1. Install the VRChat Avatars SDK and Modular Avatar.
-2. Copy `Editor/MehigoHairManager.cs` below the project's `Assets` folder, preferably inside an `Editor` folder.
+2. Copy the package's complete `Editor` folder, including `MehigoHairManager.cs` and `Icons`, below the project's `Assets` folder.
 3. Do not keep an older mehigo Hair Generator script that declares the same classes.
 
 ## 2. Prepare the avatar
@@ -57,7 +65,23 @@ Choose **Tools > mehigo > Hair Manager**.
 
 ![Opening Hair Manager from the Tools menu](images/02-open-hair-manager.png)
 
-Use **ไทย / ENG** at the upper right to switch languages. English is the default in 1.1.0.
+Use **Simple / Advanced** and **ไทย / ENG** at the upper right to switch workflows or languages.
+
+## Start with Simple Mode
+
+Simple Mode is the default workflow for common setups:
+
+1. On **Avatar**, select the avatar. The Avatar Descriptor and output folder are detected automatically.
+2. On **Hair & Controls**, select multiple Hair Objects in the Hierarchy and click **Add Selected Hair**, or drag them into the drop area.
+3. Use **+ Toggle**, **+ Radial**, or **+ New Color Button** inside each Hair card. Adding a new color button automatically saves the hairstyle's current materials as the separate **Default** button.
+4. On **Preview & Generate**, click **Open Menu Preview** to review the menu structure.
+5. Click **Generate / Update Setup**.
+
+Button names, existing animator preservation, Hair Root/Wrapper detection, and default material scanning are automatic. Switch to **Advanced** when you need parameter, save folder, activation, or detailed BlendShape settings.
+
+The **Hairstyle Icon** field in Simple Mode supports the bundled mehigo default, a Project Texture, or Scene View Capture. Separate bundled defaults are provided for the root menu, hairstyles, Toggle BlendShapes, Radial BlendShapes, and Hair Color.
+
+Sections 4 onward describe the Advanced Mode interface.
 
 ## 4. Configure Avatar Info
 
@@ -83,7 +107,7 @@ Open **Hair Styles**, then either:
 Configure each entry:
 
 - **Menu Button Name**: label shown in the VRChat menu
-- **Button Icon**: the button image; Default uses VRChat's standard appearance
+- **Button Icon**: the button image; Default uses the bundled mehigo icon
 - **Hair Object**: root of this hairstyle
 - Arrow buttons: reorder the menu
 - `X`: remove the entry from the setup without deleting the source GameObject

@@ -1,12 +1,20 @@
-# คู่มือการใช้งาน mehigo Hair Manager 1.1.0
+# คู่มือการใช้งาน mehigo Hair Manager 1.2.0
 
 [ภาษาไทย](USER_GUIDE_TH.md) | [English](USER_GUIDE_EN.md) | [หน้าโครงการ](../README.md)
 
-> สำหรับ Unity 2022.3 และ mehigo Hair Manager 1.1.0
+> สำหรับ Unity 2022.3 และ mehigo Hair Manager 1.2.0
 
 mehigo Hair Manager ช่วยสร้างเมนูเปลี่ยนทรงผมสำหรับอวาตาร์ VRChat รองรับ Linked Objects, BlendShape, Material Preset และไอคอน โดยใช้ Modular Avatar เพื่อไม่แก้ FX Controller, Expression Parameters หรือ Expressions Menu ต้นฉบับโดยตรง
 
-## มีอะไรใหม่ในเวอร์ชัน 1.1.0
+## มีอะไรใหม่ในเวอร์ชัน 1.2.0
+
+- เพิ่ม **Simple Mode** เป็นหน้าเริ่มต้น โดยแยกเป็น Avatar → Hair & Controls → Preview & Generate
+- เพิ่มหลายทรงผมจาก Selection หรือลาก GameObject มาวางได้
+- เพิ่มปุ่ม Toggle และ Radial จากรายการ BlendShape โดยไม่ต้องเลือก Renderer เอง
+- เพิ่ม Hair Color พร้อม Scan Default Material อัตโนมัติ
+- เก็บหน้าจอและตัวเลือกเดิมทั้งหมดไว้ใน **Advanced Mode**
+
+## สิ่งที่เพิ่มไว้ตั้งแต่เวอร์ชัน 1.1.0
 
 - ภาษาเริ่มต้นของหน้าต่าง Editor เปลี่ยนเป็น English; สลับได้ด้วยปุ่ม **ไทย / ENG**
 - เหลือ 3 แท็บ: **Avatar Info**, **Hair Styles** และ **Generate**
@@ -39,7 +47,7 @@ mehigo Hair Manager ช่วยสร้างเมนูเปลี่ยน
 ### ติดตั้งด้วยตนเอง
 
 1. ติดตั้ง VRChat Avatars SDK และ Modular Avatar
-2. คัดลอก `Editor/MehigoHairManager.cs` ไว้ใต้ `Assets` โดยแนะนำให้วางในโฟลเดอร์ `Editor`
+2. คัดลอกโฟลเดอร์ `Editor` ของแพ็กเกจทั้งชุด รวม `MehigoHairManager.cs` และ `Icons` ไปไว้ใต้ `Assets`
 3. อย่าเก็บสคริปต์ mehigo Hair Generator รุ่นเก่าที่ประกาศ class เดียวกันไว้พร้อมกัน
 
 ## 2. เตรียมอวาตาร์
@@ -57,7 +65,23 @@ mehigo Hair Manager ช่วยสร้างเมนูเปลี่ยน
 
 ![เมนูสำหรับเปิด Hair Manager](images/02-open-hair-manager.png)
 
-ปุ่มมุมขวาบนใช้สลับภาษา **ไทย / ENG** ได้ตลอดเวลา ใน 1.1.0 ภาษาเริ่มต้นคือ English
+ปุ่มมุมขวาบนใช้สลับ **Simple / Advanced** และภาษา **ไทย / ENG** ได้ตลอดเวลา
+
+## เริ่มต้นด้วย Simple Mode
+
+Simple Mode เป็นหน้าหลักสำหรับงานทั่วไป:
+
+1. หน้า **Avatar**: เลือก Avatar ระบบจะตรวจหา Avatar Descriptor และ Output Folder อัตโนมัติ
+2. หน้า **Hair & Controls**: เลือก Hair Object หลายชิ้นใน Hierarchy แล้วกด **เพิ่มทรงผมที่เลือก** หรือลากมาวาง
+3. ใช้ **+ เปิด / ปิด**, **+ ปรับระดับ** หรือ **+ ปุ่มสีใหม่** ใน Hair Card โดยแต่ละครั้งที่เพิ่มปุ่มสีใหม่ ระบบจะบันทึกสีผมที่ใช้อยู่เป็นปุ่ม **ค่าเริ่มต้น (Default)** ให้อัตโนมัติ
+4. หน้า **Preview & Generate**: กด **เปิด Menu Preview** เพื่อตรวจโครงสร้างเมนู
+5. กด **สร้าง / อัปเดต Setup**
+
+ระบบจะตั้งชื่อปุ่มจากชื่อ Object/BlendShape, รักษา Animator เดิม, ตรวจ Hair Root/Wrapper และ Scan Default Material ให้โดยอัตโนมัติ หากต้องแก้ Parameter, Save Folder, Activation Mode หรือรายละเอียด BlendShape ให้สลับเป็น **Advanced**
+
+ช่อง **ไอคอนทรงผม** ใน Simple Mode เลือกได้สามแบบ: ใช้ Default Icon ของ mehigo, เลือก Texture จาก Project หรือ Capture จาก Scene View ระบบมี Default Icon แยกสำหรับเมนูหลัก, ทรงผม, Toggle BlendShape, Radial BlendShape และ Hair Color
+
+หัวข้อตั้งแต่ข้อ 4 เป็นต้นไปอธิบายหน้าจอ Advanced Mode
 
 ## 4. ตั้งค่า Avatar Info
 
@@ -83,7 +107,7 @@ mehigo Hair Manager ช่วยสร้างเมนูเปลี่ยน
 ตั้งค่าหลักของแต่ละรายการ:
 
 - **Menu Button Name**: ชื่อที่แสดงในเมนู VRChat
-- **Button Icon**: ไอคอนของปุ่ม; Default ใช้หน้าตามาตรฐานของ VRChat
+- **Button Icon**: ไอคอนของปุ่ม; Default ใช้ไอคอนที่รวมมากับ mehigo
 - **Hair Object**: รากของทรงผมชุดนั้น
 - ปุ่มลูกศร: เปลี่ยนลำดับเมนู
 - ปุ่ม `X`: ลบรายการออกจาก Setup โดยไม่ลบ GameObject ต้นฉบับ

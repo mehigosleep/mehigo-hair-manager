@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.2.0 - 2026-08-20
+
+- Added a new Simple Mode as the default editor experience while preserving the complete Advanced Mode workflow.
+- Added a persistent Simple / Advanced mode switch using Unity Editor preferences.
+- Added a guided three-step Simple workflow for selecting an avatar, adding hair and controls, previewing, and generating.
+- Split Simple Mode into separate Avatar, Hair & Controls, and Preview & Generate pages with Back/Next navigation.
+- Simple Hair cards now expand one hairstyle at a time, and validation can return directly to the affected card.
+- Added multi-object Hair creation from the current Hierarchy selection.
+- Added drag-and-drop Hair Object creation.
+- Added automatic Avatar Descriptor, activation target, existing animator preservation, and default material detection for newly added Hair Objects.
+- Added Quick Toggle and Quick Radial controls with a combined Renderer / BlendShape picker.
+- Added automatic control naming, Saved defaults, and 100 maximum values for Quick controls.
+- Added one-click Hair Color preset creation that snapshots the default materials automatically.
+- Clarified that adding a new Hair Color button also creates the Default button from the hairstyle's current materials.
+- Added simplified Hair cards with reordering, optional icons, activation summaries, control summaries, and material editing.
+- Added an escape hatch for manual activation detection and Linked Object settings without exposing those fields during the normal Simple workflow.
+- Added Simple Mode Menu Preview and Generate actions with validation and conflict-review handoff.
+- Added bundled default icons for the root Hair menu, hairstyles, Toggle BlendShapes, Radial BlendShapes, and Hair Color controls.
+- Restored the full Default / Custom Texture / Scene Capture hairstyle icon selector in Simple Mode.
+- Menu Preview and generated VRChat menus now use the same bundled icon fallbacks.
+- Every Hair Color preset entry uses the bundled Hair Color icon in both Preview and generated submenus.
+- Hair Color-only setups now open a hairstyle submenu correctly even when no BlendShape controls exist.
+
 ## 1.1.0 - 2026-08-19
 
 - Changed the default editor language from Thai to English.
