@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>mehigo Hair Manager – VRChat髪型切り替えメニュー作成ツール</title>
+  <meta name="description" content="Unity上でVRChatアバターの髪型切り替え、BlendShape、髪色プリセット、メニュープレビューを簡単に作成できるModular Avatar対応ツールです。">
+  <meta name="theme-color" content="#7c3aed">
+  <link rel="canonical" href="https://mehigosleep.github.io/mehigo-hair-manager/ja/">
+  <link rel="alternate" hreflang="en" href="https://mehigosleep.github.io/mehigo-hair-manager/">
+  <link rel="alternate" hreflang="ja" href="https://mehigosleep.github.io/mehigo-hair-manager/ja/">
+  <link rel="alternate" hreflang="x-default" href="https://mehigosleep.github.io/mehigo-hair-manager/">
+  <link rel="stylesheet" href="../styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="mehigo Hair Manager – VRChat髪型切り替えツール">
+  <meta property="og:description" content="髪型メニュー、BlendShape、髪色プリセットをシンプルな3ステップで作成。">
+  <meta property="og:url" content="https://mehigosleep.github.io/mehigo-hair-manager/ja/">
+  <meta property="og:image" content="https://mehigosleep.github.io/mehigo-hair-manager/assets/overview-simple-mode-editor.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "mehigo Hair Manager",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Windows",
+    "softwareVersion": "1.2.0",
+    "description": "Modular Avatarに対応したVRChatアバター向け髪型切り替えメニュー作成ツール。",
+    "url": "https://mehigosleep.github.io/mehigo-hair-manager/ja/",
+    "downloadUrl": "https://github.com/mehigosleep/mehigo-hair-manager/releases/latest",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <nav class="wrap" aria-label="メインナビゲーション">
+      <a class="brand" href="./">mehigo Hair Manager</a>
+      <div class="nav-links">
+        <a href="#features">機能</a>
+        <a href="#workflow">使い方</a>
+        <a href="https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_JA.md">ガイド</a>
+        <a href="https://github.com/mehigosleep/mehigo-hair-manager">GitHub</a>
+        <a lang="en" href="../">English</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <span class="eyebrow">Unity Editor Tool · Version 1.2.0</span>
+      <h1>VRChatの髪型切り替えメニューを、もっと簡単に</h1>
+      <p class="lead">mehigo Hair Managerは、VRChatアバターの髪型切り替え、BlendShapeのToggle・Radial、髪色変更、アイコン撮影、メニュープレビューをまとめて設定できるUnity Editorツールです。</p>
+      <div class="actions">
+        <a class="button primary" href="vcc://vpm/addRepo?url=https%3A%2F%2Fmehigosleep.github.io%2Fmehigo-hair-manager%2Fvpm.json">VCCにリポジトリを追加</a>
+        <a class="button" href="https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_JA.md">日本語ガイドを読む</a>
+      </div>
+      <p class="repo-url">リポジトリURL: <code>https://mehigosleep.github.io/mehigo-hair-manager/vpm.json</code></p>
+      <img class="shot" src="../assets/overview-simple-mode-editor.png" width="1918" height="968" alt="VRChatアバターの髪型とラジアルメニューを編集するmehigo Hair Manager Simple Mode">
+    </section>
+
+    <section id="features" class="wrap">
+      <div class="section-head"><h2>髪型改変に必要な機能をひとつの画面に</h2><p>Simple Modeは一般的な設定を自動化し、細かな調整が必要な場合はAdvanced Modeに切り替えられます。</p></div>
+      <div class="grid">
+        <article class="card"><div class="icon">✦</div><h3>髪型切り替えメニュー</h3><p>Hierarchyから複数の髪型を追加し、順番を並べ替えてExpressions Menuを自動作成します。</p></article>
+        <article class="card"><div class="icon">◉</div><h3>Toggle・Radial</h3><p>検出されたBlendShapeを選ぶだけで、ON/OFFボタンやRadial Puppetを追加できます。</p></article>
+        <article class="card"><div class="icon">●</div><h3>髪色プリセット</h3><p>現在のMaterialをDefaultとして自動保存し、複数の髪色ボタンを作成できます。</p></article>
+        <article class="card"><div class="icon">▣</div><h3>髪型アイコン</h3><p>付属アイコン、Project内のTexture、Scene Viewからのキャプチャに対応しています。</p></article>
+        <article class="card"><div class="icon">⌁</div><h3>リアルタイムプレビュー</h3><p>生成前に髪型、BlendShape、髪色、ページ構成をラジアルメニューで確認できます。</p></article>
+        <article class="card"><div class="icon">◇</div><h3>Modular Avatar対応</h3><p>元のFX ControllerやExpressions Menuを直接変更せずに必要なコンポーネントを生成します。</p></article>
+      </div>
+    </section>
+
+    <section id="workflow" class="wrap">
+      <div class="section-head"><h2>3ステップでセットアップ</h2></div>
+      <div class="steps">
+        <article class="step"><h3>アバターを選択</h3><p>VRC Avatar Descriptorとアバター専用の出力フォルダを自動検出します。</p></article>
+        <article class="step"><h3>髪型とコントロールを追加</h3><p>髪型、アイコン、BlendShape、連動オブジェクト、髪色をHair Cardから追加します。</p></article>
+        <article class="step"><h3>プレビューして生成</h3><p>メニューを確認し、必要なAnimator・Menu・Parameterをまとめて生成または更新します。</p></article>
+      </div>
+    </section>
+
+    <section class="wrap split">
+      <img class="shot" src="../assets/overview-gesture-manager-test.png" width="1918" height="1013" alt="Unity Play ModeとGesture ManagerでVRChat髪型メニューをテストしている画面">
+      <div><h2>生成前の確認から実機テストまで</h2><p class="lead">プレビューでメニュー構造を確認し、Gesture Managerを使ってUnity上で生成結果をテストできます。</p><ul class="checklist"><li>アバターごとに出力フォルダを分離</li><li>既存セットアップの読み込みと安全な更新</li><li>生成前の自動Conflictチェック</li><li>日本語ガイド、英語・タイ語UI</li><li>必要に応じてAdvanced設定を利用可能</li></ul></div>
+    </section>
+
+    <section class="wrap"><div class="install"><h2>VRChat Creator Companionからインストール</h2><p>Unity 2022.3、VRChat Avatars SDK、Modular Avatarが必要です。</p><div class="actions"><a class="button primary" href="vcc://vpm/addRepo?url=https%3A%2F%2Fmehigosleep.github.io%2Fmehigo-hair-manager%2Fvpm.json">VCCに追加</a><a class="button" href="https://github.com/mehigosleep/mehigo-hair-manager/releases/latest">最新リリース</a></div></div></section>
+  </main>
+
+  <footer><div class="wrap"><span>© 2026 mehigo</span><span><a href="https://github.com/mehigosleep/mehigo-hair-manager">GitHubでソースとドキュメントを見る</a></span></div></footer>
+</body>
+</html>
+

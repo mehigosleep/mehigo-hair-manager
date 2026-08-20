@@ -3,19 +3,115 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>mehigo Hair Manager</title>
-  <style>
-    body{margin:0;background:#111827;color:#e5e7eb;font:16px/1.6 system-ui,sans-serif}
-    main{max-width:720px;margin:10vh auto;padding:32px}
-    h1{font-size:2.4rem;margin-bottom:.25rem}.muted{color:#9ca3af}
-    a.button{display:inline-block;margin-top:20px;padding:12px 18px;border-radius:10px;background:#7c3aed;color:white;text-decoration:none;font-weight:700}
-    code{word-break:break-all;color:#c4b5fd}
-  </style>
+  <title>mehigo Hair Manager – VRChat Hairstyle Switcher for Unity</title>
+  <meta name="description" content="Create VRChat hairstyle menus in Unity with automatic hair toggles, BlendShape radial controls, color presets, menu preview, and Modular Avatar integration.">
+  <meta name="theme-color" content="#7c3aed">
+  <link rel="canonical" href="https://mehigosleep.github.io/mehigo-hair-manager/">
+  <link rel="alternate" hreflang="en" href="https://mehigosleep.github.io/mehigo-hair-manager/">
+  <link rel="alternate" hreflang="ja" href="https://mehigosleep.github.io/mehigo-hair-manager/ja/">
+  <link rel="alternate" hreflang="x-default" href="https://mehigosleep.github.io/mehigo-hair-manager/">
+  <link rel="stylesheet" href="styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="mehigo Hair Manager – VRChat Hairstyle Switcher">
+  <meta property="og:description" content="Build VRChat hair menus, BlendShape controls, and hair-color presets with a guided Unity workflow.">
+  <meta property="og:url" content="https://mehigosleep.github.io/mehigo-hair-manager/">
+  <meta property="og:image" content="https://mehigosleep.github.io/mehigo-hair-manager/assets/overview-simple-mode-editor.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "mehigo Hair Manager",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Windows",
+    "softwareVersion": "1.2.0",
+    "description": "A Unity Editor tool for creating VRChat hairstyle switcher menus with Modular Avatar, BlendShape controls, hair colors, icon capture, and real-time menu preview.",
+    "url": "https://mehigosleep.github.io/mehigo-hair-manager/",
+    "downloadUrl": "https://github.com/mehigosleep/mehigo-hair-manager/releases/latest",
+    "screenshot": "https://mehigosleep.github.io/mehigo-hair-manager/assets/overview-simple-mode-editor.png",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
 </head>
-<body><main>
-  <h1>mehigo Hair Manager</h1>
-  <p class="muted">A non-destructive Modular Avatar workflow for hairstyle selectors, BlendShapes, and material presets.</p>
-  <a class="button" href="vcc://vpm/addRepo?url=https%3A%2F%2Fmehigosleep.github.io%2Fmehigo-hair-manager%2Fvpm.json">Add to VCC</a>
-  <p>Repository URL: <code>https://mehigosleep.github.io/mehigo-hair-manager/vpm.json</code></p>
-</main></body>
+<body>
+  <header>
+    <nav class="wrap" aria-label="Main navigation">
+      <a class="brand" href="./">mehigo Hair Manager</a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#workflow">Workflow</a>
+        <a href="https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_EN.md">Guide</a>
+        <a href="https://github.com/mehigosleep/mehigo-hair-manager">GitHub</a>
+        <a lang="ja" href="ja/">日本語</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <span class="eyebrow">Unity Editor Tool · Version 1.2.0</span>
+      <h1>Create VRChat hairstyle menus without the setup headache</h1>
+      <p class="lead">mehigo Hair Manager is a guided VRChat hairstyle switcher and hair menu tool for Unity. Add hairstyles, hair toggles, BlendShape radial controls, color presets, captured icons, and Modular Avatar integration from one editor window.</p>
+      <div class="actions">
+        <a class="button primary" href="vcc://vpm/addRepo?url=https%3A%2F%2Fmehigosleep.github.io%2Fmehigo-hair-manager%2Fvpm.json">Add Repository to VCC</a>
+        <a class="button" href="https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_EN.md">Read the Simple Mode Guide</a>
+      </div>
+      <p class="repo-url">Repository URL: <code>https://mehigosleep.github.io/mehigo-hair-manager/vpm.json</code></p>
+      <img class="shot" src="assets/overview-simple-mode-editor.png" width="1918" height="968" alt="mehigo Hair Manager Simple Mode editing two VRChat hairstyles beside the radial Menu Preview">
+    </section>
+
+    <section id="features" class="wrap">
+      <div class="section-head">
+        <h2>A focused workflow for VRChat hair customization</h2>
+        <p>Simple Mode handles common setup automatically, while Advanced Mode keeps detailed compatibility and generation controls available when needed.</p>
+      </div>
+      <div class="grid">
+        <article class="card"><div class="icon">✦</div><h3>Hairstyle switcher</h3><p>Add multiple Hair Objects from the Hierarchy, drag and drop, reorder them, and generate a VRChat Expressions Menu.</p></article>
+        <article class="card"><div class="icon">◉</div><h3>Toggle and Radial controls</h3><p>Choose detected BlendShapes without manually finding their renderer. Create Toggle or Radial Puppet controls in a few clicks.</p></article>
+        <article class="card"><div class="icon">●</div><h3>Hair-color presets</h3><p>Create color buttons from material slots while the current hairstyle materials are preserved automatically as Default.</p></article>
+        <article class="card"><div class="icon">▣</div><h3>Custom hairstyle icons</h3><p>Use bundled icons, choose a Project texture, or capture a square icon directly from the current Unity Scene View.</p></article>
+        <article class="card"><div class="icon">⌁</div><h3>Real-time Menu Preview</h3><p>Inspect hairstyle submenus, Toggle states, Radial controls, page navigation, and color presets before generating assets.</p></article>
+        <article class="card"><div class="icon">◇</div><h3>Modular Avatar workflow</h3><p>Generate Merge Animator, Parameters, and Menu Installer components without modifying the avatar's original expression assets.</p></article>
+      </div>
+    </section>
+
+    <section id="workflow" class="wrap">
+      <div class="section-head"><h2>Three simple steps</h2></div>
+      <div class="steps">
+        <article class="step"><h3>Select the avatar</h3><p>The VRC Avatar Descriptor and avatar-specific output folder are detected automatically.</p></article>
+        <article class="step"><h3>Add hair and controls</h3><p>Add hairstyles, icons, BlendShape controls, linked objects, and hair colors from compact Hair Cards.</p></article>
+        <article class="step"><h3>Preview and generate</h3><p>Check the radial menu, validate the setup, and create or update every required asset with one button.</p></article>
+      </div>
+    </section>
+
+    <section class="wrap split">
+      <img class="shot" src="assets/overview-gesture-manager-test.png" width="1918" height="1013" alt="A VRChat avatar testing generated hairstyle controls with Gesture Manager in Unity Play Mode">
+      <div>
+        <h2>Preview first, test with confidence</h2>
+        <p class="lead">The built-in preview mirrors the generated hierarchy and can use Gesture Manager UI assets when they are installed.</p>
+        <ul class="checklist">
+          <li>Separate output folder for every avatar instance</li>
+          <li>Existing setup loading and safe updates</li>
+          <li>Automatic conflict scan before generation</li>
+          <li>Thai and English editor interface</li>
+          <li>Advanced compatibility controls when required</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="install">
+        <h2>Install with VRChat Creator Companion</h2>
+        <p>Requires Unity 2022.3, VRChat Avatars SDK, and Modular Avatar.</p>
+        <div class="actions">
+          <a class="button primary" href="vcc://vpm/addRepo?url=https%3A%2F%2Fmehigosleep.github.io%2Fmehigo-hair-manager%2Fvpm.json">Add to VCC</a>
+          <a class="button" href="https://github.com/mehigosleep/mehigo-hair-manager/releases/latest">Latest release</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><span>© 2026 mehigo</span><span><a href="https://github.com/mehigosleep/mehigo-hair-manager">Source and documentation on GitHub</a></span></div></footer>
+</body>
 </html>
+

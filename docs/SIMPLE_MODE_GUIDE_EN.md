@@ -1,6 +1,6 @@
 # Simple Mode Guide — mehigo Hair Manager 1.2.0
 
-[ภาษาไทย](SIMPLE_MODE_GUIDE_TH.md) · [Project Page](../README.md) · [Complete Guide](USER_GUIDE_EN.md)
+[ภาษาไทย](SIMPLE_MODE_GUIDE_TH.md) · [日本語](SIMPLE_MODE_GUIDE_JA.md) · [Project Page](../README.md) · [Complete Guide](USER_GUIDE_EN.md)
 
 > This guide covers only **Simple Mode** in version 1.2.0: creating a hairstyle menu, adding BlendShape controls and hair colors, checking Menu Preview, and generating the setup.
 
@@ -245,4 +245,3 @@ Do not edit generated Animator, Animation, or Menu assets directly because a lat
 - Every color uses the correct materials and slots.
 - Menu Preview contains every button in the correct order.
 - Test the avatar in Play Mode or an avatar testing tool before Build/Upload.
-

@@ -1,6 +1,6 @@
 # คู่มือ Simple Mode — mehigo Hair Manager 1.2.0
 
-[English](SIMPLE_MODE_GUIDE_EN.md) · [หน้าโครงการ](../README.md) · [คู่มือฉบับเต็ม](USER_GUIDE_TH.md)
+[English](SIMPLE_MODE_GUIDE_EN.md) · [日本語](SIMPLE_MODE_GUIDE_JA.md) · [หน้าโครงการ](../README.md) · [คู่มือฉบับเต็ม](USER_GUIDE_TH.md)
 
 > คู่มือนี้อธิบายเฉพาะ **Simple Mode** ของเวอร์ชัน 1.2.0 สำหรับการสร้างเมนูเลือกทรงผม เพิ่มปุ่ม BlendShape เพิ่มสีผม ตรวจ Menu Preview และ Generate Setup
 

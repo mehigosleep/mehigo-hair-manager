@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mehigosleep.github.io/mehigo-hair-manager/sitemap.xml
+

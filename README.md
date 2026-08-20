@@ -1,4 +1,4 @@
-# mehigo Hair Manager
+# mehigo Hair Manager — VRChat Hairstyle Switcher & Hair Menu Tool
 
 **Version 1.2.0**
 
@@ -20,7 +20,7 @@ Generated assets are integrated through Modular Avatar without directly modifyin
 
 Advanced Mode remains available for custom activation behavior, linked objects, compatibility adjustments, conflict review, and detailed setup control.
 
-[คู่มือ Simple Mode ภาษาไทย](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_TH.md) · [Simple Mode Guide in English](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_EN.md) · [คู่มือฉบับเต็ม](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_TH.md) · [Complete English Guide](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_EN.md) · [Changelog](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md)
+[คู่มือ Simple Mode ภาษาไทย](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_TH.md) · [Simple Mode Guide in English](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_EN.md) · [Simple Modeガイド 日本語](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_JA.md) · [คู่มือฉบับเต็ม](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_TH.md) · [Complete English Guide](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_EN.md) · [Changelog](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md)
 
 ## Overview
 
