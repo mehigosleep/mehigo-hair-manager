@@ -2,11 +2,11 @@
 
 **Version 1.1.0**
 
-Unity Editor tool for managing multiple hairstyle setups on VRChat avatars with a non-destructive Modular Avatar workflow.
+Unity Editor tool for managing multiple hairstyle setups on VRChat avatars with Modular Avatar. The tool generates separate Animator, menu, parameter, and configuration assets without directly editing the avatar's original FX controller, expression menu, or expression parameters.
 
-[คู่มือภาษาไทย](docs/USER_GUIDE_TH.md) · [English User Guide](docs/USER_GUIDE_EN.md) · [Changelog](CHANGELOG.md)
+[คู่มือภาษาไทย](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_TH.md) · [English User Guide](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_EN.md) · [Changelog](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md)
 
-![mehigo Hair Manager with a VRChat avatar](docs/images/01-project-avatar.png)
+![mehigo Hair Manager with a VRChat avatar](https://raw.githubusercontent.com/mehigosleep/mehigo-hair-manager/main/docs/images/01-project-avatar.png)
 
 ## Features
 
@@ -60,7 +60,7 @@ v1.1.0 was tested with VRChat SDK 3.10.4. Test your avatar after changing SDK or
 3. Open Unity.
 4. Use **Tools > mehigo > Hair Manager**.
 
-Do not keep older mehigo Hair Generator scripts in the project at the same time if they contain the same internal class definitions.
+Do not install the tool through both VCC and the manual method in the same project. Also remove older mehigo Hair Generator scripts that contain the same internal class definitions; otherwise Unity may report duplicate-class compilation errors.
 
 ## Basic workflow
 
@@ -71,7 +71,7 @@ Do not keep older mehigo Hair Generator scripts in the project at the same time 
 5. Generate or update the setup.
 6. Test the generated menu and animations before uploading the avatar.
 
-For the complete illustrated workflow, see the [คู่มือภาษาไทย](docs/USER_GUIDE_TH.md) or [English User Guide](docs/USER_GUIDE_EN.md).
+For the complete illustrated workflow, see the [คู่มือภาษาไทย](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_TH.md) or [English User Guide](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_EN.md).
 
 The **Save Folder** is the shared base folder. mehigo automatically creates a stable `Avatar_<id>` subfolder for each avatar instance in the Scene, so even a copied instance of the same Prefab does not overwrite the first avatar's Controller, Animation Clips, Expression Menus, or captured Icons. A Prefab asset opened directly uses its asset GUID.
 
@@ -83,4 +83,4 @@ Do not manually edit generated assets unless you understand that a later Generat
 
 ## License
 
-Copyright (c) 2026 mehigosleep. All rights reserved. See `LICENSE.md`.
+Copyright (c) 2026 mehigosleep. All rights reserved. See [LICENSE.md](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/LICENSE.md).
