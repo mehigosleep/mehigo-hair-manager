@@ -1,6 +1,6 @@
 # mehigo Hair Manager 1.2.0 User Guide
 
-[ภาษาไทย](USER_GUIDE_TH.md) | [English](USER_GUIDE_EN.md) | [Project page](../README.md)
+[Simple Mode Guide](SIMPLE_MODE_GUIDE_EN.md) | [Thai Simple Mode Guide](SIMPLE_MODE_GUIDE_TH.md) | [Complete English Guide](USER_GUIDE_EN.md) | [Project page](../README.md)
 
 > For Unity 2022.3 and mehigo Hair Manager 1.2.0
 

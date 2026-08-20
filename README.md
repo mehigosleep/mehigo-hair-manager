@@ -4,9 +4,17 @@
 
 Unity Editor tool for managing multiple hairstyle setups on VRChat avatars with Modular Avatar. The tool generates separate Animator, menu, parameter, and configuration assets without directly editing the avatar's original FX controller, expression menu, or expression parameters.
 
-[คู่มือภาษาไทย](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_TH.md) · [English User Guide](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_EN.md) · [Changelog](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md)
+[คู่มือ Simple Mode ภาษาไทย](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_TH.md) · [Simple Mode Guide in English](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_EN.md) · [คู่มือฉบับเต็ม](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_TH.md) · [Complete English Guide](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_EN.md) · [Changelog](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md)
 
-![mehigo Hair Manager with a VRChat avatar](https://raw.githubusercontent.com/mehigosleep/mehigo-hair-manager/main/docs/images/01-project-avatar.png)
+## Overview
+
+### Simple Mode and real-time Menu Preview
+
+![mehigo Hair Manager Simple Mode with real-time Menu Preview](https://raw.githubusercontent.com/mehigosleep/mehigo-hair-manager/main/docs/images/overview-simple-mode-editor.png)
+
+### In-Unity test with Gesture Manager
+
+![Generated hair controls tested with Gesture Manager in Unity](https://raw.githubusercontent.com/mehigosleep/mehigo-hair-manager/main/docs/images/overview-gesture-manager-test.png)
 
 ## Features
 
@@ -78,7 +86,7 @@ Do not install the tool through both VCC and the manual method in the same proje
 5. Switch to **Advanced** only when manual compatibility, parameter, folder, or detailed control settings are required.
 6. Test the generated menu and animations before uploading the avatar.
 
-For the complete illustrated workflow, see the [คู่มือภาษาไทย](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_TH.md) or [English User Guide](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_EN.md).
+For the illustrated v1.2.0 workflow, see the [คู่มือ Simple Mode ภาษาไทย](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_TH.md) or [Simple Mode Guide in English](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_EN.md). Advanced options remain documented in the [คู่มือฉบับเต็ม](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_TH.md) and [Complete English Guide](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_EN.md).
 
 The **Save Folder** is the shared base folder. mehigo automatically creates a stable `Avatar_<id>` subfolder for each avatar instance in the Scene, so even a copied instance of the same Prefab does not overwrite the first avatar's Controller, Animation Clips, Expression Menus, or captured Icons. A Prefab asset opened directly uses its asset GUID.
 
