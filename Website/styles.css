@@ -122,6 +122,19 @@ p { margin-top: 0; }
 .summary { max-width: 760px; padding: 70px 0; text-align: center; }
 .summary p { margin-bottom: 0; color: var(--muted); font-size: 1.08rem; }
 
+.ma-credit {
+  margin-bottom: 28px;
+  padding: 28px 32px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  text-align: center;
+}
+.ma-credit h2 { font-size: 1.55rem; }
+.ma-credit p { max-width: 800px; margin: 0 auto; color: var(--muted); }
+.credit-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 16px; }
+.credit-links a { font-weight: 700; }
+
 .install {
   display: flex;
   align-items: center;

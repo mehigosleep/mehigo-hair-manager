@@ -4,6 +4,8 @@
 
 > คู่มือนี้อธิบายเฉพาะ **Simple Mode** ของเวอร์ชัน 1.2.0 สำหรับการสร้างเมนูเลือกทรงผม เพิ่มปุ่ม BlendShape เพิ่ม Hair Material Preset ตรวจ Menu Preview และ Generate Setup
 
+> **[Modular Avatar](https://modular-avatar.nadena.dev/) เป็น Core Dependency ที่จำเป็น** โปรเจกต์ชุมชนนี้ช่วยเตรียม Asset และ Component สำหรับ Modular Avatar ส่วนการเชื่อมต่อแบบ non-destructive จะทำงานผ่าน Modular Avatar ตอน Build โปรเจกต์นี้ไม่ใช่โปรเจกต์ทางการและไม่มีความเกี่ยวข้องหรือได้รับการรับรองจากผู้พัฒนา Modular Avatar
+
 ## สิ่งที่ต้องมี
 
 - Unity 2022.3 และโปรเจกต์ VRChat Avatars
@@ -22,7 +24,7 @@ Simple Mode แบ่งงานออกเป็นสามหน้า:
 2. **Hair & Controls** — เพิ่มทรงผม ปุ่ม BlendShape และ Material Preset
 3. **Preview & Generate** — ตรวจเมนูแล้วสร้าง Setup
 
-ระบบจะตรวจ Avatar Descriptor, Hair Root/Wrapper, Renderer, BlendShape, Material และ Output Folder ให้อัตโนมัติ ผู้ใช้ไม่จำเป็นต้องตั้ง Parameter, Animator Layer หรือชื่อไฟล์ที่ Generate เอง
+ตัวช่วยจะตรวจ Avatar Descriptor, Hair Root/Wrapper, Renderer, BlendShape, Material และ Output Folder ให้อัตโนมัติ ผู้ใช้ไม่จำเป็นต้องตั้ง Parameter, Animator Layer หรือชื่อไฟล์ที่ Generate เอง
 
 ## 1. เปิด Hair Manager
 
@@ -211,18 +213,18 @@ Hair Materials submenu แสดง **Default** และ Material Preset ทั
 
 ## 11. Generate หรือ Update Setup
 
-เมื่อตรวจ Preview แล้ว กด **Generate / Update Setup** ระบบจะ:
+เมื่อตรวจ Preview แล้ว กด **Generate / Update Setup** ตัวช่วยจะเตรียม:
 
 1. ตรวจความถูกต้องและ Conflict
 2. สร้างหรืออัปเดต Animator Controller และ Animation Clips
 3. สร้าง Expression Menu และ Parameters
 4. สร้าง GameObject `mehigo Hair Selector` ใต้ Avatar
-5. ใส่ Modular Avatar Merge Animator, Parameters และ Menu Installer
+5. Modular Avatar Merge Animator, Parameters และ Menu Installer ที่ Modular Avatar จะใช้ตอน Build
 6. บันทึก Config สำหรับโหลดกลับมาแก้ไขภายหลัง
 
 ![ผลลัพธ์หลัง Generate Setup](images/simple-mode-v1.2.0/18-generated-setup.png)
 
-ไฟล์ที่ Generate จะอยู่ในโฟลเดอร์ `Avatar_<id>` แยกตาม Avatar การ Generate ซ้ำบน Avatar เดิมจะอัปเดตไฟล์ของ Avatar นั้น ส่วน Avatar อีกตัวจะได้รับโฟลเดอร์แยกและไม่เขียนทับกัน
+ไฟล์ที่ Generate จะอยู่ในโฟลเดอร์ `Avatar_<id>` แยกตาม Avatar การ Generate ซ้ำบน Avatar เดิมจะอัปเดตไฟล์ของ Avatar นั้น ส่วน Avatar อีกตัวจะได้รับโฟลเดอร์แยกและไม่เขียนทับกัน โดย Modular Avatar ยังคงเป็นระบบที่ทำ non-destructive merge ตอน Build
 
 หากตรวจพบ Conflict ระบบจะหยุดก่อนสร้างและแสดงปุ่มเปิดหน้าตรวจสอบใน Advanced Mode
 

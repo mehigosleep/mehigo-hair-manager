@@ -4,6 +4,8 @@
 
 > このガイドでは、バージョン1.2.0の**Simple Mode**を使って、VRChatアバターの髪型切り替えメニュー、BlendShapeコントロール、Hair Material Presetを作成し、プレビュー後にセットアップを生成する手順を説明します。
 
+> **[Modular Avatar](https://modular-avatar.nadena.dev/)は必須のコア依存関係です。** このコミュニティ製ヘルパーはAssetとModular Avatar Componentを準備し、non-destructiveな統合はModular AvatarがBuild時に実行します。本プロジェクトはModular Avatarの公式プロジェクトではなく、開発者との提携・推奨を示すものではありません。
+
 ## 必要な環境
 
 - Unity 2022.3のVRChat Avatarsプロジェクト
@@ -172,18 +174,18 @@ Preview内の操作はSceneのアバターを変更しません。ボタン数�
 
 ## 11. セットアップを生成・更新する
 
-Preview確認後、**Generate / Update Setup**を押します。ツールは次の処理を行います。
+Preview確認後、**Generate / Update Setup**を押します。ヘルパーは次の内容を準備します。
 
 1. 入力内容とConflictを確認
 2. Animator ControllerとAnimation Clipsを生成・更新
 3. Expressions MenuとParametersを生成
 4. アバター配下に`mehigo Hair Selector`を作成
-5. Modular Avatar Merge Animator、Parameters、Menu Installerを設定
+5. Build時にModular Avatarが使用するMerge Animator、Parameters、Menu Installer Component
 6. 編集用Configを保存
 
 ![生成されたmehigo Hair Selector](images/simple-mode-v1.2.0/18-generated-setup.png)
 
-生成ファイルはアバターごとの`Avatar_<id>`フォルダに保存されます。同じアバターで再生成するとそのアバターのファイルだけを更新し、別アバターのファイルは上書きしません。
+生成ファイルはアバターごとの`Avatar_<id>`フォルダに保存されます。同じアバターで再生成するとそのアバターのファイルだけを更新し、別アバターのファイルは上書きしません。non-destructiveなMergeは引き続きModular AvatarがBuild時に実行します。
 
 ## 12. 既存セットアップを編集する
 

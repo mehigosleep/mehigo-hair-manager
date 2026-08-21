@@ -1026,12 +1026,12 @@ public class MehigoHairGeneratorV4 : EditorWindow
         EditorGUILayout.LabelField(
             editorMode == EditorExperienceMode.Simple
                 ? T(
-                    "เลือก Avatar • เพิ่มทรงผม • เพิ่มปุ่ม • สร้าง Setup",
-                    "Select Avatar • Add Hair • Add Controls • Generate"
+                    "Community Helper สำหรับ Modular Avatar • เลือก Avatar • เพิ่มทรงผม • เตรียม Setup",
+                    "Community Helper for Modular Avatar • Select Avatar • Add Hair • Prepare Setup"
                 )
                 : T(
-                    "แก้ไข Setup เดิม • Compatibility Mode • ตรวจสอบ Conflict • Modular Avatar",
-                    "Editable Setup • Compatibility Mode • Conflict Scanner • Modular Avatar"
+                    "Community Helper สำหรับ Modular Avatar • แก้ไข Setup • ตรวจสอบ Conflict",
+                    "Community Helper for Modular Avatar • Editable Setup • Conflict Scanner"
                 ),
             EditorStyles.miniLabel
         );
@@ -1698,8 +1698,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
         DrawSectionHeader(
             T("3. Preview และสร้าง Setup", "3. Preview and Generate"),
             T(
-                "ตรวจหน้าตา Menu แล้วสร้างไฟล์ที่จำเป็นให้ Avatar",
-                "Preview the menu, then generate everything required for the avatar."
+                "ตรวจ Menu แล้วเตรียม Asset และ Component ที่ Modular Avatar จะใช้ตอน Build",
+                "Preview the menu, then prepare the assets and components Modular Avatar uses at build time."
             )
         );
 
@@ -2145,15 +2145,30 @@ public class MehigoHairGeneratorV4 : EditorWindow
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.BeginVertical(sectionStyle);
-        DrawSectionHeader(T("Non-destructive", "Non-destructive"));
+        DrawSectionHeader(T("Modular Avatar: Non-destructive Integration", "Modular Avatar: Non-destructive Integration"));
 
         EditorGUILayout.HelpBox(
             T(
-                    "mehigo สร้าง Asset แยก แล้วให้ Modular Avatar Merge ตอน Build โดยไม่แก้ไข FX Controller, Expression Parameters หรือ Expressions Menu เดิมโดยตรง",
-                "mehigo generates separate assets and lets Modular Avatar merge them at build time without directly editing the original FX / Parameters / Menu."
+                "Modular Avatar เป็น Core Dependency และเป็นระบบที่ทำ non-destructive merge ตอน Build ตัวช่วยนี้เตรียม Asset และ Component ให้ Modular Avatar โดยไม่แทนที่ระบบของ Modular Avatar",
+                "Modular Avatar is the required core dependency and performs the non-destructive merge at build time. This community helper prepares assets and components for Modular Avatar; it does not replace Modular Avatar."
             ),
             MessageType.Info
         );
+
+        EditorGUILayout.LabelField(
+            T(
+                "โปรเจกต์ชุมชน • ไม่ใช่โปรเจกต์ทางการของ Modular Avatar",
+                "Community-made • Not an official Modular Avatar project"
+            ),
+            EditorStyles.miniLabel
+        );
+
+        if (GUILayout.Button(
+            T("เปิดเว็บไซต์ทางการของ Modular Avatar", "Open official Modular Avatar website"),
+            GUILayout.Height(26)))
+        {
+            Application.OpenURL("https://modular-avatar.nadena.dev/");
+        }
 
         EditorGUILayout.EndVertical();
     }
@@ -4311,8 +4326,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
             menuInstallerType == null)
         {
             EditorUtility.DisplayDialog(
-                "Modular Avatar not found",
-                "Install Modular Avatar before using mehigo Hair Manager.",
+                "Modular Avatar core dependency not found",
+                "Install Modular Avatar before using this community workflow helper.",
                 "OK"
             );
             return;

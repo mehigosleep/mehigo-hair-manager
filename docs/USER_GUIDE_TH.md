@@ -4,7 +4,9 @@
 
 > สำหรับ Unity 2022.3 และ mehigo Hair Manager 1.2.0
 
-mehigo Hair Manager ช่วยสร้างเมนูเปลี่ยนทรงผมสำหรับอวาตาร์ VRChat รองรับ Linked Objects, BlendShape, Material Preset และไอคอน โดยใช้ Modular Avatar เพื่อไม่แก้ FX Controller, Expression Parameters หรือ Expressions Menu ต้นฉบับโดยตรง
+mehigo Hair Manager เป็น Community Workflow Helper สำหรับ [Modular Avatar](https://modular-avatar.nadena.dev/) ช่วยเตรียม Asset เมนูทรงผม, Linked Objects, BlendShape, Material Preset, Icon และ Component ของ Modular Avatar ที่จำเป็น โดย Modular Avatar เป็น Core Dependency และทำ non-destructive integration ตอน Build
+
+> โปรเจกต์นี้ไม่ใช่โปรเจกต์ทางการของ Modular Avatar และไม่มีความเกี่ยวข้องหรือได้รับการรับรองจาก bd_ หรือผู้พัฒนา Modular Avatar
 
 ## มีอะไรใหม่ในเวอร์ชัน 1.2.0
 
@@ -200,7 +202,7 @@ Preview เป็นการตรวจหน้าตาและโครง
 
 ## 12. สิ่งที่ระบบสร้าง
 
-mehigo สร้าง Animator Controller, Animation Clips, Expression Menu, Parameters, Icon และ Config พร้อม Component ของ Modular Avatar ที่จำเป็น โดยไม่เขียนทับ Controller/Menu/Parameters ต้นฉบับโดยตรง
+ตัวช่วยจะเตรียม Animator Controller, Animation Clips, Expression Menu, Parameters, Icon, Config และ Component ของ Modular Avatar ที่จำเป็น จากนั้น Modular Avatar จะใช้ Setup นี้ทำ non-destructive integration ตอน Build โดยไม่เขียนทับ Controller/Menu/Parameters ต้นฉบับโดยตรง
 
 - Save Folder เป็นโฟลเดอร์ฐานร่วม
 - Runtime assets อยู่ใน `Avatar_<id>` ของอวาตาร์แต่ละ instance

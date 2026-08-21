@@ -1,4 +1,4 @@
-# mehigo Hair Manager — VRChat Hairstyle Switcher & Hair Menu Tool
+# mehigo Hair Manager — Community Workflow Helper for Modular Avatar
 
 **Version 1.2.0**
 
@@ -10,15 +10,17 @@ Repository URL:
 
 `https://mehigosleep.github.io/mehigo-hair-manager/vpm.json`
 
-## Create VRChat hairstyle menus without the setup headache
+## A simpler hairstyle workflow for Modular Avatar
 
-**mehigo Hair Manager** is a Unity Editor tool that helps VRChat avatar creators build and maintain hairstyle menus without manually configuring Animator layers, parameters, or expression menus.
+**mehigo Hair Manager** is a community-made workflow helper for [Modular Avatar](https://modular-avatar.nadena.dev/). It provides a guided interface for configuring hairstyle menus, BlendShape controls, and Material Presets through Modular Avatar.
 
 Simple Mode guides you through selecting an avatar, adding hairstyles, creating Toggle and Radial BlendShape controls, setting up Hair Material Presets, previewing the menu, and generating the complete setup. Material Presets switch existing Material assets in renderer slots; the tool does not create materials or edit their colors.
 
 > **Material switching only:** Prepare each Material variant in Unity first. mehigo Hair Manager creates the VRChat menu and animations that swap those existing Materials and restore the original Default set.
 
-Generated assets are integrated through Modular Avatar without directly modifying the avatar's original FX Controller, Expression Parameters, or Expressions Menu. Each avatar receives its own output folder, so multiple avatars and copied instances can be managed without overwriting one another.
+Modular Avatar is the required core dependency and performs the non-destructive integration at build time. This helper prepares the supporting Animator, menu, parameter, animation, and Modular Avatar component setup; it does not replace Modular Avatar. Each avatar receives its own output folder, so multiple avatars and copied instances can be managed without overwriting one another.
+
+> **Community project:** This is not an official Modular Avatar project and is not affiliated with or endorsed by bd_ or the Modular Avatar project.
 
 Advanced Mode remains available for custom activation behavior, linked objects, compatibility adjustments, conflict review, and detailed setup control.
 
@@ -109,9 +111,15 @@ The **Save Folder** is the shared base folder. mehigo automatically creates a st
 
 ## Generated content
 
-mehigo creates generated Animator, animation, menu, parameter, and configuration assets used by Modular Avatar. Generated runtime assets are kept inside an avatar-specific `Avatar_<id>` subfolder. Running Generate/Update again for the same avatar updates its own assets, while a different avatar receives a separate output folder.
+The helper prepares Animator, animation, menu, parameter, configuration assets, and Modular Avatar components. Modular Avatar uses that setup to perform the non-destructive merge at build time. Generated runtime assets are kept inside an avatar-specific `Avatar_<id>` subfolder. Running Generate/Update again for the same avatar updates its own assets, while a different avatar receives a separate output folder.
 
 Do not manually edit generated assets unless you understand that a later Generate/Update for the same avatar may overwrite them. Assets produced by older versions directly inside the base Save Folder are not deleted automatically.
+
+## Modular Avatar credit
+
+Made for use with [Modular Avatar](https://modular-avatar.nadena.dev/) by bd_. Modular Avatar is the required core dependency and is licensed under the [MIT License](https://github.com/bdunderscore/modular-avatar/blob/main/COPYING.md). See the [official source repository](https://github.com/bdunderscore/modular-avatar).
+
+This community project is not an official Modular Avatar project and is not affiliated with or endorsed by bd_ or the Modular Avatar project. No Modular Avatar logo or restricted image assets are included.
 
 ## License
 
