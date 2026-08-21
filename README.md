@@ -28,10 +28,6 @@ Advanced Mode remains available for custom activation behavior, linked objects, 
 
 ![mehigo Hair Manager Simple Mode with real-time Menu Preview](https://raw.githubusercontent.com/mehigosleep/mehigo-hair-manager/main/docs/images/overview-simple-mode-editor.png)
 
-### In-Unity test with Gesture Manager
-
-![Generated hair controls tested with Gesture Manager in Unity](https://raw.githubusercontent.com/mehigosleep/mehigo-hair-manager/main/docs/images/overview-gesture-manager-test.png)
-
 ## Features
 
 - Simple Mode with separate Avatar → Hair & Controls → Preview & Generate pages
