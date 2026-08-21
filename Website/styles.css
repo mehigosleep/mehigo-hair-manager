@@ -67,24 +67,6 @@ h3 { margin: 0 0 8px; font-size: 1.15rem; }
 p { margin-top: 0; }
 .lead { max-width: 740px; margin: 0 auto; color: var(--muted); font-size: 1.16rem; }
 
-.generated {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin: 26px auto 0;
-}
-
-.generated span {
-  padding: 7px 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--surface);
-  color: #295887;
-  font-size: .9rem;
-  font-weight: 700;
-}
-
 .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 30px 0 16px; }
 .button {
   display: inline-flex;
