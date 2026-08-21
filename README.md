@@ -1,5 +1,7 @@
 # mehigo Hair Manager — Community-made Automation Tool for Modular Avatar
 
+[English](README.md) | [ภาษาไทย](README_TH.md)
+
 **Version 1.2.0**
 
 ## Install with VCC
