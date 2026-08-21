@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>mehigo Hair Manager – Modular Avatar向けコミュニティヘルパー</title>
-  <meta name="description" content="Modular Avatarをコア依存関係として、VRChatの髪型、BlendShape、Material Preset設定を補助するコミュニティ製ワークフローヘルパーです。">
+  <title>mehigo Hair Manager – Modular Avatar向け髪型コントロール自動化ツール</title>
+  <meta name="description" content="VRChatの髪型用Animator、Animation、Expression Menu、Parameters、Material切り替えコントロール、Modular Avatar Componentを生成するコミュニティ製Unity Editorツールです。">
   <meta name="theme-color" content="#1677ff">
   <link rel="canonical" href="https://mehigosleep.github.io/mehigo-hair-manager/ja/">
   <link rel="alternate" hreflang="en" href="https://mehigosleep.github.io/mehigo-hair-manager/">
@@ -12,8 +12,8 @@
   <link rel="alternate" hreflang="x-default" href="https://mehigosleep.github.io/mehigo-hair-manager/">
   <link rel="stylesheet" href="../styles.css">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="mehigo Hair Manager – Modular Avatar向けコミュニティヘルパー">
-  <meta property="og:description" content="Modular Avatarを使ったVRChat髪型メニュー、BlendShape、Material Preset設定を分かりやすい手順で補助します。">
+  <meta property="og:title" content="mehigo Hair Manager – Modular Avatar向け髪型コントロール自動化ツール">
+  <meta property="og:description" content="VRChatの髪型コントロールを自動生成し、Modular Avatarとの統合設定を行います。">
   <meta property="og:url" content="https://mehigosleep.github.io/mehigo-hair-manager/ja/">
   <meta name="twitter:card" content="summary">
   <script type="application/ld+json">
@@ -24,7 +24,7 @@
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Windows",
     "softwareVersion": "1.2.0",
-    "description": "Modular Avatarをコア依存関係としてVRChat髪型、BlendShape、Material Preset設定を補助するコミュニティ製ワークフローヘルパー。",
+    "description": "VRChatの髪型用Animator、Animation、Expression Menu、Parameters、Material切り替えコントロール、Modular Avatar Componentを生成するコミュニティ製Unity Editorツール。",
     "url": "https://mehigosleep.github.io/mehigo-hair-manager/ja/",
     "downloadUrl": "https://github.com/mehigosleep/mehigo-hair-manager/releases/latest",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
@@ -46,9 +46,9 @@
 
   <main>
     <section class="hero wrap">
-      <span class="eyebrow">コミュニティ製ワークフローヘルパー · v1.2.0</span>
-      <h1>Modular Avatarの髪型設定をよりシンプルに</h1>
-      <p class="lead">Modular Avatarを使ったVRChat髪型メニュー、BlendShape、Material Preset設定を分かりやすいUnity Editorワークフローで補助します。</p>
+      <span class="eyebrow">コミュニティ製自動化ツール · v1.2.0</span>
+      <h1>Modular AvatarでVRChatの髪型コントロールを自動生成</h1>
+      <p class="lead">Animator Controller、Animation Clips、Expression Menu、Parameters、Material切り替えコントロールを生成し、アバターへ統合するためのModular Avatar Componentを設定します。</p>
       <div class="actions">
         <a class="button primary" href="vcc://vpm/addRepo?url=https%3A%2F%2Fmehigosleep.github.io%2Fmehigo-hair-manager%2Fvpm.json">VCCにリポジトリを追加</a>
         <a class="button" href="https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_JA.md">Simple Modeガイド</a>
@@ -65,7 +65,7 @@
         <div class="steps">
           <article class="step"><h3>アバターを選択</h3><p>アバターのルートを選ぶと、Descriptorと出力フォルダを自動検出します。</p></article>
           <article class="step"><h3>髪型を追加</h3><p>髪型、Toggle・Radial BlendShape、Material Preset、メニューアイコンを追加します。</p></article>
-          <article class="step"><h3>プレビューして準備</h3><p>メニューを確認し、Build時に使用するAssetとModular Avatar Componentを準備します。</p></article>
+          <article class="step"><h3>プレビューして生成</h3><p>メニューを確認し、コントロールAssetとModular Avatar Componentのセットアップを生成します。</p></article>
         </div>
       </div>
     </section>
@@ -81,14 +81,14 @@
     </section>
 
     <section class="summary wrap">
-      <h2>Modular AvatarワークフローのためのガイドUI</h2>
-      <p>Animator、Menu、Parameter、Animation、Modular Avatar Componentの設定を準備します。non-destructiveな統合はコア依存関係であるModular AvatarがBuild時に実行します。</p>
+      <h2>髪型コントロール一式を自動生成</h2>
+      <p>Animator ControllerとLayer、Animation Clips、Expression Menu、Parameters、Material切り替えコントロールを生成・更新し、必要なModular Avatar Componentを設定します。non-destructiveな統合はコア依存関係であるModular AvatarがBuild時に実行します。</p>
     </section>
 
     <section class="ma-credit wrap">
       <span class="section-label">コア依存関係・クレジット</span>
       <h2>Modular Avatarのためのコミュニティプロジェクト</h2>
-      <p>bd_による<a href="https://modular-avatar.nadena.dev/">Modular Avatar</a>が必須のコア依存関係です。本プロジェクトはコミュニティ製であり、Modular Avatarの公式プロジェクトではなく、開発者による提携・推奨を示すものではありません。</p>
+      <p>bd_による<a href="https://modular-avatar.nadena.dev/">Modular Avatar</a>が必須のコア依存関係です。mehigo Hair Managerは独立したコミュニティ製自動化ツールであり、Modular Avatarの公式プロジェクトではなく、開発者による提携・推奨を示すものではありません。</p>
       <div class="credit-links">
         <a href="https://modular-avatar.nadena.dev/">公式サイト</a>
         <a href="https://github.com/bdunderscore/modular-avatar">ソース</a>

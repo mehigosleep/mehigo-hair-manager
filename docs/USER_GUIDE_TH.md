@@ -4,7 +4,7 @@
 
 > สำหรับ Unity 2022.3 และ mehigo Hair Manager 1.2.0
 
-mehigo Hair Manager เป็น Community Workflow Helper สำหรับ [Modular Avatar](https://modular-avatar.nadena.dev/) ช่วยเตรียม Asset เมนูทรงผม, Linked Objects, BlendShape, Material Preset, Icon และ Component ของ Modular Avatar ที่จำเป็น โดย Modular Avatar เป็น Core Dependency และทำ non-destructive integration ตอน Build
+mehigo Hair Manager เป็น Community-made Unity Editor Automation Tool ที่สร้างมาเพื่อใช้กับ [Modular Avatar](https://modular-avatar.nadena.dev/) ระบบจะสร้าง Animator Controller และ Layer, Animation Clips, Expression Menu, Parameters, Material Swap controls, Icon, Config และ Component ของ Modular Avatar ที่จำเป็น โดย Modular Avatar เป็น Core Dependency และทำ non-destructive integration ตอน Build
 
 > โปรเจกต์นี้ไม่ใช่โปรเจกต์ทางการของ Modular Avatar และไม่มีความเกี่ยวข้องหรือได้รับการรับรองจาก bd_ หรือผู้พัฒนา Modular Avatar
 
@@ -202,7 +202,7 @@ Preview เป็นการตรวจหน้าตาและโครง
 
 ## 12. สิ่งที่ระบบสร้าง
 
-ตัวช่วยจะเตรียม Animator Controller, Animation Clips, Expression Menu, Parameters, Icon, Config และ Component ของ Modular Avatar ที่จำเป็น จากนั้น Modular Avatar จะใช้ Setup นี้ทำ non-destructive integration ตอน Build โดยไม่เขียนทับ Controller/Menu/Parameters ต้นฉบับโดยตรง
+mehigo Hair Manager จะสร้างหรืออัปเดต Animator Controller และ Layer, Animation Clips, Expression Menu, Parameters, Icon, Config และ Component ของ Modular Avatar ที่จำเป็น จากนั้น Modular Avatar จะใช้ Setup ที่สร้างขึ้นนี้ทำ non-destructive integration ตอน Build โดยไม่เขียนทับ Controller/Menu/Parameters ต้นฉบับโดยตรง
 
 - Save Folder เป็นโฟลเดอร์ฐานร่วม
 - Runtime assets อยู่ใน `Avatar_<id>` ของอวาตาร์แต่ละ instance

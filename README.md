@@ -1,4 +1,4 @@
-# mehigo Hair Manager — Community Workflow Helper for Modular Avatar
+# mehigo Hair Manager — Community-made Automation Tool for Modular Avatar
 
 **Version 1.2.0**
 
@@ -10,15 +10,15 @@ Repository URL:
 
 `https://mehigosleep.github.io/mehigo-hair-manager/vpm.json`
 
-## A simpler hairstyle workflow for Modular Avatar
+## Automatically build VRChat hair controls with Modular Avatar
 
-**mehigo Hair Manager** is a community-made workflow helper for [Modular Avatar](https://modular-avatar.nadena.dev/). It provides a guided interface for configuring hairstyle menus, BlendShape controls, and Material Presets through Modular Avatar.
+**mehigo Hair Manager** is a community-made Unity Editor automation tool built for [Modular Avatar](https://modular-avatar.nadena.dev/). It generates Animator Controllers and Layers, Animation Clips, Expression Menus, Parameters, Material Swap controls, and the Modular Avatar components required to integrate them with a VRChat avatar.
 
 Simple Mode guides you through selecting an avatar, adding hairstyles, creating Toggle and Radial BlendShape controls, setting up Hair Material Presets, previewing the menu, and generating the complete setup. Material Presets switch existing Material assets in renderer slots; the tool does not create materials or edit their colors.
 
 > **Material switching only:** Prepare each Material variant in Unity first. mehigo Hair Manager creates the VRChat menu and animations that swap those existing Materials and restore the original Default set.
 
-Modular Avatar is the required core dependency and performs the non-destructive integration at build time. This helper prepares the supporting Animator, menu, parameter, animation, and Modular Avatar component setup; it does not replace Modular Avatar. Each avatar receives its own output folder, so multiple avatars and copied instances can be managed without overwriting one another.
+Modular Avatar is the required core dependency and performs the non-destructive integration at build time. mehigo Hair Manager automates creation of the control assets and configures the integration components; it does not replace Modular Avatar. Each avatar receives its own output folder, so multiple avatars and copied instances can be managed without overwriting one another.
 
 > **Community project:** This is not an official Modular Avatar project and is not affiliated with or endorsed by bd_ or the Modular Avatar project.
 
@@ -111,7 +111,7 @@ The **Save Folder** is the shared base folder. mehigo automatically creates a st
 
 ## Generated content
 
-The helper prepares Animator, animation, menu, parameter, configuration assets, and Modular Avatar components. Modular Avatar uses that setup to perform the non-destructive merge at build time. Generated runtime assets are kept inside an avatar-specific `Avatar_<id>` subfolder. Running Generate/Update again for the same avatar updates its own assets, while a different avatar receives a separate output folder.
+mehigo Hair Manager creates or updates the Animator Controller and Layers, Animation Clips, Expression Menu, Parameters, icons, configuration assets, and required Modular Avatar components. Modular Avatar then uses this generated setup to perform the non-destructive merge at build time. Generated runtime assets are kept inside an avatar-specific `Avatar_<id>` subfolder. Running Generate/Update again for the same avatar updates its own assets, while a different avatar receives a separate output folder.
 
 Do not manually edit generated assets unless you understand that a later Generate/Update for the same avatar may overwrite them. Assets produced by older versions directly inside the base Save Folder are not deleted automatically.
 

@@ -2,7 +2,9 @@
 
 ## Unreleased
 
-- Reframed the project description as a community workflow helper for Modular Avatar and added clear credit for Modular Avatar as the required core dependency and non-destructive integration layer.
+- Clarified that mehigo Hair Manager is a community-made automation tool that generates Animator Controllers and Layers, Animation Clips, Expression Menus, Parameters, Material Swap controls, and the required Modular Avatar component setup.
+- Clarified the responsibility boundary: mehigo Hair Manager creates and configures the control system, while Modular Avatar performs the non-destructive integration at build time.
+- Reframed the project description as a community-made automation tool built for Modular Avatar and added clear credit for Modular Avatar as the required core dependency and non-destructive integration layer.
 - Added an explicit notice that this is not an official Modular Avatar project and is not affiliated with or endorsed by its maintainers.
 - Renamed the misleading Hair Color wording across the editor, generated menus, website, and guides to Hair Material Presets / Hair Materials.
 - Clarified that Material Presets switch existing Material assets assigned to Renderer slots; they do not create Material variants or edit shader colors.

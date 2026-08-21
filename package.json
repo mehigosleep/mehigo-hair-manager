@@ -3,7 +3,7 @@
   "displayName": "mehigo Hair Manager",
   "version": "1.2.0",
   "unity": "2022.3",
-  "description": "Community workflow helper for configuring VRChat hairstyles, BlendShapes, and Material Presets through the required Modular Avatar core dependency.",
+  "description": "Community-made Unity Editor automation tool that generates VRChat hair control assets and configures their integration through the required Modular Avatar core dependency.",
   "keywords": [
     "vrchat",
     "vcc",

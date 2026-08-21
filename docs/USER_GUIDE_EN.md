@@ -4,7 +4,7 @@
 
 > For Unity 2022.3 and mehigo Hair Manager 1.2.0
 
-mehigo Hair Manager is a community workflow helper for [Modular Avatar](https://modular-avatar.nadena.dev/). It prepares hairstyle menu assets, linked-object settings, BlendShapes, Material Presets, icons, and the required Modular Avatar components. Modular Avatar is the required core dependency and performs the non-destructive integration at build time.
+mehigo Hair Manager is a community-made Unity Editor automation tool built for [Modular Avatar](https://modular-avatar.nadena.dev/). It generates Animator Controllers and Layers, Animation Clips, Expression Menus, Parameters, Material Swap controls, icons, configuration assets, and the required Modular Avatar components. Modular Avatar is the required core dependency and performs the non-destructive integration at build time.
 
 > This is not an official Modular Avatar project and is not affiliated with or endorsed by bd_ or the Modular Avatar project.
 
@@ -202,7 +202,7 @@ Open **Generate** and verify the selected Avatar and Hair count in **Preflight**
 
 ## 12. Generated content
 
-The helper prepares the Animator Controller, Animation Clips, Expression Menu, Parameters, icons, configuration, and required Modular Avatar components. Modular Avatar uses this setup to perform the non-destructive integration at build time without directly overwriting the original avatar controller/menu/parameters.
+mehigo Hair Manager creates or updates the Animator Controller and Layers, Animation Clips, Expression Menu, Parameters, icons, configuration, and required Modular Avatar components. Modular Avatar uses this generated setup to perform the non-destructive integration at build time without directly overwriting the original avatar controller/menu/parameters.
 
 - Save Folder is the shared base folder.
 - Runtime assets are stored in an `Avatar_<id>` folder for each avatar instance.

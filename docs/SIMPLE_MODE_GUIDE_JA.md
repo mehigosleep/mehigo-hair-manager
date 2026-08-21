@@ -4,7 +4,7 @@
 
 > このガイドでは、バージョン1.2.0の**Simple Mode**を使って、VRChatアバターの髪型切り替えメニュー、BlendShapeコントロール、Hair Material Presetを作成し、プレビュー後にセットアップを生成する手順を説明します。
 
-> **[Modular Avatar](https://modular-avatar.nadena.dev/)は必須のコア依存関係です。** このコミュニティ製ヘルパーはAssetとModular Avatar Componentを準備し、non-destructiveな統合はModular AvatarがBuild時に実行します。本プロジェクトはModular Avatarの公式プロジェクトではなく、開発者との提携・推奨を示すものではありません。
+> **mehigo Hair Managerは[Modular Avatar](https://modular-avatar.nadena.dev/)向けのコミュニティ製自動化ツールです。** Animator ControllerとLayer、Animation Clips、Expression Menu、Parameters、Material切り替えコントロール、必要なModular Avatar Componentを生成します。Modular Avatarは必須のコア依存関係であり、non-destructiveな統合をBuild時に実行します。本プロジェクトはModular Avatarの公式プロジェクトではなく、開発者との提携・推奨を示すものではありません。
 
 ## 必要な環境
 
@@ -22,7 +22,7 @@ Gesture Managerは任意です。インストール済みの場合、Menu Previe
 2. **Hair & Controls** — 髪型、BlendShape、Material Presetを追加
 3. **Preview & Generate** — メニューを確認してセットアップを生成
 
-Avatar Descriptor、Hair RootまたはWrapper、Renderer、BlendShape、Material、出力フォルダは自動検出されます。Parameter名やAnimator Layer、生成ファイル名を手動で設定する必要はありません。
+Avatar Descriptor、Hair RootまたはWrapper、Renderer、BlendShape、Material、出力フォルダを自動検出し、Parameters、Animator Layers、必要なファイルを生成します。これらを手動で設定する必要はありません。
 
 ## 1. Hair Managerを開く
 
@@ -174,13 +174,13 @@ Preview内の操作はSceneのアバターを変更しません。ボタン数�
 
 ## 11. セットアップを生成・更新する
 
-Preview確認後、**Generate / Update Setup**を押します。ヘルパーは次の内容を準備します。
+Preview確認後、**Generate / Update Setup**を押します。mehigo Hair Managerは次の処理を行います。
 
 1. 入力内容とConflictを確認
 2. Animator ControllerとAnimation Clipsを生成・更新
 3. Expressions MenuとParametersを生成
 4. アバター配下に`mehigo Hair Selector`を作成
-5. Build時にModular Avatarが使用するMerge Animator、Parameters、Menu Installer Component
+5. Build時に使用するModular Avatar Merge Animator、Parameters、Menu Installer Componentを作成・設定
 6. 編集用Configを保存
 
 ![生成されたmehigo Hair Selector](images/simple-mode-v1.2.0/18-generated-setup.png)

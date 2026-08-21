@@ -1026,12 +1026,12 @@ public class MehigoHairGeneratorV4 : EditorWindow
         EditorGUILayout.LabelField(
             editorMode == EditorExperienceMode.Simple
                 ? T(
-                    "Community Helper สำหรับ Modular Avatar • เลือก Avatar • เพิ่มทรงผม • เตรียม Setup",
-                    "Community Helper for Modular Avatar • Select Avatar • Add Hair • Prepare Setup"
+                    "Automation Tool สำหรับ Modular Avatar • เลือก Avatar • เพิ่มทรงผม • Generate Setup",
+                    "Automation Tool for Modular Avatar • Select Avatar • Add Hair • Generate Setup"
                 )
                 : T(
-                    "Community Helper สำหรับ Modular Avatar • แก้ไข Setup • ตรวจสอบ Conflict",
-                    "Community Helper for Modular Avatar • Editable Setup • Conflict Scanner"
+                    "Automation Tool สำหรับ Modular Avatar • แก้ไข Setup • ตรวจสอบ Conflict",
+                    "Automation Tool for Modular Avatar • Editable Setup • Conflict Scanner"
                 ),
             EditorStyles.miniLabel
         );
@@ -1698,8 +1698,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
         DrawSectionHeader(
             T("3. Preview และสร้าง Setup", "3. Preview and Generate"),
             T(
-                "ตรวจ Menu แล้วเตรียม Asset และ Component ที่ Modular Avatar จะใช้ตอน Build",
-                "Preview the menu, then prepare the assets and components Modular Avatar uses at build time."
+                "ตรวจ Menu แล้ว Generate Control Assets และ Component ที่ Modular Avatar จะใช้ตอน Build",
+                "Preview the menu, then generate the control assets and components Modular Avatar uses at build time."
             )
         );
 
@@ -2149,8 +2149,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         EditorGUILayout.HelpBox(
             T(
-                "Modular Avatar เป็น Core Dependency และเป็นระบบที่ทำ non-destructive merge ตอน Build ตัวช่วยนี้เตรียม Asset และ Component ให้ Modular Avatar โดยไม่แทนที่ระบบของ Modular Avatar",
-                "Modular Avatar is the required core dependency and performs the non-destructive merge at build time. This community helper prepares assets and components for Modular Avatar; it does not replace Modular Avatar."
+                "mehigo Hair Manager สร้าง Animator, Animation Clips, Expression Menu, Parameters และตั้งค่า Component ที่จำเป็น ส่วน Modular Avatar เป็น Core Dependency ที่ทำ non-destructive merge ตอน Build",
+                "mehigo Hair Manager generates the Animator, Animation Clips, Expression Menu, Parameters, and required component setup. Modular Avatar is the core dependency that performs the non-destructive merge at build time."
             ),
             MessageType.Info
         );
@@ -4327,7 +4327,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         {
             EditorUtility.DisplayDialog(
                 "Modular Avatar core dependency not found",
-                "Install Modular Avatar before using this community workflow helper.",
+                "Install Modular Avatar before using this community-made automation tool.",
                 "OK"
             );
             return;

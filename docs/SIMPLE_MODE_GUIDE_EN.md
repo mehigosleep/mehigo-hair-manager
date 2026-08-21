@@ -4,7 +4,7 @@
 
 > This guide covers only **Simple Mode** in version 1.2.0: creating a hairstyle menu, adding BlendShape controls and Hair Material Presets, checking Menu Preview, and generating the setup.
 
-> **[Modular Avatar](https://modular-avatar.nadena.dev/) is the required core dependency.** This community helper prepares assets and Modular Avatar components; Modular Avatar performs the non-destructive integration at build time. This is not an official Modular Avatar project and is not affiliated with or endorsed by its maintainers.
+> **mehigo Hair Manager is a community-made automation tool built for [Modular Avatar](https://modular-avatar.nadena.dev/).** It generates Animator Controllers and Layers, Animation Clips, Expression Menus, Parameters, Material Swap controls, and the required Modular Avatar components. Modular Avatar is the required core dependency and performs the non-destructive integration at build time. This is not an official Modular Avatar project and is not affiliated with or endorsed by its maintainers.
 
 ## Requirements
 
@@ -24,7 +24,7 @@ Simple Mode separates the workflow into three pages:
 2. **Hair & Controls** — add hairstyles, BlendShape controls, and Material Presets
 3. **Preview & Generate** — inspect the menu and generate the setup
 
-The helper automatically detects the Avatar Descriptor, Hair Root or wrapper, renderers, BlendShapes, materials, and output folder. You do not need to configure parameters, Animator layers, or generated filenames manually.
+The tool automatically detects the Avatar Descriptor, Hair Root or wrapper, renderers, BlendShapes, materials, and output folder. It creates the Parameters, Animator Layers, and generated files, so you do not need to configure them manually.
 
 ## 1. Open Hair Manager
 
@@ -213,13 +213,13 @@ The Hair Materials submenu contains **Default** and every added Material Preset.
 
 ## 11. Generate or update the setup
 
-After checking Preview, press **Generate / Update Setup**. The helper prepares:
+After checking Preview, press **Generate / Update Setup**. mehigo Hair Manager:
 
 1. Validates the configuration and scans for conflicts.
 2. Creates or updates the Animator Controller and Animation Clips.
 3. Creates the Expression Menu and Parameters.
 4. Creates `mehigo Hair Selector` under the avatar.
-5. Modular Avatar Merge Animator, Parameters, and Menu Installer components used by Modular Avatar at build time.
+5. Creates or configures the Modular Avatar Merge Animator, Parameters, and Menu Installer components used at build time.
 6. Saves the configuration for later editing.
 
 ![Generated setup and Modular Avatar components](images/simple-mode-v1.2.0/18-generated-setup.png)
