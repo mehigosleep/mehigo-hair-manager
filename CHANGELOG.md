@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added Google Search Console site-verification metadata to all landing-page languages.
 - Added a complete Thai landing page with language navigation, localized metadata, and sitemap `hreflang` entries.
 - Added a complete Thai project README and language links between the English and Thai versions.
 - Added complete credit and third-party notices for the optional Gesture Manager UI asset integration, clarifying that its assets are loaded only from the user's installed package and are not bundled or included in generated avatar assets.
