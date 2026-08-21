@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>mehigo Hair Manager – เครื่องมือสร้างระบบควบคุมทรงผมสำหรับ Modular Avatar</title>
+  <meta name="description" content="เครื่องมือ Unity Editor ที่พัฒนาโดยชุมชน สำหรับสร้าง Animator, Animation, Expression Menu, Parameters, Material Swap controls และ Component ของ Modular Avatar ให้อัตโนมัติ">
+  <meta name="theme-color" content="#1677ff">
+  <link rel="canonical" href="https://mehigosleep.github.io/mehigo-hair-manager/th/">
+  <link rel="alternate" hreflang="en" href="https://mehigosleep.github.io/mehigo-hair-manager/">
+  <link rel="alternate" hreflang="th" href="https://mehigosleep.github.io/mehigo-hair-manager/th/">
+  <link rel="alternate" hreflang="ja" href="https://mehigosleep.github.io/mehigo-hair-manager/ja/">
+  <link rel="alternate" hreflang="x-default" href="https://mehigosleep.github.io/mehigo-hair-manager/">
+  <link rel="stylesheet" href="../styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="mehigo Hair Manager – เครื่องมือสร้างระบบควบคุมทรงผมสำหรับ Modular Avatar">
+  <meta property="og:description" content="สร้างระบบควบคุมทรงผม VRChat อัตโนมัติและตั้งค่าการเชื่อมต่อผ่าน Modular Avatar">
+  <meta property="og:url" content="https://mehigosleep.github.io/mehigo-hair-manager/th/">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "mehigo Hair Manager",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Windows",
+    "softwareVersion": "1.2.0",
+    "description": "เครื่องมือ Unity Editor ที่พัฒนาโดยชุมชน สำหรับสร้างระบบควบคุมทรงผม VRChat และตั้งค่า Component ของ Modular Avatar ให้อัตโนมัติ",
+    "url": "https://mehigosleep.github.io/mehigo-hair-manager/th/",
+    "downloadUrl": "https://github.com/mehigosleep/mehigo-hair-manager/releases/latest",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <nav class="wrap" aria-label="เมนูหลัก">
+      <a class="brand" href="./">mehigo Hair Manager</a>
+      <div class="nav-links">
+        <a href="#workflow">3 ขั้นตอน</a>
+        <a href="https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_TH.md">คู่มือ</a>
+        <a href="https://github.com/mehigosleep/mehigo-hair-manager">GitHub</a>
+        <a lang="en" href="../">English</a>
+        <a lang="ja" href="../ja/">日本語</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <span class="eyebrow">เครื่องมือ Automation ที่พัฒนาโดยชุมชน · v1.2.0</span>
+      <h1>สร้างระบบควบคุมทรงผม VRChat อัตโนมัติด้วย Modular Avatar</h1>
+      <p class="lead">สร้าง Animator Controller, Animation Clips, Expression Menu, Parameters และ Material Swap controls พร้อมตั้งค่า Component ของ Modular Avatar ที่ใช้เชื่อมระบบเข้ากับ Avatar</p>
+      <div class="actions">
+        <a class="button primary" href="vcc://vpm/addRepo?url=https%3A%2F%2Fmehigosleep.github.io%2Fmehigo-hair-manager%2Fvpm.json">เพิ่ม Repository เข้า VCC</a>
+        <a class="button" href="https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_TH.md">คู่มือ Simple Mode</a>
+      </div>
+      <p class="repo-url">Repository URL: <code>https://mehigosleep.github.io/mehigo-hair-manager/vpm.json</code></p>
+    </section>
+
+    <section id="workflow" class="workflow">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-label">Simple Mode</span>
+          <h2>พร้อมใช้งานใน 3 ขั้นตอน</h2>
+        </div>
+        <div class="steps">
+          <article class="step"><h3>เลือก Avatar</h3><p>เลือก Avatar Root ระบบจะตรวจ Descriptor และ Output Folder ให้อัตโนมัติ</p></article>
+          <article class="step"><h3>เพิ่มทรงผม</h3><p>เพิ่มทรงผม, Toggle หรือ Radial BlendShape, Material Presets และ Menu Icons</p></article>
+          <article class="step"><h3>Preview และ Generate</h3><p>ตรวจ Menu Preview แล้วสร้าง Control Assets และ Modular Avatar Component Setup ทั้งหมด</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="example wrap" aria-labelledby="example-title">
+      <div class="section-head">
+        <span class="section-label">ตัวอย่าง</span>
+        <h2 id="example-title">สร้างและ Preview เมนูทั้งหมด</h2>
+        <p>ตั้งค่าทรงผมและ Controls พร้อมตรวจเมนูที่ Avatar จะใช้งานผ่าน Real-time Preview</p>
+      </div>
+      <img src="../assets/hair-manager-menu-preview.png" alt="หน้าต่าง mehigo Hair Manager และ Radial Menu Preview แบบ Real-time พร้อมระบบควบคุมทรงผมและ Material Preset submenus" width="1672" height="941" loading="lazy">
+      <p class="example-note"><strong>เป็นระบบสลับ Material เท่านั้น:</strong> ข้อความ “Hair Color” ในภาพหน้าจอ v1.2.0 เป็นชื่อเดิมของ Material Presets แต่ละปุ่มจะสลับ Material Assets ที่ผู้ใช้เตรียมไว้ ไม่ได้สร้างหรือแก้สีของ Material</p>
+    </section>
+
+    <section class="summary wrap">
+      <h2>สร้าง Hair Control Setup ที่สมบูรณ์</h2>
+      <p>mehigo Hair Manager จะสร้างหรืออัปเดต Animator Controller และ Layers, Animation Clips, Expression Menu, Parameters และ Material Swap controls จากนั้นตั้งค่า Component ของ Modular Avatar ที่จำเป็น โดย Modular Avatar ยังคงเป็น Core Dependency ที่ทำ non-destructive integration ตอน Build</p>
+    </section>
+
+    <section class="ma-credit wrap">
+      <span class="section-label">Core Dependency และเครดิต</span>
+      <h2>สร้างมาเพื่อใช้งานกับ Modular Avatar</h2>
+      <p><a href="https://modular-avatar.nadena.dev/">Modular Avatar</a> พัฒนาโดย bd_ และเป็น Core Dependency ที่จำเป็น mehigo Hair Manager เป็นเครื่องมือ Automation อิสระที่พัฒนาโดยชุมชน ไม่ใช่โปรเจกต์ทางการของ Modular Avatar และไม่มีความเกี่ยวข้องหรือได้รับการรับรองจากผู้พัฒนา</p>
+      <div class="credit-links">
+        <a href="https://modular-avatar.nadena.dev/">เว็บไซต์ทางการ</a>
+        <a href="https://github.com/bdunderscore/modular-avatar">Source</a>
+        <a href="https://github.com/bdunderscore/modular-avatar/blob/main/COPYING.md">MIT License</a>
+      </div>
+    </section>
+
+    <section class="ma-credit wrap">
+      <span class="section-label">Optional Preview Integration และเครดิต</span>
+      <h2>ใช้ Gesture Manager UI เมื่อติดตั้งไว้</h2>
+      <p>เมื่อติดตั้ง Gesture Manager ไว้ mehigo Hair Manager สามารถโหลด UI assets จาก Package ที่ผู้ใช้ติดตั้ง เพื่อใช้กับ Menu Preview ภายใน Editor โดย Gesture Manager เป็นตัวเลือกเสริม ไม่ได้ bundle มากับ mehigo Hair Manager และไม่มีผลต่อ Generated Avatar Assets</p>
+      <p>Gesture Manager UI assets © 2019–2023 BlackStartx — MIT License โดย mehigo Hair Manager เป็นโปรเจกต์อิสระและไม่มีความเกี่ยวข้องหรือได้รับการรับรองจาก Gesture Manager หรือผู้พัฒนา</p>
+      <div class="credit-links">
+        <a href="https://github.com/BlackStartx/VRC-Gesture-Manager">Source</a>
+        <a href="https://github.com/BlackStartx/VRC-Gesture-Manager/blob/master/LICENSE.md">MIT License</a>
+        <a href="https://github.com/mehigosleep/mehigo-hair-manager/blob/main/THIRD_PARTY_NOTICES.md">Third-Party Notices</a>
+      </div>
+    </section>
+
+    <section class="install wrap">
+      <div>
+        <h2>เริ่มต้นด้วย VRChat Creator Companion</h2>
+        <p>ต้องใช้ Unity 2022.3, VRChat Avatars SDK และ Modular Avatar ซึ่งเป็น Core Dependency</p>
+      </div>
+      <a class="button primary" href="vcc://vpm/addRepo?url=https%3A%2F%2Fmehigosleep.github.io%2Fmehigo-hair-manager%2Fvpm.json">เพิ่มเข้า VCC</a>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><span>โปรเจกต์ชุมชนสำหรับ Modular Avatar · ไม่ใช่โปรเจกต์ทางการ</span><a href="https://github.com/mehigosleep/mehigo-hair-manager">GitHub</a></div></footer>
+</body>
+</html>

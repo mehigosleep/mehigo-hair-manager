@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added a complete Thai landing page with language navigation, localized metadata, and sitemap `hreflang` entries.
 - Added a complete Thai project README and language links between the English and Thai versions.
 - Added complete credit and third-party notices for the optional Gesture Manager UI asset integration, clarifying that its assets are loaded only from the user's installed package and are not bundled or included in generated avatar assets.
 - Clarified that mehigo Hair Manager is a community-made automation tool that generates Animator Controllers and Layers, Animation Clips, Expression Menus, Parameters, Material Swap controls, and the required Modular Avatar component setup.

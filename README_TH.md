@@ -6,7 +6,7 @@
 
 ## ติดตั้งด้วย VCC
 
-[![เพิ่ม Repository เข้า VCC](https://img.shields.io/badge/Add_Repository_to_VCC-2f81f7?style=for-the-badge)](https://mehigosleep.github.io/mehigo-hair-manager/)
+[![เพิ่ม Repository เข้า VCC](https://img.shields.io/badge/Add_Repository_to_VCC-2f81f7?style=for-the-badge)](https://mehigosleep.github.io/mehigo-hair-manager/th/)
 
 Repository URL:
 
