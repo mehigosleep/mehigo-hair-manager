@@ -76,7 +76,7 @@ The experimental mehigo Direct BlendTree optimization remains disabled because a
 Optional:
 
 - Avatar Optimizer (AAO)
-- Gesture Manager (for in-game-style Preview icons and colors)
+- Gesture Manager (for its familiar radial-menu UI assets in Menu Preview; not bundled)
 
 v1.1.0 was tested with VRChat SDK 3.10.4. Test your avatar after changing SDK or package versions.
 
@@ -121,6 +121,14 @@ Made for use with [Modular Avatar](https://modular-avatar.nadena.dev/) by bd_. M
 
 This community project is not an official Modular Avatar project and is not affiliated with or endorsed by bd_ or the Modular Avatar project. No Modular Avatar logo or restricted image assets are included.
 
+## Optional Gesture Manager integration
+
+When [Gesture Manager](https://github.com/BlackStartx/VRC-Gesture-Manager) is installed, mehigo Hair Manager can load UI assets from the user's installed package to provide its familiar radial-menu appearance in the editor-only Menu Preview. Gesture Manager is optional, is not bundled with mehigo Hair Manager, and does not affect the generated avatar setup. The built-in fallback Preview remains available when Gesture Manager is not installed.
+
+Gesture Manager UI assets © 2019–2023 BlackStartx and are provided under the [MIT License](https://github.com/BlackStartx/VRC-Gesture-Manager/blob/master/LICENSE.md). mehigo Hair Manager is an independent project and is not affiliated with or endorsed by Gesture Manager or its developer.
+
+See [Third-Party Notices](THIRD_PARTY_NOTICES.md) for the complete dependency and optional integration credits.
+
 ## License
 
-Copyright (c) 2026 mehigosleep. All rights reserved. See [LICENSE.md](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/LICENSE.md).
+Copyright (c) 2026 mehigosleep. All rights reserved. See [LICENSE.md](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/LICENSE.md) and [THIRD_PARTY_NOTICES.md](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/THIRD_PARTY_NOTICES.md).

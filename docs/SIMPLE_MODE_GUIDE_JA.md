@@ -14,7 +14,7 @@
 - **VRC Avatar Descriptor**が設定されたアバター
 - 選択するHair ObjectがアバターのHierarchy内に配置されていること
 
-Gesture Managerは任意です。インストール済みの場合、Menu PreviewでGesture Managerと同じUI素材を利用できます。
+[Gesture Manager](https://github.com/BlackStartx/VRC-Gesture-Manager)は任意です。インストール済みの場合、Menu PreviewはユーザーがインストールしたパッケージからUI Assetを読み込めます。Gesture Managerはmehigo Hair Managerに同梱されず、生成されるアバターAssetにも影響しません。Gesture Manager UI assets © 2019–2023 BlackStartx — [MIT License](https://github.com/BlackStartx/VRC-Gesture-Manager/blob/master/LICENSE.md)。
 
 ## Simple Modeの流れ
 

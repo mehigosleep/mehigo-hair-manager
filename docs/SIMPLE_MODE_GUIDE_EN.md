@@ -14,7 +14,7 @@
 - An avatar with a **VRC Avatar Descriptor**
 - Hair Objects placed under the selected avatar in the Hierarchy
 
-Gesture Manager is optional. When installed, Menu Preview uses the familiar Gesture Manager appearance and icons.
+[Gesture Manager](https://github.com/BlackStartx/VRC-Gesture-Manager) is optional. When installed, Menu Preview can load its familiar UI assets from the user's installed package. Gesture Manager is not bundled with mehigo Hair Manager and does not affect generated avatar assets. Gesture Manager UI assets © 2019–2023 BlackStartx — [MIT License](https://github.com/BlackStartx/VRC-Gesture-Manager/blob/master/LICENSE.md).
 
 ## Workflow overview
 

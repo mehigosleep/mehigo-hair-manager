@@ -33,7 +33,7 @@ mehigo Hair Manager is a community-made Unity Editor automation tool built for [
 - VRChat Avatars SDK `>=3.10.4 <3.11.0`
 - Modular Avatar `>=1.14.0 <2.0.0-a`
 
-Optional: Avatar Optimizer (AAO) for build-time optimization and Gesture Manager for familiar Preview visuals. mehigo uses its built-in fallback when Gesture Manager is unavailable.
+Optional: Avatar Optimizer (AAO) for build-time optimization and [Gesture Manager](https://github.com/BlackStartx/VRC-Gesture-Manager) for familiar Preview visuals. When installed, Menu Preview loads UI assets from the user's installed Gesture Manager package. Gesture Manager is not bundled, does not affect generated avatar assets, and the built-in fallback remains available. Gesture Manager UI assets © 2019–2023 BlackStartx — [MIT License](https://github.com/BlackStartx/VRC-Gesture-Manager/blob/master/LICENSE.md).
 
 > Version 1.1.0 was tested with VRChat SDK 3.10.4. Retest the avatar after changing SDK or package versions.
 

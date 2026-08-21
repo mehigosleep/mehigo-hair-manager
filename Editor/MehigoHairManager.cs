@@ -420,7 +420,11 @@ public class MehigoHairGeneratorV4 : EditorWindow
             if (gmAssetsAvailable)
             {
                 EditorGUILayout.LabelField(
-                    "Gesture Manager UI assets © BlackStartx — MIT License",
+                    "Gesture Manager UI assets © 2019–2023 BlackStartx — MIT License",
+                    EditorStyles.centeredGreyMiniLabel
+                );
+                EditorGUILayout.LabelField(
+                    "Loaded from the installed package • Not bundled with mehigo Hair Manager",
                     EditorStyles.centeredGreyMiniLabel
                 );
             }

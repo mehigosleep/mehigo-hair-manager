@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added complete credit and third-party notices for the optional Gesture Manager UI asset integration, clarifying that its assets are loaded only from the user's installed package and are not bundled or included in generated avatar assets.
 - Clarified that mehigo Hair Manager is a community-made automation tool that generates Animator Controllers and Layers, Animation Clips, Expression Menus, Parameters, Material Swap controls, and the required Modular Avatar component setup.
 - Clarified the responsibility boundary: mehigo Hair Manager creates and configures the control system, while Modular Avatar performs the non-destructive integration at build time.
 - Reframed the project description as a community-made automation tool built for Modular Avatar and added clear credit for Modular Avatar as the required core dependency and non-destructive integration layer.

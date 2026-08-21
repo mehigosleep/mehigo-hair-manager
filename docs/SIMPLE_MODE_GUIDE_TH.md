@@ -14,7 +14,7 @@
 - Avatar ที่มี **VRC Avatar Descriptor**
 - Hair Objects ต้องอยู่ใต้ Avatar ที่เลือกใน Hierarchy
 
-Gesture Manager เป็นอุปกรณ์เสริม หากติดตั้งไว้ Menu Preview จะใช้หน้าตาและไอคอนแบบเดียวกับ Gesture Manager
+[Gesture Manager](https://github.com/BlackStartx/VRC-Gesture-Manager) เป็นตัวเลือกเสริม หากติดตั้งไว้ Menu Preview สามารถโหลด UI assets จากแพ็กเกจที่ผู้ใช้ติดตั้งเพื่อใช้แสดงหน้าตาที่คุ้นเคย โดย Gesture Manager ไม่ได้ถูกรวมมากับ mehigo Hair Manager และไม่มีผลต่อ Asset ที่ Generate ให้อวาตาร์ Gesture Manager UI assets © 2019–2023 BlackStartx — [MIT License](https://github.com/BlackStartx/VRC-Gesture-Manager/blob/master/LICENSE.md)
 
 ## ภาพรวมการทำงาน
 
