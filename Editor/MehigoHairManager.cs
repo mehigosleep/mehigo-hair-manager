@@ -448,7 +448,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
             HairEntry hair = owner.hairs[selectedHairIndex];
 
             if (level == PreviewLevel.Material)
-                return owner.T("สีผม", "Hair Color");
+                return owner.T("Material ผม", "Hair Materials");
 
             return owner.SafeName(hair.menuName, $"Hair {selectedHairIndex}");
         }
@@ -493,7 +493,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
                         name = i == 0
                             ? owner.T("ค่าเริ่มต้น", "Default")
                             : owner.SafeName(preset.menuName, $"Preset {i}"),
-                        icon = owner.GetDefaultColorPresetIcon(),
+                        icon = owner.GetDefaultMaterialPresetIcon(),
                         type = PreviewControlType.Toggle,
                         hairIndex = selectedHairIndex,
                         stateKey = $"Material_{selectedHairIndex}_{i}"
@@ -539,8 +539,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
             {
                 controls.Add(new PreviewControl
                 {
-                    name = owner.T("สีผม", "Hair Color"),
-                    icon = owner.GetDefaultColorPresetIcon(),
+                    name = owner.T("Material ผม", "Hair Materials"),
+                    icon = owner.GetDefaultMaterialPresetIcon(),
                     type = PreviewControlType.SubMenu,
                     hairIndex = selectedHairIndex,
                     stateKey = "MaterialMenu"
@@ -913,7 +913,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
     private Texture2D defaultHairstyleIcon;
     private Texture2D defaultToggleBlendShapeIcon;
     private Texture2D defaultRadialBlendShapeIcon;
-    private Texture2D defaultColorPresetIcon;
+    private Texture2D defaultMaterialPresetIcon;
 
     [MenuItem("Tools/mehigo/Hair Manager")]
     public static void Open()
@@ -1513,7 +1513,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         if (GUILayout.Button(T("+ ปรับระดับ", "+ Radial"), GUILayout.Height(30)))
             ShowQuickBlendShapeMenu(hair, BlendShapeControlMode.RadialPuppet);
 
-        if (GUILayout.Button(T("+ ปุ่มสีใหม่", "+ New Color Button"), GUILayout.Height(30)))
+        if (GUILayout.Button(T("+ Material Preset", "+ Material Preset"), GUILayout.Height(30)))
         {
             EnsureDefaultMaterialPreset(hair);
 
@@ -1537,8 +1537,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         EditorGUILayout.HelpBox(
             T(
-                "หมายเหตุสำหรับปุ่ม “+ ปุ่มสีใหม่” เท่านั้น: ระบบจะเพิ่มปุ่มสีผมใหม่ 1 ปุ่ม และบันทึกสีผมที่ใช้อยู่ตอนนี้เป็นปุ่ม “ค่าเริ่มต้น (Default)” ให้อัตโนมัติ",
-                "Note for “+ New Color Button” only: Adds one new hair-color button and automatically saves the hair's current materials as a separate “Default” button."
+                "Material Preset ใช้สลับ Material Asset ที่มีอยู่ในแต่ละ Renderer/Slot เท่านั้น ไม่ได้สร้างหรือแก้สีใน Material ระบบจะบันทึก Material ปัจจุบันเป็นปุ่ม “ค่าเริ่มต้น (Default)” ให้อัตโนมัติ",
+                "Material Presets switch existing Material assets in each renderer slot. They do not create or edit material colors. The current materials are saved automatically as a separate “Default” button."
             ),
             MessageType.Info
         );
@@ -1649,7 +1649,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         EditorGUILayout.Space(4);
         EditorGUILayout.LabelField(
-            T("สีผม", "Hair Colors"),
+            T("Material Preset", "Material Presets"),
             EditorStyles.boldLabel
         );
 
@@ -1713,8 +1713,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
         EditorGUILayout.Space(4);
         EditorGUILayout.LabelField(
             T(
-                $"ทรงผม {hairs.Count}  •  ปุ่มปรับแต่ง {CountBlendShapes()}  •  สีผม {CountHairColorOptions()}",
-                $"Hair {hairs.Count}  •  Controls {CountBlendShapes()}  •  Colors {CountHairColorOptions()}"
+                $"ทรงผม {hairs.Count}  •  ปุ่มปรับแต่ง {CountBlendShapes()}  •  Material Preset {CountMaterialPresetOptions()}",
+                $"Hair {hairs.Count}  •  Controls {CountBlendShapes()}  •  Material Presets {CountMaterialPresetOptions()}"
             ),
             EditorStyles.miniBoldLabel
         );
@@ -2254,7 +2254,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
             GUILayout.Label(GetActivationSummary(hair), badgeStyle);
 
             if (hair.materialPresets.Count > 0)
-            GUILayout.Label(T($"Material Preset {hair.materialPresets.Count}", $"Color {hair.materialPresets.Count}"), badgeStyle);
+            GUILayout.Label(T($"Material Preset {hair.materialPresets.Count}", $"Material Preset {hair.materialPresets.Count}"), badgeStyle);
 
             if (hair.blendShapes.Count > 0)
                 GUILayout.Label($"BS {hair.blendShapes.Count}", badgeStyle);
@@ -2674,8 +2674,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
         hair.materialFoldout = EditorGUILayout.Foldout(
             hair.materialFoldout,
             T(
-                $"Hair Color / Material Preset ({hair.materialPresets.Count})",
-                $"Hair Color / Material Presets ({hair.materialPresets.Count})"
+                $"Material Preset สำหรับผม ({hair.materialPresets.Count})",
+                $"Hair Material Presets ({hair.materialPresets.Count})"
             ),
             true
         );
@@ -2861,7 +2861,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         MaterialPreset preset = new MaterialPreset
         {
-            menuName = "Color " + hair.materialPresets.Count,
+            menuName = "Material " + hair.materialPresets.Count,
             slots = hair.materialPresets[0].slots
                 .Select(s => new MaterialSlotEntry
                 {
@@ -5342,8 +5342,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
             controls.Add(
                 new VRCExpressionsMenu.Control
                 {
-                    name = T("สีผม", "Hair Color"),
-                    icon = GetDefaultColorPresetIcon(),
+                    name = T("Material ผม", "Hair Materials"),
+                    icon = GetDefaultMaterialPresetIcon(),
                     type = VRCExpressionsMenu.Control.ControlType.SubMenu,
                     subMenu = CreateMaterialPresetSubMenu(hairIndex)
                 }
@@ -5376,7 +5376,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
                     name = i == 0
                         ? T("ค่าเริ่มต้น", "Default")
                         : SafeName(preset.menuName, $"Preset {i}"),
-                    icon = GetDefaultColorPresetIcon(),
+                    icon = GetDefaultMaterialPresetIcon(),
                     type = VRCExpressionsMenu.Control.ControlType.Toggle,
                     parameter = new VRCExpressionsMenu.Control.Parameter
                     {
@@ -5389,7 +5389,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         return BuildPagedMenu(
             $"{GetAvatarScopedSaveFolder()}/Hair_{hairIndex}_MaterialMenu",
-            T("สีผม", "Hair Color"),
+            T("Material ผม", "Hair Materials"),
             controls
         );
     }
@@ -5709,11 +5709,11 @@ public class MehigoHairGeneratorV4 : EditorWindow
         );
     }
 
-    private Texture2D GetDefaultColorPresetIcon()
+    private Texture2D GetDefaultMaterialPresetIcon()
     {
         return LoadBundledIcon(
-            ref defaultColorPresetIcon,
-            "05-default-color-preset.png"
+            ref defaultMaterialPresetIcon,
+            "05-default-material-preset.png"
         );
     }
 
@@ -6117,7 +6117,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         return hairs.Count(h => h.materialPresets.Count > 1);
     }
 
-    private int CountHairColorOptions()
+    private int CountMaterialPresetOptions()
     {
         return hairs.Sum(
             h => Mathf.Max(0, h.materialPresets.Count - 1)

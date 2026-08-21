@@ -11,7 +11,7 @@ mehigo Hair Manager builds hairstyle menus for VRChat avatars, including linked 
 - Added **Simple Mode** as separate Avatar → Hair & Controls → Preview & Generate pages.
 - Add multiple Hair Objects from the selection or by drag and drop.
 - Add Toggle and Radial controls from a BlendShape list without selecting a Renderer manually.
-- Add Hair Color presets with automatic default material scanning.
+- Add Hair Material Presets with automatic default material scanning. Presets switch existing Material assets; they do not create materials or edit colors.
 - The complete previous editor remains available in **Advanced Mode**.
 
 ## Features retained from version 1.1.0
@@ -73,13 +73,13 @@ Simple Mode is the default workflow for common setups:
 
 1. On **Avatar**, select the avatar. The Avatar Descriptor and output folder are detected automatically.
 2. On **Hair & Controls**, select multiple Hair Objects in the Hierarchy and click **Add Selected Hair**, or drag them into the drop area.
-3. Use **+ Toggle**, **+ Radial**, or **+ New Color Button** inside each Hair card. Adding a new color button automatically saves the hairstyle's current materials as the separate **Default** button.
+3. Use **+ Toggle**, **+ Radial**, or **+ Material Preset** inside each Hair card. Adding a Material Preset automatically saves the hairstyle's current Material assignments as the separate **Default** button.
 4. On **Preview & Generate**, click **Open Menu Preview** to review the menu structure.
 5. Click **Generate / Update Setup**.
 
 Button names, existing animator preservation, Hair Root/Wrapper detection, and default material scanning are automatic. Switch to **Advanced** when you need parameter, save folder, activation, or detailed BlendShape settings.
 
-The **Hairstyle Icon** field in Simple Mode supports the bundled mehigo default, a Project Texture, or Scene View Capture. Separate bundled defaults are provided for the root menu, hairstyles, Toggle BlendShapes, Radial BlendShapes, and Hair Color.
+The **Hairstyle Icon** field in Simple Mode supports the bundled mehigo default, a Project Texture, or Scene View Capture. Separate bundled defaults are provided for the root menu, hairstyles, Toggle BlendShapes, Radial BlendShapes, and Material Presets.
 
 Sections 4 onward describe the Advanced Mode interface.
 
@@ -152,7 +152,9 @@ The Conflict Scanner includes these properties. Avoid assigning one object to en
 
 Version 1.1.0 always generates the stable Standard Animator layout. Experimental Direct BlendTree generation is hidden.
 
-## 8. Hair Color / Material Presets
+## 8. Hair Material Presets
+
+Material Presets replace the existing Material Asset assigned to each selected Renderer/Slot. They do not create Material assets or modify shader color properties; prepare the Material variants before adding them to mehigo Hair Manager.
 
 1. Click **Scan Materials**.
 2. Click **Create Default Material Preset** to snapshot every material slot below the Hair Root.
@@ -161,7 +163,7 @@ Version 1.1.0 always generates the stable Standard Animator layout. Experimental
 
 ![Starting a Material Preset setup](images/08-material-preset-start.png)
 
-![Default and Color 1 Material Presets](images/09-material-presets.png)
+![Default and Material 1 Material Presets](images/09-material-presets.png)
 
 Do not reorder renderers or material slots after setup. If the hair hierarchy changes, scan and review the presets again.
 

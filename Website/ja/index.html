@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>mehigo Hair Manager – VRChat髪型コントロールを簡単作成</title>
-  <meta name="description" content="Animator Layer、Parameter、Expression Menuを自動作成する、Unity向けの簡単なVRChat髪型コントロールツールです。">
+  <meta name="description" content="VRChat髪型メニュー、BlendShapeコントロール、既存Material AssetのMaterial Preset切り替えを設定できるUnity Editorツールです。">
   <meta name="theme-color" content="#1677ff">
   <link rel="canonical" href="https://mehigosleep.github.io/mehigo-hair-manager/ja/">
   <link rel="alternate" hreflang="en" href="https://mehigosleep.github.io/mehigo-hair-manager/">
@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="../styles.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="mehigo Hair Manager – VRChat髪型コントロールを簡単作成">
-  <meta property="og:description" content="VRChatの髪型に必要なAnimator Layer、Parameter、Expression Menuを自動作成します。">
+  <meta property="og:description" content="VRChat髪型メニュー、BlendShape、既存Material AssetのMaterial Preset切り替えを自動設定します。">
   <meta property="og:url" content="https://mehigosleep.github.io/mehigo-hair-manager/ja/">
   <meta name="twitter:card" content="summary">
   <script type="application/ld+json">
@@ -24,7 +24,7 @@
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Windows",
     "softwareVersion": "1.2.0",
-    "description": "Animator Layer、Parameter、Expression Menuを自動作成するVRChat髪型コントロールツール。",
+    "description": "VRChat髪型メニュー、BlendShape、既存Material AssetのMaterial Preset切り替えを設定するUnity Editorツール。",
     "url": "https://mehigosleep.github.io/mehigo-hair-manager/ja/",
     "downloadUrl": "https://github.com/mehigosleep/mehigo-hair-manager/releases/latest",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
@@ -64,7 +64,7 @@
         </div>
         <div class="steps">
           <article class="step"><h3>アバターを選択</h3><p>アバターのルートを選ぶと、Descriptorと出力フォルダを自動検出します。</p></article>
-          <article class="step"><h3>髪型を追加</h3><p>髪型、Toggle・Radial BlendShape、髪色、メニューアイコンを追加します。</p></article>
+          <article class="step"><h3>髪型を追加</h3><p>髪型、Toggle・Radial BlendShape、Material Preset、メニューアイコンを追加します。</p></article>
           <article class="step"><h3>プレビューして生成</h3><p>メニューを確認し、ボタン1つで必要なセットアップを作成または更新します。</p></article>
         </div>
       </div>
@@ -76,12 +76,13 @@
         <h2 id="example-title">メニュー全体を作成しながらプレビュー</h2>
         <p>髪型とコントロールを設定し、アバターで使用するメニューをリアルタイムプレビューで確認できます。</p>
       </div>
-      <img src="../assets/hair-manager-menu-preview.png" alt="mehigo Hair ManagerエディターとリアルタイムのRadial Menu Preview。髪型コントロールと髪色サブメニューを表示" width="1672" height="941" loading="lazy">
+      <img src="../assets/hair-manager-menu-preview.png" alt="mehigo Hair ManagerエディターとリアルタイムのRadial Menu Preview。髪型コントロールとMaterial Presetサブメニューを表示" width="1672" height="941" loading="lazy">
+      <p class="example-note"><strong>Materialの切り替え機能です：</strong> このv1.2.0スクリーンショットに表示される「Hair Color」は以前の表記です。各ボタンは既存のMaterial Assetを切り替えます。</p>
     </section>
 
     <section class="summary wrap">
       <h2>面倒な手動設定は不要</h2>
-      <p>複数の髪型、BlendShape、髪色Preset、カスタムアイコン、リアルタイムMenu Preview、Modular Avatar連携を1つのUnity Editorツールで設定できます。</p>
+      <p>複数の髪型、BlendShape、Material Preset、カスタムアイコン、リアルタイムMenu Preview、Modular Avatar連携を1つのUnity Editorツールで設定できます。Material Presetは既存のMaterial Assetを切り替える機能で、色やMaterial自体を作成・編集する機能ではありません。</p>
     </section>
 
     <section class="install wrap">

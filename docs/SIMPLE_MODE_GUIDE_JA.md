@@ -2,7 +2,7 @@
 
 [English](SIMPLE_MODE_GUIDE_EN.md) · [ภาษาไทย](SIMPLE_MODE_GUIDE_TH.md) · [プロジェクトページ](../README.md)
 
-> このガイドでは、バージョン1.2.0の**Simple Mode**を使って、VRChatアバターの髪型切り替えメニュー、BlendShapeコントロール、髪色プリセットを作成し、プレビュー後にセットアップを生成する手順を説明します。
+> このガイドでは、バージョン1.2.0の**Simple Mode**を使って、VRChatアバターの髪型切り替えメニュー、BlendShapeコントロール、Hair Material Presetを作成し、プレビュー後にセットアップを生成する手順を説明します。
 
 ## 必要な環境
 
@@ -17,7 +17,7 @@ Gesture Managerは任意です。インストール済みの場合、Menu Previe
 ## Simple Modeの流れ
 
 1. **Avatar** — アバターを選択
-2. **Hair & Controls** — 髪型、BlendShape、髪色を追加
+2. **Hair & Controls** — 髪型、BlendShape、Material Presetを追加
 3. **Preview & Generate** — メニューを確認してセットアップを生成
 
 Avatar Descriptor、Hair RootまたはWrapper、Renderer、BlendShape、Material、出力フォルダは自動検出されます。Parameter名やAnimator Layer、生成ファイル名を手動で設定する必要はありません。
@@ -69,7 +69,7 @@ Hair Cardでは次の内容を編集できます。
 - **Hair Object** — 髪型のルートObject
 - **Hairstyle Icon** — 髪型ボタンのアイコン
 - 自動検出された表示切り替え方法
-- Toggle、Radial、髪色ボタン
+- Toggle、Radial、Material Presetボタン
 - `▲` / `▼`で順番変更、`X`でセットアップから削除
 
 ![髪型追加後のHair Card](images/simple-mode-v1.2.0/05-hair-card.png)
@@ -110,17 +110,17 @@ RendererとBlendShapeはHair Object配下から自動で一覧化されます。
 
 ![追加されたToggleとRadial](images/simple-mode-v1.2.0/09-toggle-radial-controls.png)
 
-## 7. 髪色ボタンを追加する
+## 7. Hair Material Presetを追加する
 
-**+ New Color Button**を押すと、髪色ボタンが1個追加されます。
+**+ Material Preset**を押すと、既存のMaterial Assetを切り替えるボタンが1個追加されます。
 
-> 髪色ボタンを初めて追加した時点で、現在のMaterialは自動的に別の**Default**ボタンとして保存されます。
+> Material PresetはMaterialを新規作成したり、Shaderの色を編集したりする機能ではありません。Renderer/Material Slotへ割り当てるMaterial Assetを切り替えます。現在のMaterialは自動的に別の**Default**ボタンとして保存されます。
 
-**Hair Colors**でボタン名を`Pink`、`White`、`Black`などに変更し、色を変えたいRenderer/Material Slotだけ新しいMaterialへ差し替えます。
+**Material Presets**でボタン名を`Pink`、`White`、`Black`などに変更し、切り替えたいRenderer/Material Slotへ既存のMaterial Assetを割り当てます。
 
-![髪色プリセットとMaterial Slot](images/simple-mode-v1.2.0/10-hair-color-preset.png)
+![Hair Material PresetとMaterial Slot](images/simple-mode-v1.2.0/10-material-preset.png)
 
-DefaultはHair Card内の編集欄には表示されませんが、Menu Previewと生成後のHair Colorサブメニューには独立したボタンとして表示されます。
+DefaultはHair Card内の編集欄には表示されませんが、Menu Previewと生成後のHair Materialsサブメニューには独立したボタンとして表示されます。
 
 ## 8. 複数の髪型を管理する
 
@@ -128,9 +128,9 @@ Hair Cardは複数追加できます。1枚を開くと他のCardは自動で閉
 
 ![複数のHair Card](images/simple-mode-v1.2.0/11-multiple-hairs.png)
 
-髪型ごとに異なるアイコン、Toggle、Radial、髪色プリセットを設定できます。
+髪型ごとに異なるアイコン、Toggle、Radial、Material Presetを設定できます。
 
-![コントロールと髪色を設定したHair Card](images/simple-mode-v1.2.0/12-complete-hair-card.png)
+![コントロールとMaterial Presetを設定したHair Card](images/simple-mode-v1.2.0/12-complete-hair-card.png)
 
 ### Detection Fixes / More Options
 
@@ -138,7 +138,7 @@ Hair Cardは複数追加できます。1枚を開くと他のCardは自動で閉
 
 ## 9. Preview & Generateページ
 
-設定が完了したら**Next**で3ページ目へ進みます。髪型、コントロール、髪色の数が表示されます。
+設定が完了したら**Next**で3ページ目へ進みます。髪型、コントロール、Material Presetの数が表示されます。
 
 ![Preview and Generateページ](images/simple-mode-v1.2.0/13-preview-generate.png)
 
@@ -156,7 +156,7 @@ Hair Cardの順番で全髪型が表示されます。
 
 ### 髪型サブメニュー
 
-髪型を選ぶと、髪型使用ボタン、Toggle、Radial、Hair Colorサブメニューが表示されます。
+髪型を選ぶと、髪型使用ボタン、Toggle、Radial、Hair Materialsサブメニューが表示されます。
 
 ![1つ目の髪型サブメニュー](images/simple-mode-v1.2.0/15-menu-preview-hair-one.png)
 
@@ -164,11 +164,11 @@ Hair Cardの順番で全髪型が表示されます。
 
 Preview内の操作はSceneのアバターを変更しません。ボタン数が1ページを超えると、ページ切り替えボタンが自動で追加されます。
 
-### Hair Colorサブメニュー
+### Hair Materialsサブメニュー
 
-**Default**と追加したすべての髪色が表示されます。各Presetには同じHair Color用デフォルトアイコンが使用されます。
+**Default**と追加したすべてのMaterial Presetが表示されます。ボタンを選択するとMaterial Assetが切り替わり、色が生成されるわけではありません。各Presetには同じMaterial Preset用デフォルトアイコンが使用されます。
 
-![Defaultと追加した髪色](images/simple-mode-v1.2.0/17-menu-preview-colors.png)
+![Defaultと追加したMaterial Preset](images/simple-mode-v1.2.0/17-menu-preview-materials.png)
 
 ## 11. セットアップを生成・更新する
 
@@ -190,7 +190,7 @@ Preview確認後、**Generate / Update Setup**を押します。ツールは次�
 1. Hair Managerを開く
 2. 元のアバターを選択
 3. **Load Existing Setup for This Avatar**を押す
-4. Hair Card、コントロール、髪色を編集
+4. Hair Card、コントロール、Material Presetを編集
 5. Menu Previewで確認
 6. **Generate / Update Setup**を押す
 
@@ -201,7 +201,6 @@ Preview確認後、**Generate / Update Setup**を押します。ツールは次�
 - すべての髪型が正しく表示・非表示になる
 - ToggleとRadialが指定した髪のBlendShapeだけを動かす
 - Defaultで元のMaterialに戻る
-- 各髪色が正しいMaterial Slotを使用している
+- 各Material Presetが正しいMaterial AssetとSlotを使用している
 - Menu Previewのボタンと順番が正しい
 - Build/Upload前にPlay Modeまたはテストツールで動作確認する
-

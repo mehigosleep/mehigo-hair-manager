@@ -2,7 +2,7 @@
 
 [English](SIMPLE_MODE_GUIDE_EN.md) · [日本語](SIMPLE_MODE_GUIDE_JA.md) · [หน้าโครงการ](../README.md) · [คู่มือฉบับเต็ม](USER_GUIDE_TH.md)
 
-> คู่มือนี้อธิบายเฉพาะ **Simple Mode** ของเวอร์ชัน 1.2.0 สำหรับการสร้างเมนูเลือกทรงผม เพิ่มปุ่ม BlendShape เพิ่มสีผม ตรวจ Menu Preview และ Generate Setup
+> คู่มือนี้อธิบายเฉพาะ **Simple Mode** ของเวอร์ชัน 1.2.0 สำหรับการสร้างเมนูเลือกทรงผม เพิ่มปุ่ม BlendShape เพิ่ม Hair Material Preset ตรวจ Menu Preview และ Generate Setup
 
 ## สิ่งที่ต้องมี
 
@@ -19,7 +19,7 @@ Gesture Manager เป็นอุปกรณ์เสริม หากติ
 Simple Mode แบ่งงานออกเป็นสามหน้า:
 
 1. **Avatar** — เลือก Avatar
-2. **Hair & Controls** — เพิ่มทรงผม ปุ่ม BlendShape และสีผม
+2. **Hair & Controls** — เพิ่มทรงผม ปุ่ม BlendShape และ Material Preset
 3. **Preview & Generate** — ตรวจเมนูแล้วสร้าง Setup
 
 ระบบจะตรวจ Avatar Descriptor, Hair Root/Wrapper, Renderer, BlendShape, Material และ Output Folder ให้อัตโนมัติ ผู้ใช้ไม่จำเป็นต้องตั้ง Parameter, Animator Layer หรือชื่อไฟล์ที่ Generate เอง
@@ -77,7 +77,7 @@ Hair Card ที่เปิดอยู่ประกอบด้วย:
 - **Hair Object** — วัตถุรากของทรงผม
 - **Hairstyle Icon** — ไอคอนของปุ่มทรงผม
 - สถานะการตรวจจับการเปิด–ปิด Hair Object
-- ปุ่มเพิ่ม Toggle, Radial และสีผม
+- ปุ่มเพิ่ม Toggle, Radial และ Material Preset
 - ปุ่ม `▲` / `▼` สำหรับเปลี่ยนลำดับ และ `X` สำหรับนำรายการออกจาก Setup
 
 ![Hair Card หลังเพิ่มทรงผม](images/simple-mode-v1.2.0/05-hair-card.png)
@@ -136,22 +136,22 @@ Toggle เหมาะกับค่าที่มีสองสถานะ 
 
 ปุ่ม `X` ด้านขวาของแต่ละรายการลบเฉพาะปุ่มนั้นออกจาก Setup
 
-## 7. เพิ่มปุ่มสีผม
+## 7. เพิ่ม Hair Material Preset
 
-กด **+ New Color Button** เพื่อเพิ่มสีผมหนึ่งปุ่ม
+กด **+ Material Preset** เพื่อเพิ่มปุ่มสำหรับสลับชุด Material ที่มีอยู่ให้กับทรงผม
 
-> ทุกครั้งที่เพิ่มปุ่มสีใหม่ ระบบจะบันทึก Material ที่ทรงผมใช้อยู่ขณะนั้นเป็นปุ่ม **Default** ให้อัตโนมัติ จากนั้นจึงสร้างปุ่มสีใหม่ให้แก้ Material
+> Material Preset ไม่ได้สร้าง Material ใหม่หรือแก้ค่าสีใน Shader แต่จะเปลี่ยน Material Asset ที่กำหนดให้ Renderer/Slot ระบบจะบันทึก Material ที่ใช้อยู่ขณะนั้นเป็นปุ่ม **Default** ให้อัตโนมัติ
 
-ในส่วน **Hair Colors**:
+ในส่วน **Material Presets**:
 
-1. เปลี่ยนชื่อ `Color 1` เป็นชื่อที่ต้องการ เช่น `Pink`, `White` หรือ `Black`
+1. เปลี่ยนชื่อ `Material 1` เป็นชื่อปุ่มที่ต้องการ เช่น `Pink`, `White` หรือ `Black`
 2. เปลี่ยน Material เฉพาะ Renderer/Slot ที่ต้องการ
 3. หากทรงผมใช้หลาย Material Slot ระบบจะแสดงทุก Slot ที่ตรวจพบ
-4. กด `X` เพื่อลบ Preset สีนั้น
+4. กด `X` เพื่อลบ Material Preset นั้น
 
-![เพิ่ม Hair Color และกำหนด Material ในแต่ละ Slot](images/simple-mode-v1.2.0/10-hair-color-preset.png)
+![เพิ่ม Material Preset และกำหนด Material Asset ในแต่ละ Slot](images/simple-mode-v1.2.0/10-material-preset.png)
 
-ค่า Default จะไม่แสดงเป็นช่องแก้ไขใน Hair Card เพราะระบบเก็บจาก Material เดิมให้อัตโนมัติ แต่จะปรากฏเป็นปุ่มแยกใน Hair Color submenu ตอน Preview และในเมนูที่ Generate จริง
+ค่า Default จะไม่แสดงเป็นช่องแก้ไขใน Hair Card เพราะระบบเก็บจาก Material เดิมให้อัตโนมัติ แต่จะปรากฏเป็นปุ่มแยกใน Hair Materials submenu ตอน Preview และในเมนูที่ Generate จริง
 
 ## 8. ใช้หลายทรงผม
 
@@ -159,9 +159,9 @@ Toggle เหมาะกับค่าที่มีสองสถานะ 
 
 ![Hair Card หลายรายการและการจัดลำดับ](images/simple-mode-v1.2.0/11-multiple-hairs.png)
 
-แต่ละทรงผมมีไอคอน, Toggle, Radial และชุดสีเป็นของตัวเอง
+แต่ละทรงผมมีไอคอน, Toggle, Radial และ Material Preset เป็นของตัวเอง
 
-![ตัวอย่าง Hair Card ที่มีปุ่มและสีผมครบ](images/simple-mode-v1.2.0/12-complete-hair-card.png)
+![ตัวอย่าง Hair Card ที่มีปุ่มและ Material Preset](images/simple-mode-v1.2.0/12-complete-hair-card.png)
 
 ### Detection Fixes / More Options
 
@@ -174,7 +174,7 @@ Toggle เหมาะกับค่าที่มีสองสถานะ 
 
 ## 9. หน้า Preview & Generate
 
-เมื่อข้อมูลครบ กด **Next** ไปหน้า 3 ระบบจะแสดงจำนวนทรงผม, ปุ่มปรับแต่ง และสีผมทั้งหมด
+เมื่อข้อมูลครบ กด **Next** ไปหน้า 3 ระบบจะแสดงจำนวนทรงผม, ปุ่มปรับแต่ง และ Material Preset ทั้งหมด
 
 ![หน้าสรุป Preview and Generate](images/simple-mode-v1.2.0/13-preview-generate.png)
 
@@ -192,7 +192,7 @@ Toggle เหมาะกับค่าที่มีสองสถานะ 
 
 ### เมนูภายในทรงผม
 
-เมื่อเลือกทรงผม จะเห็นปุ่มใช้ทรงผม, Toggle, Radial และ Hair Color submenu
+เมื่อเลือกทรงผม จะเห็นปุ่มใช้ทรงผม, Toggle, Radial และ Hair Materials submenu
 
 ![Preview ปุ่มภายในทรงผมแรก](images/simple-mode-v1.2.0/15-menu-preview-hair-one.png)
 
@@ -203,11 +203,11 @@ Toggle เหมาะกับค่าที่มีสองสถานะ 
 - การกดใน Preview เป็นเพียงการจำลองและไม่เปลี่ยน Avatar ใน Scene
 - หากมีปุ่มเกินหนึ่งหน้า Preview จะแสดงปุ่มเปลี่ยนหน้าให้อัตโนมัติ
 
-### Hair Color submenu
+### Hair Materials submenu
 
-Hair Color submenu แสดง **Default** และทุกสีที่เพิ่มไว้ ทุก Preset ใช้ไอคอน Hair Color มาตรฐานเดียวกันเพื่อให้ผู้ใช้เข้าใจว่าเป็นชุดสี
+Hair Materials submenu แสดง **Default** และ Material Preset ทั้งหมด เมื่อกดปุ่ม ระบบจะสลับ Material Asset ที่กำหนดไว้ ไม่ได้สร้างสีใหม่ ทุก Preset ใช้ไอคอน Material Preset มาตรฐานเดียวกัน
 
-![Hair Color submenu พร้อม Default และสีที่เพิ่ม](images/simple-mode-v1.2.0/17-menu-preview-colors.png)
+![Hair Materials submenu พร้อม Default และ Material Preset](images/simple-mode-v1.2.0/17-menu-preview-materials.png)
 
 ## 11. Generate หรือ Update Setup
 
@@ -242,6 +242,6 @@ Hair Color submenu แสดง **Default** และทุกสีที่เ
 - ทรงผมทุกชุดเปิด–ปิดถูกต้อง
 - Toggle และ Radial ควบคุมเฉพาะ BlendShape ของทรงผมที่ตั้งไว้
 - ปุ่ม Default คืน Material เดิมได้
-- ทุกสีใช้ Material และ Slot ถูกต้อง
+- ทุก Material Preset ใช้ Material Asset และ Slot ถูกต้อง
 - Menu Preview มีปุ่มครบและลำดับถูกต้อง
 - ทดสอบ Avatar ใน Play Mode หรือเครื่องมือทดสอบก่อน Build/Upload

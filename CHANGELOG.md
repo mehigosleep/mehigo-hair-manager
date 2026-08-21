@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Renamed the misleading Hair Color wording across the editor, generated menus, website, and guides to Hair Material Presets / Hair Materials.
+- Clarified that Material Presets switch existing Material assets assigned to Renderer slots; they do not create Material variants or edit shader colors.
+
 ## 1.2.0 - 2026-08-20
 
 - Added a new Simple Mode as the default editor experience while preserving the complete Advanced Mode workflow.
@@ -12,16 +17,16 @@
 - Added automatic Avatar Descriptor, activation target, existing animator preservation, and default material detection for newly added Hair Objects.
 - Added Quick Toggle and Quick Radial controls with a combined Renderer / BlendShape picker.
 - Added automatic control naming, Saved defaults, and 100 maximum values for Quick controls.
-- Added one-click Hair Color preset creation that snapshots the default materials automatically.
-- Clarified that adding a new Hair Color button also creates the Default button from the hairstyle's current materials.
+- Added one-click Hair Material Preset creation that snapshots the default materials automatically.
+- Clarified that Material Presets switch existing Material assets rather than creating or editing colors, and that the first preset also creates a Default button from the hairstyle's current materials.
 - Added simplified Hair cards with reordering, optional icons, activation summaries, control summaries, and material editing.
 - Added an escape hatch for manual activation detection and Linked Object settings without exposing those fields during the normal Simple workflow.
 - Added Simple Mode Menu Preview and Generate actions with validation and conflict-review handoff.
-- Added bundled default icons for the root Hair menu, hairstyles, Toggle BlendShapes, Radial BlendShapes, and Hair Color controls.
+- Added bundled default icons for the root Hair menu, hairstyles, Toggle BlendShapes, Radial BlendShapes, and Material Preset controls.
 - Restored the full Default / Custom Texture / Scene Capture hairstyle icon selector in Simple Mode.
 - Menu Preview and generated VRChat menus now use the same bundled icon fallbacks.
-- Every Hair Color preset entry uses the bundled Hair Color icon in both Preview and generated submenus.
-- Hair Color-only setups now open a hairstyle submenu correctly even when no BlendShape controls exist.
+- Every Hair Material Preset entry uses the bundled Material Preset icon in both Preview and generated submenus.
+- Material Preset-only setups now open a hairstyle submenu correctly even when no BlendShape controls exist.
 
 ## 1.1.0 - 2026-08-19
 

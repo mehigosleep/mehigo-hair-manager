@@ -11,7 +11,7 @@ mehigo Hair Manager ช่วยสร้างเมนูเปลี่ยน
 - เพิ่ม **Simple Mode** เป็นหน้าเริ่มต้น โดยแยกเป็น Avatar → Hair & Controls → Preview & Generate
 - เพิ่มหลายทรงผมจาก Selection หรือลาก GameObject มาวางได้
 - เพิ่มปุ่ม Toggle และ Radial จากรายการ BlendShape โดยไม่ต้องเลือก Renderer เอง
-- เพิ่ม Hair Color พร้อม Scan Default Material อัตโนมัติ
+- เพิ่ม Hair Material Preset พร้อม Scan Default Material อัตโนมัติ โดยระบบสลับ Material Asset ที่มีอยู่ ไม่ได้สร้าง Material หรือแก้สีให้
 - เก็บหน้าจอและตัวเลือกเดิมทั้งหมดไว้ใน **Advanced Mode**
 
 ## สิ่งที่เพิ่มไว้ตั้งแต่เวอร์ชัน 1.1.0
@@ -73,13 +73,13 @@ Simple Mode เป็นหน้าหลักสำหรับงานท�
 
 1. หน้า **Avatar**: เลือก Avatar ระบบจะตรวจหา Avatar Descriptor และ Output Folder อัตโนมัติ
 2. หน้า **Hair & Controls**: เลือก Hair Object หลายชิ้นใน Hierarchy แล้วกด **เพิ่มทรงผมที่เลือก** หรือลากมาวาง
-3. ใช้ **+ เปิด / ปิด**, **+ ปรับระดับ** หรือ **+ ปุ่มสีใหม่** ใน Hair Card โดยแต่ละครั้งที่เพิ่มปุ่มสีใหม่ ระบบจะบันทึกสีผมที่ใช้อยู่เป็นปุ่ม **ค่าเริ่มต้น (Default)** ให้อัตโนมัติ
+3. ใช้ **+ เปิด / ปิด**, **+ ปรับระดับ** หรือ **+ Material Preset** ใน Hair Card โดยเมื่อเพิ่ม Preset ระบบจะบันทึก Material ที่ทรงผมใช้อยู่เป็นปุ่ม **ค่าเริ่มต้น (Default)** ให้อัตโนมัติ
 4. หน้า **Preview & Generate**: กด **เปิด Menu Preview** เพื่อตรวจโครงสร้างเมนู
 5. กด **สร้าง / อัปเดต Setup**
 
 ระบบจะตั้งชื่อปุ่มจากชื่อ Object/BlendShape, รักษา Animator เดิม, ตรวจ Hair Root/Wrapper และ Scan Default Material ให้โดยอัตโนมัติ หากต้องแก้ Parameter, Save Folder, Activation Mode หรือรายละเอียด BlendShape ให้สลับเป็น **Advanced**
 
-ช่อง **ไอคอนทรงผม** ใน Simple Mode เลือกได้สามแบบ: ใช้ Default Icon ของ mehigo, เลือก Texture จาก Project หรือ Capture จาก Scene View ระบบมี Default Icon แยกสำหรับเมนูหลัก, ทรงผม, Toggle BlendShape, Radial BlendShape และ Hair Color
+ช่อง **ไอคอนทรงผม** ใน Simple Mode เลือกได้สามแบบ: ใช้ Default Icon ของ mehigo, เลือก Texture จาก Project หรือ Capture จาก Scene View ระบบมี Default Icon แยกสำหรับเมนูหลัก, ทรงผม, Toggle BlendShape, Radial BlendShape และ Material Preset
 
 หัวข้อตั้งแต่ข้อ 4 เป็นต้นไปอธิบายหน้าจอ Advanced Mode
 
@@ -152,7 +152,9 @@ Conflict Scanner จะตรวจ property ของ Linked Objects เหล�
 
 รุ่น 1.1.0 สร้าง BlendShape ด้วย Standard Animator เท่านั้น โหมด Direct BlendTree แบบทดลองถูกซ่อนเพื่อความเสถียร
 
-## 8. Hair Color / Material Presets
+## 8. Hair Material Presets
+
+Material Preset จะเปลี่ยน Material Asset ที่กำหนดให้ Renderer/Slot เท่านั้น ไม่ได้สร้าง Material ใหม่หรือแก้ค่าสีใน Shader ผู้ใช้ต้องเตรียม Material แต่ละแบบไว้ก่อนแล้วจึงนำมาเลือกใน mehigo Hair Manager
 
 1. กด **Scan Materials**
 2. กด **Create Default Material Preset** เพื่อบันทึก material ทุก slot ใต้ Hair Root
@@ -161,7 +163,7 @@ Conflict Scanner จะตรวจ property ของ Linked Objects เหล�
 
 ![เริ่มสร้าง Material Preset](images/08-material-preset-start.png)
 
-![Default และ Color 1 Material Preset](images/09-material-presets.png)
+![Default และ Material 1 Material Preset](images/09-material-presets.png)
 
 อย่าเปลี่ยนลำดับ Renderer หรือ material slot หลังตั้งค่า หากแก้โครงสร้างทรงผมให้ Scan Materials และตรวจ Preset ใหม่
 

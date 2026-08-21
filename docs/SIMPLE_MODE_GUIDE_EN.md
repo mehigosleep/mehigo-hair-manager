@@ -2,7 +2,7 @@
 
 [ภาษาไทย](SIMPLE_MODE_GUIDE_TH.md) · [日本語](SIMPLE_MODE_GUIDE_JA.md) · [Project Page](../README.md) · [Complete Guide](USER_GUIDE_EN.md)
 
-> This guide covers only **Simple Mode** in version 1.2.0: creating a hairstyle menu, adding BlendShape controls and hair colors, checking Menu Preview, and generating the setup.
+> This guide covers only **Simple Mode** in version 1.2.0: creating a hairstyle menu, adding BlendShape controls and Hair Material Presets, checking Menu Preview, and generating the setup.
 
 ## Requirements
 
@@ -19,7 +19,7 @@ Gesture Manager is optional. When installed, Menu Preview uses the familiar Gest
 Simple Mode separates the workflow into three pages:
 
 1. **Avatar** — select the avatar
-2. **Hair & Controls** — add hairstyles, BlendShape controls, and hair colors
+2. **Hair & Controls** — add hairstyles, BlendShape controls, and Material Presets
 3. **Preview & Generate** — inspect the menu and generate the setup
 
 The tool automatically detects the Avatar Descriptor, Hair Root or wrapper, renderers, BlendShapes, materials, and output folder. You do not need to configure parameters, Animator layers, or generated filenames.
@@ -77,7 +77,7 @@ An expanded Hair Card contains:
 - **Hair Object** — the root object of the hairstyle
 - **Hairstyle Icon** — the hairstyle button icon
 - The detected visibility behavior
-- Buttons for adding Toggle, Radial, and hair-color controls
+- Buttons for adding Toggle, Radial, and Material Preset controls
 - `▲` / `▼` for ordering and `X` for removing the entry
 
 ![Hair Card after adding a hairstyle](images/simple-mode-v1.2.0/05-hair-card.png)
@@ -136,22 +136,22 @@ After adding a control, its button name can be edited. Each entry displays its *
 
 The `X` button removes only that control from the setup.
 
-## 7. Add hair-color buttons
+## 7. Add Hair Material Presets
 
-Press **+ New Color Button** to add one hair-color button.
+Press **+ Material Preset** to add a button that switches the hairstyle to another set of existing Material assets.
 
-> Whenever a new color button is added, the tool automatically saves the materials currently used by the hairstyle as the separate **Default** button. It then creates the new color button for editing.
+> Material Presets do not create a Material or change shader color values. They replace the Material assigned to each selected Renderer/Slot. The tool automatically saves the currently assigned materials as a separate **Default** button.
 
-Under **Hair Colors**:
+Under **Material Presets**:
 
-1. Rename `Color 1` to a useful label such as `Pink`, `White`, or `Black`.
+1. Rename `Material 1` to a useful menu label such as `Pink`, `White`, or `Black`.
 2. Replace the material only in the renderer slots that should change.
 3. When the hairstyle uses multiple material slots, every detected slot is listed.
-4. Press `X` to remove that color preset.
+4. Press `X` to remove that Material Preset.
 
-![Add a hair color and assign materials](images/simple-mode-v1.2.0/10-hair-color-preset.png)
+![Add a Material Preset and assign existing materials](images/simple-mode-v1.2.0/10-material-preset.png)
 
-The Default materials are not shown as editable fields in the Hair Card because they are captured automatically. **Default** appears as a separate button in the Hair Color submenu in Preview and in the generated menu.
+The Default materials are not shown as editable fields in the Hair Card because they are captured automatically. **Default** appears as a separate button in the Hair Materials submenu in Preview and in the generated menu.
 
 ## 8. Use multiple hairstyles
 
@@ -159,9 +159,9 @@ You can add multiple Hair Cards. Expanding one card collapses the others to keep
 
 ![Multiple Hair Cards and ordering controls](images/simple-mode-v1.2.0/11-multiple-hairs.png)
 
-Every hairstyle has its own icon, Toggle controls, Radial controls, and color presets.
+Every hairstyle has its own icon, Toggle controls, Radial controls, and Material Presets.
 
-![A complete Hair Card with controls and colors](images/simple-mode-v1.2.0/12-complete-hair-card.png)
+![A complete Hair Card with controls and Material Presets](images/simple-mode-v1.2.0/12-complete-hair-card.png)
 
 ### Detection Fixes / More Options
 
@@ -174,7 +174,7 @@ This section is normally left closed. Open it only when the detected wrapper or 
 
 ## 9. Preview & Generate page
 
-When the configuration is complete, press **Next** to open page 3. The page summarizes the number of hairstyles, controls, and hair colors.
+When the configuration is complete, press **Next** to open page 3. The page summarizes the number of hairstyles, controls, and Material Presets.
 
 ![Preview and Generate summary](images/simple-mode-v1.2.0/13-preview-generate.png)
 
@@ -192,7 +192,7 @@ The first preview level shows all hairstyles in Hair Card order.
 
 ### Hairstyle submenu
 
-Selecting a hairstyle displays its Use Hair button, Toggle controls, Radial controls, and Hair Color submenu.
+Selecting a hairstyle displays its Use Hair button, Toggle controls, Radial controls, and Hair Materials submenu.
 
 ![Controls inside the first hairstyle](images/simple-mode-v1.2.0/15-menu-preview-hair-one.png)
 
@@ -203,11 +203,11 @@ Selecting a hairstyle displays its Use Hair button, Toggle controls, Radial cont
 - Preview interactions do not modify the avatar in the Scene.
 - A page control is added automatically when the menu exceeds one page.
 
-### Hair Color submenu
+### Hair Materials submenu
 
-The Hair Color submenu contains **Default** and every added color. All presets use the same bundled Hair Color icon so they are visually recognized as one group.
+The Hair Materials submenu contains **Default** and every added Material Preset. Selecting a button swaps the assigned Material assets; it does not generate a color. All presets use the same bundled Material Preset icon so they are visually recognized as one group.
 
-![Hair Color submenu with Default and added colors](images/simple-mode-v1.2.0/17-menu-preview-colors.png)
+![Hair Materials submenu with Default and added Material Presets](images/simple-mode-v1.2.0/17-menu-preview-materials.png)
 
 ## 11. Generate or update the setup
 
@@ -231,7 +231,7 @@ If a conflict is detected, generation pauses and Simple Mode provides a button t
 1. Open Hair Manager.
 2. Select the original avatar on the Avatar page.
 3. Press **Load Existing Setup for This Avatar**.
-4. Edit the Hair Cards, controls, or colors.
+4. Edit the Hair Cards, controls, or Material Presets.
 5. Check Menu Preview.
 6. Press **Generate / Update Setup** again.
 
@@ -242,6 +242,6 @@ Do not edit generated Animator, Animation, or Menu assets directly because a lat
 - Every hairstyle enables and disables correctly.
 - Toggle and Radial controls affect only their intended hair BlendShapes.
 - Default restores the original materials.
-- Every color uses the correct materials and slots.
+- Every Material Preset uses the correct Material assets and slots.
 - Menu Preview contains every button in the correct order.
 - Test the avatar in Play Mode or an avatar testing tool before Build/Upload.

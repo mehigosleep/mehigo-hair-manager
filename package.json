@@ -3,7 +3,7 @@
   "displayName": "mehigo Hair Manager",
   "version": "1.2.0",
   "unity": "2022.3",
-  "description": "Non-destructive hairstyle, BlendShape, material preset, and Modular Avatar setup tool for VRChat avatars.",
+  "description": "Non-destructive VRChat hairstyle and BlendShape setup tool with Material Presets that switch existing Material assets through Modular Avatar.",
   "keywords": [
     "vrchat",
     "vcc",

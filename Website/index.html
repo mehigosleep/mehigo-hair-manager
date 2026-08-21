@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>mehigo Hair Manager – Easy VRChat Hairstyle Control</title>
-  <meta name="description" content="An easy VRChat hairstyle control system for Unity that automatically creates Animator layers, parameters, and expression menus.">
+  <meta name="description" content="An easy VRChat hairstyle control system for Unity with automatic menus, BlendShape controls, and Material Preset switching using existing Material assets.">
   <meta name="theme-color" content="#1677ff">
   <link rel="canonical" href="https://mehigosleep.github.io/mehigo-hair-manager/">
   <link rel="alternate" hreflang="en" href="https://mehigosleep.github.io/mehigo-hair-manager/">
@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="styles.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="mehigo Hair Manager – Easy VRChat Hairstyle Control">
-  <meta property="og:description" content="Automatically create Animator layers, parameters, and expression menus for VRChat hairstyles.">
+  <meta property="og:description" content="Automatically create VRChat hairstyle menus, BlendShape controls, and Material Preset switching for existing Material assets.">
   <meta property="og:url" content="https://mehigosleep.github.io/mehigo-hair-manager/">
   <meta name="twitter:card" content="summary">
   <script type="application/ld+json">
@@ -24,7 +24,7 @@
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Windows",
     "softwareVersion": "1.2.0",
-    "description": "An easy VRChat hairstyle control system that automatically creates Animator layers, parameters, and expression menus.",
+    "description": "An easy VRChat hairstyle control system with automatic menus, BlendShape controls, and Material Preset switching using existing Material assets.",
     "url": "https://mehigosleep.github.io/mehigo-hair-manager/",
     "downloadUrl": "https://github.com/mehigosleep/mehigo-hair-manager/releases/latest",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
@@ -64,7 +64,7 @@
         </div>
         <div class="steps">
           <article class="step"><h3>Select Avatar</h3><p>Choose the avatar root. The Descriptor and output folder are detected automatically.</p></article>
-          <article class="step"><h3>Add Hair</h3><p>Add hairstyles, Toggle or Radial BlendShapes, hair colors, and menu icons.</p></article>
+          <article class="step"><h3>Add Hair</h3><p>Add hairstyles, Toggle or Radial BlendShapes, Material Presets, and menu icons.</p></article>
           <article class="step"><h3>Preview & Generate</h3><p>Check the menu preview, then create or update the complete setup with one button.</p></article>
         </div>
       </div>
@@ -76,12 +76,13 @@
         <h2 id="example-title">Build and preview the complete menu</h2>
         <p>Configure hairstyles and controls while the real-time preview shows the menus your avatar will use.</p>
       </div>
-      <img src="assets/hair-manager-menu-preview.png" alt="mehigo Hair Manager editor beside the real-time radial menu preview, with hairstyle controls and hair-color submenus" width="1672" height="941" loading="lazy">
+      <img src="assets/hair-manager-menu-preview.png" alt="mehigo Hair Manager editor beside the real-time radial menu preview, with hairstyle controls and Material Preset submenus" width="1672" height="941" loading="lazy">
+      <p class="example-note"><strong>Material switching only:</strong> The “Hair Color” wording visible in this v1.2.0 screenshot is the previous label for Material Presets. Each button swaps existing Material assets.</p>
     </section>
 
     <section class="summary wrap">
       <h2>Hair controls without manual setup</h2>
-      <p>Multiple hairstyles, BlendShape controls, hair-color presets, custom icons, real-time Menu Preview, and Modular Avatar integration—all in one Unity Editor tool.</p>
+      <p>Multiple hairstyles, BlendShape controls, Material Presets, custom icons, real-time Menu Preview, and Modular Avatar integration—all in one Unity Editor tool. Material Presets switch existing Material assets; they do not create or edit colors.</p>
     </section>
 
     <section class="install wrap">
