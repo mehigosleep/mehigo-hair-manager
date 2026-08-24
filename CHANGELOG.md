@@ -1,7 +1,9 @@
 # Changelog
 
-## Unreleased
+## 1.2.1 - 2026-08-24
 
+- Added complete Japanese localization for the Editor, Menu Preview, and Scene View Capture workflow.
+- Added and revised the Japanese Simple Mode guide using terminology aligned with the Unity Japanese manual.
 - Added Google Search Console site-verification metadata to all landing-page languages.
 - Added a complete Thai landing page with language navigation, localized metadata, and sitemap `hreflang` entries.
 - Added a complete Thai project README and language links between the English and Thai versions.

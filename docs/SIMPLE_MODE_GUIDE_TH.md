@@ -1,8 +1,8 @@
-# คู่มือ Simple Mode — mehigo Hair Manager 1.2.0
+# คู่มือ Simple Mode — mehigo Hair Manager 1.2.1
 
 [English](SIMPLE_MODE_GUIDE_EN.md) · [日本語](SIMPLE_MODE_GUIDE_JA.md) · [หน้าโครงการ](../README.md) · [คู่มือฉบับเต็ม](USER_GUIDE_TH.md)
 
-> คู่มือนี้อธิบายเฉพาะ **Simple Mode** ของเวอร์ชัน 1.2.0 สำหรับการสร้างเมนูเลือกทรงผม เพิ่มปุ่ม BlendShape เพิ่ม Hair Material Preset ตรวจ Menu Preview และ Generate Setup
+> คู่มือนี้อธิบายเฉพาะ **Simple Mode** ของเวอร์ชัน 1.2.1 สำหรับการสร้างเมนูเลือกทรงผม เพิ่มปุ่ม BlendShape เพิ่ม Hair Material Preset ตรวจ Menu Preview และ Generate Setup
 
 > **mehigo Hair Manager เป็น Community-made Automation Tool ที่สร้างมาเพื่อใช้กับ [Modular Avatar](https://modular-avatar.nadena.dev/)** ระบบจะสร้าง Animator Controller และ Layer, Animation Clips, Expression Menu, Parameters, Material Swap controls และ Component ของ Modular Avatar ที่จำเป็น ส่วน Modular Avatar เป็น Core Dependency ที่ทำ non-destructive integration ตอน Build โปรเจกต์นี้ไม่ใช่โปรเจกต์ทางการและไม่มีความเกี่ยวข้องหรือได้รับการรับรองจากผู้พัฒนา Modular Avatar
 

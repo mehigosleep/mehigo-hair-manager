@@ -87,7 +87,7 @@ public class MehigoHairProjectDataV4 : ScriptableObject
 public class MehigoHairGeneratorV4 : EditorWindow
 {
     public const string ToolName = "mehigo Hair Manager";
-    public const string ToolVersion = "1.2.0";
+    public const string ToolVersion = "1.2.1";
     private const string EditorModePreferenceKey = "mehigo.HairManager.EditorMode";
     private const string SimpleStepPreferenceKey = "mehigo.HairManager.SimpleStep";
     [Serializable]

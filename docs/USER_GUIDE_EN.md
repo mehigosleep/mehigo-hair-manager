@@ -1,12 +1,17 @@
-# mehigo Hair Manager 1.2.0 User Guide
+# mehigo Hair Manager 1.2.1 User Guide
 
 [Simple Mode Guide](SIMPLE_MODE_GUIDE_EN.md) | [Thai Simple Mode Guide](SIMPLE_MODE_GUIDE_TH.md) | [Complete English Guide](USER_GUIDE_EN.md) | [Project page](../README.md)
 
-> For Unity 2022.3 and mehigo Hair Manager 1.2.0
+> For Unity 2022.3 and mehigo Hair Manager 1.2.1
 
 mehigo Hair Manager is a community-made Unity Editor automation tool built for [Modular Avatar](https://modular-avatar.nadena.dev/). It generates Animator Controllers and Layers, Animation Clips, Expression Menus, Parameters, Material Swap controls, icons, configuration assets, and the required Modular Avatar components. Modular Avatar is the required core dependency and performs the non-destructive integration at build time.
 
 > This is not an official Modular Avatar project and is not affiliated with or endorsed by bd_ or the Modular Avatar project.
+
+## What's new in version 1.2.1
+
+- Added Japanese as an Editor language, including Menu Preview and Scene View Capture.
+- Added the Japanese Simple Mode guide with Unity Japanese terminology.
 
 ## What's new in version 1.2.0
 

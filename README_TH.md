@@ -2,7 +2,7 @@
 
 [English](README.md) | **ภาษาไทย**
 
-**Version 1.2.0**
+**Version 1.2.1**
 
 ## ติดตั้งด้วย VCC
 

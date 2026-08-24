@@ -1,7 +1,7 @@
 {
   "name": "com.mehigosleep.hair-manager",
   "displayName": "mehigo Hair Manager",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "unity": "2022.3",
   "description": "Community-made Unity Editor automation tool that generates VRChat hair control assets and configures their integration through the required Modular Avatar core dependency.",
   "keywords": [
@@ -19,7 +19,7 @@
   "license": "LicenseRef-All-Rights-Reserved",
   "documentationUrl": "https://github.com/mehigosleep/mehigo-hair-manager#readme",
   "changelogUrl": "https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md",
-  "url": "https://github.com/mehigosleep/mehigo-hair-manager/releases/download/v1.2.0/com.mehigosleep.hair-manager-1.2.0.zip",
+  "url": "https://github.com/mehigosleep/mehigo-hair-manager/releases/download/v1.2.1/com.mehigosleep.hair-manager-1.2.1.zip",
   "vpmDependencies": {
     "com.vrchat.avatars": ">=3.10.4 <3.11.0",
     "nadena.dev.modular-avatar": ">=1.14.0 <2.0.0-a"
