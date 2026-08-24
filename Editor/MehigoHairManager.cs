@@ -150,6 +150,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         new Dictionary<string, string>
         {
             { "● mehigo Preview", "● mehigo プレビュー" },
+            { "Menu Preview", "メニュープレビュー" },
             { "Updates from the current editor values without creating or modifying assets.", "現在のエディター値を反映します。アセットの作成・変更は行いません。" },
             { "Radial Preview Value", "Radial プレビュー値" },
             { "Toggle and Radial interactions in this window are preview-only and do not change the avatar.", "このウィンドウでの Toggle と Radial の操作はプレビュー専用で、アバターには反映されません。" },
