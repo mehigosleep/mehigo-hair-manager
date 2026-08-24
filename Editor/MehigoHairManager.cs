@@ -124,7 +124,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
     private enum EditorLanguage
     {
         Thai,
-        English
+        English,
+        Japanese
     }
 
     private enum EditorExperienceMode
@@ -145,9 +146,214 @@ public class MehigoHairGeneratorV4 : EditorWindow
     private SimpleWizardStep simpleWizardStep = SimpleWizardStep.Avatar;
     private OptimizationMode optimizationMode = OptimizationMode.Standard;
 
+    private static readonly Dictionary<string, string> JapaneseText =
+        new Dictionary<string, string>
+        {
+            { "● mehigo Preview", "● mehigo プレビュー" },
+            { "Updates from the current editor values without creating or modifying assets.", "現在のエディター値を反映します。アセットの作成・変更は行いません。" },
+            { "Radial Preview Value", "Radial プレビュー値" },
+            { "Toggle and Radial interactions in this window are preview-only and do not change the avatar.", "このウィンドウでの Toggle と Radial の操作はプレビュー専用で、アバターには反映されません。" },
+            { "Hair Materials", "髪のマテリアル" },
+            { "Default", "デフォルト" },
+            { "No menu controls yet", "メニューコントロールはまだありません" },
+            { "Simple", "シンプル" },
+            { "Advanced", "詳細" },
+            { "Automation Tool for Modular Avatar • Select Avatar • Add Hair • Generate Setup", "Modular Avatar 自動化ツール • アバターを選択 • 髪を追加 • セットアップを生成" },
+            { "Automation Tool for Modular Avatar • Editable Setup • Conflict Scanner", "Modular Avatar 自動化ツール • セットアップ編集 • 競合スキャナー" },
+            { "Avatar Info", "アバター情報" },
+            { "Hair Styles", "ヘアスタイル" },
+            { "Generate", "生成" },
+            { "No Avatar Selected", "アバターが選択されていません" },
+            { "Not Scanned", "未スキャン" },
+            { "Avatar", "アバター" },
+            { "Hair & Controls", "髪とコントロール" },
+            { "Preview & Generate", "プレビューと生成" },
+            { "← Back", "← 戻る" },
+            { "Next →", "次へ →" },
+            { "1. Select Avatar", "1. アバターを選択" },
+            { "Select the avatar root. Descriptor and output folder are detected automatically.", "アバターのルートを選択してください。Descriptor と出力フォルダーは自動検出されます。" },
+            { "Load Existing Setup for This Avatar", "このアバターの既存セットアップを読み込む" },
+            { "No VRChat Avatar Descriptor was found in the selected object.", "選択したオブジェクトに VRChat Avatar Descriptor が見つかりません。" },
+            { "Menu Options", "メニューオプション" },
+            { "Menu Name", "メニュー名" },
+            { "Remember Selected Hair", "選択した髪を保存" },
+            { "2. Add Hair and Controls", "2. 髪とコントロールを追加" },
+            { "Select one or more hair objects in the Hierarchy and add them together.", "ヒエラルキーで髪のゲームオブジェクトを1つ以上選択し、まとめて追加します。" },
+            { "+ Add Selected Hair", "+ 選択した髪を追加" },
+            { "+ Empty Hair", "+ 空の髪を追加" },
+            { "No hair styles yet — select Hair Roots in the Hierarchy and add them.", "ヘアスタイルがありません。ヒエラルキーで Hair Root を選択して追加してください。" },
+            { "Drop Hair Objects Here", "ここに髪のゲームオブジェクトをドロップ" },
+            { "Hair", "髪" },
+            { "Button Name", "ボタン名" },
+            { "Hair Object", "髪のゲームオブジェクト" },
+            { "Hairstyle Icon", "ヘアスタイルアイコン" },
+            { "Add Controls", "コントロールを追加" },
+            { "+ Toggle", "+ Toggle" },
+            { "+ Radial", "+ Radial" },
+            { "+ Material Preset", "+ マテリアルプリセット" },
+            { "Material Presets switch existing Material assets in each renderer slot. They do not create or edit material colors. The current materials are saved automatically as a separate “Default” button.", "マテリアルプリセットは、各レンダラースロットの既存マテリアルアセットを切り替えます。マテリアルの色を作成・編集する機能ではありません。現在のマテリアルは「デフォルト」ボタンとして自動保存されます。" },
+            { "Detection Fixes / More Options", "検出の修正 / その他のオプション" },
+            { "Select a Hair Object first.", "先に髪のゲームオブジェクトを選択してください。" },
+            { "A Wrapper must be selected", "Wrapper を選択してください" },
+            { "Visibility is controlled by another system", "表示状態は別のシステムで制御されます" },
+            { "This Hair Object will be enabled/disabled", "この髪のゲームオブジェクトを有効/無効にします" },
+            { "Missing BlendShape", "BlendShape が見つかりません" },
+            { "Material Presets", "マテリアルプリセット" },
+            { "3. Preview and Generate", "3. プレビューと生成" },
+            { "Preview the menu, then generate the control assets and components Modular Avatar uses at build time.", "メニューをプレビューし、Modular Avatar がビルド時に使用するコントロールアセットとコンポーネントを生成します。" },
+            { "Open Menu Preview", "メニュープレビューを開く" },
+            { "Generate / Update Setup", "セットアップを生成 / 更新" },
+            { "Fix This Hair Entry", "この髪の設定を修正" },
+            { "Select Avatar", "アバターを選択" },
+            { "Add Hair Styles", "ヘアスタイルを追加" },
+            { "Open Advanced Settings", "詳細設定を開く" },
+            { "Open Conflict Review", "競合レビューを開く" },
+            { "No Available BlendShapes", "利用可能な BlendShape がありません" },
+            { "Root", "ルート" },
+            { "No Control", "制御なし" },
+            { "Select an avatar or load an existing setup", "アバターを選択するか、既存のセットアップを読み込んでください" },
+            { "Prefab / Avatar", "Prefab / アバター" },
+            { "Load Existing Setup", "既存のセットアップを読み込む" },
+            { "No VRCAvatarDescriptor was found in the selected object.", "選択したオブジェクトに VRCAvatarDescriptor が見つかりません。" },
+            { "Main Settings", "メイン設定" },
+            { "Frequently used settings", "よく使う設定" },
+            { "Root Menu Name", "ルートメニュー名" },
+            { "Save Selected Hair", "選択した髪を保存" },
+            { "Advanced Settings", "詳細設定" },
+            { "Hair Parameter", "髪の Parameter" },
+            { "Generated Object", "生成されるゲームオブジェクト" },
+            { "Save Folder", "保存先フォルダー" },
+            { "Avatar Output Folder", "アバター出力フォルダー" },
+            { "Modular Avatar: Non-destructive Integration", "Modular Avatar：非破壊インテグレーション" },
+            { "mehigo Hair Manager generates the Animator, Animation Clips, Expression Menu, Parameters, and required component setup. Modular Avatar is the core dependency that performs the non-destructive merge at build time.", "mehigo Hair Manager は Animator、Animation Clip、Expression Menu、Parameter、および必要なコンポーネント設定を生成します。Modular Avatar はビルド時に非破壊マージを行う中核依存パッケージです。" },
+            { "Community-made • Not an official Modular Avatar project", "コミュニティ制作 • Modular Avatar の公式プロジェクトではありません" },
+            { "Open official Modular Avatar website", "Modular Avatar 公式サイトを開く" },
+            { "Compact", "コンパクト" },
+            { "+ Add Hair", "+ 髪を追加" },
+            { "Add Selected", "選択項目を追加" },
+            { "Open Real-Time Menu Preview", "リアルタイムメニュープレビューを開く" },
+            { "The Preview window mirrors the current Hair Styles buttons and icons in real time.", "プレビューウィンドウには、現在のヘアスタイルのボタンとアイコンがリアルタイムで反映されます。" },
+            { "No Object", "ゲームオブジェクトなし" },
+            { "Menu Button Name", "メニューボタン名" },
+            { "Button Icon", "ボタンアイコン" },
+            { "Scan Materials", "マテリアルをスキャン" },
+            { "Preserve Existing Animator", "既存の Animator を保持" },
+            { "Auto Detect Activation", "有効化方法を自動検出" },
+            { "Re-Detect", "再検出" },
+            { "Detects from Hair Root, parent, renderers and animators", "Hair Root、親、Renderer、Animator から検出します" },
+            { "Detected Mode", "検出されたモード" },
+            { "Detected Wrapper", "検出された Wrapper" },
+            { "Activation Mode", "有効化モード" },
+            { "Existing Wrapper", "既存の Wrapper" },
+            { "+ Add", "+ 追加" },
+            { "Remove", "削除" },
+            { "Control Type", "コントロールタイプ" },
+            { "Radial Max Value", "Radial 最大値" },
+            { "ON Value", "ON の値" },
+            { "Saved", "保存" },
+            { "Radial Puppet uses a Float parameter from 0-1 and maps it to BlendShape 0 through the configured maximum value.", "Radial Puppet は 0～1 の Float Parameter を使用し、BlendShape の 0 から設定した最大値へマッピングします。" },
+            { "Default Preset snapshots every material slot under the Hair Root. New presets copy that slot layout so you can replace only the materials you want.", "デフォルトプリセットは Hair Root 配下のすべてのマテリアルスロットを保存します。新しいプリセットはそのスロット構成をコピーするため、必要なマテリアルだけを差し替えられます。" },
+            { "Create Default Material Preset", "デフォルトマテリアルプリセットを作成" },
+            { "Icon", "アイコン" },
+            { "+ Add Material Preset", "+ マテリアルプリセットを追加" },
+            { "Default Material Preset", "デフォルトマテリアルプリセット" },
+            { "Missing Renderer", "Renderer が見つかりません" },
+            { "Recommendation: Select a Hair Object first and mehigo will suggest a suitable mode.", "推奨：先に髪のゲームオブジェクトを選択すると、mehigo が適切なモードを提案します。" },
+            { "Use this when another system already controls hair visibility. mehigo will not animate the Hair Object active state.", "別のシステムが髪の表示状態を制御している場合に使用します。mehigo は髪のゲームオブジェクトの Active 状態をアニメーション化しません。" },
+            { "The selected Hair Object appears to be the hairstyle root. If disabling it hides the complete hairstyle, Control Hair Root is recommended.", "選択した髪のゲームオブジェクトはヘアスタイルのルートと思われます。無効にして髪全体が非表示になる場合は「Hair Root を制御」を推奨します。" },
+            { "Disable the Hair Object in the Hierarchy: if the whole hairstyle disappears, use Control Hair Root. If pieces remain, use the parent containing the full set as Existing Wrapper.", "ヒエラルキーで髪のゲームオブジェクトを無効にしてください。髪全体が消える場合は「Hair Root を制御」、一部が残る場合は髪全体を含む親を「既存の Wrapper」に指定します。" },
+            { "mehigo Recommendation:\\n", "mehigo の推奨：\\n" },
+            { "Conflict Scanner", "競合スキャナー" },
+            { "The scanner looks for Animator Controllers and Modular Avatar Merge Animators under each hair, reads their AnimationClip curve bindings, and compares them with properties mehigo will animate.", "各髪の配下にある Animator Controller と Modular Avatar Merge Animator を検索し、Animation Clip のカーブバインディングを読み取って、mehigo がアニメーション化するプロパティと比較します。" },
+            { "Scan Animator / MA Conflicts", "Animator / MA の競合をスキャン" },
+            { "Run the scanner after changing Hair, Wrapper, Linked Objects, or BlendShapes.", "Hair、Wrapper、Linked Object、BlendShape を変更した後にスキャンしてください。" },
+            { "No direct property conflicts were found in the Animator/MA controllers that mehigo could inspect.", "mehigo が確認できる Animator / MA Controller には、直接的なプロパティ競合が見つかりませんでした。" },
+            { "Animator Optimization", "Animator の最適化" },
+            { "Use a stable Animator layout, then let AAO optimize it when available", "安定した Animator 構成を使用し、利用可能な場合は AAO に最適化を任せます" },
+            { "Direct BlendTree Optimized Mode is disabled because real avatar tests showed cross-influence between BlendShape/Radial controls.", "実際のアバターテストで BlendShape / Radial コントロール間の干渉が確認されたため、Direct BlendTree Optimized Mode は無効です。" },
+            { "Standard", "標準" },
+            { "1 BlendShape control = 1 Layer\\nRadial keeps the proven 1D BlendTree layout\\nStable and easy to debug", "BlendShape コントロール1つ = Layer 1つ\\nRadial は実績のある 1D BlendTree 構成を維持\\n安定してデバッグしやすい構成" },
+            { "Let AAO Handle It", "AAO に任せる" },
+            { "mehigo still generates Standard\\nAAO Optimize Animator runs at build time\\nRecommended with Trace and Optimize", "mehigo は標準構成を生成\\nAAO Optimize Animator はビルド時に実行\\nTrace and Optimize との併用を推奨" },
+            { "Generated Animator (before AAO build)", "生成される Animator（AAO ビルド前）" },
+            { "Hair Selector Layers", "髪選択 Layer" },
+            { "BlendShape Layers", "BlendShape Layer" },
+            { "Material Layers", "マテリアル Layer" },
+            { "Total", "合計" },
+            { "The final layer structure after AAO build depends on AAO's Animator optimization, so mehigo does not guess a post-build layer count.", "AAO ビルド後の最終 Layer 構成は AAO の Animator 最適化に依存するため、mehigo はビルド後の Layer 数を推定しません。" },
+            { "Trace and Optimize was not detected — this behaves like Standard until AAO Trace and Optimize is added.", "Trace and Optimize が検出されませんでした。AAO Trace and Optimize を追加するまでは標準と同じ動作になります。" },
+            { "mehigo recommends: Let AAO Handle It", "mehigo の推奨：AAO に任せる" },
+            { "mehigo recommends: Standard", "mehigo の推奨：標準" },
+            { "Performance Analyzer", "パフォーマンス分析" },
+            { "Analyze meshes, materials, BlendShapes, and generated mehigo content", "Mesh、マテリアル、BlendShape、生成される mehigo コンテンツを分析します" },
+            { "Analyze Performance", "パフォーマンスを分析" },
+            { "Press Analyze Performance to inspect the avatar.", "「パフォーマンスを分析」を押してアバターを確認してください。" },
+            { "Analysis", "分析" },
+            { "Hair Triangles", "髪の Triangle 数" },
+            { "Renderers", "Renderer" },
+            { "Skinned Meshes", "Skinned Mesh" },
+            { "Material Slots", "マテリアルスロット" },
+            { "Mesh BlendShapes", "Mesh の BlendShape" },
+            { "Animator Components", "Animator コンポーネント" },
+            { "mehigo Parameters", "mehigo Parameter" },
+            { "mehigo Animator Layers", "mehigo Animator Layer" },
+            { "Overall: ", "総合：" },
+            { "Avatar Optimizer Compatibility", "Avatar Optimizer の互換性" },
+            { "Avatar Optimizer was not detected for this project/avatar.", "このプロジェクト / アバターでは Avatar Optimizer が検出されませんでした。" },
+            { "Let AAO Handle It is recommended", "「AAO に任せる」を推奨します" },
+            { "Component not found on the avatar", "アバターにコンポーネントが見つかりません" },
+            { "AAO Merge Material component detected — make sure it is not applied to a renderer used by mehigo Material Presets.", "AAO Merge Material コンポーネントを検出しました。mehigo のマテリアルプリセットが使用する Renderer に適用されていないことを確認してください。" },
+            { "AAO Merge Skinned Mesh component detected — if hair visibility uses Active/Enable animations, review AAO Copy Enablement Animation / merge targets.", "AAO Merge Skinned Mesh コンポーネントを検出しました。髪の表示に Active / Enable アニメーションを使う場合は、AAO Copy Enablement Animation / マージ先を確認してください。" },
+            { "Recommended", "推奨" },
+            { "Selected", "選択済み" },
+            { "Select", "選択" },
+            { "High impact", "影響：大" },
+            { "Moderate impact", "影響：中" },
+            { "Low impact", "影響：小" },
+            { "Preflight", "事前チェック" },
+            { "Review key status before generating", "生成前に主要な状態を確認します" },
+            { "Not selected", "未選択" },
+            { "Conflict Scan", "競合スキャン" },
+            { "Passed", "合格" },
+            { "Not scanned", "未スキャン" },
+            { "Generate / Update mehigo Setup", "mehigo セットアップを生成 / 更新" },
+            { "Save Config", "設定を保存" },
+            { "Required data is missing. Check Avatar Info and Hair Styles.", "必要なデータが不足しています。「アバター情報」と「ヘアスタイル」を確認してください。" },
+            { "Potential conflicts were found. Review the Conflict Scanner above before generating.", "競合の可能性が見つかりました。生成前に上の競合スキャナーを確認してください。" },
+            { "Texture", "テクスチャ" },
+            { "Captured Icon", "キャプチャしたアイコン" },
+            { "Preview / Capture", "プレビュー / キャプチャ" },
+            { "Captures the current Scene View camera. Frame the shot before pressing Capture.", "現在のシーンビューのカメラを使用します。キャプチャする前に構図を調整してください。" },
+            { "Select an Avatar with a VRChat Avatar Descriptor.", "VRChat Avatar Descriptor のあるアバターを選択してください。" },
+            { "Add at least one hair style.", "ヘアスタイルを1つ以上追加してください。" },
+            { "The output folder is invalid. Review it in Advanced Mode.", "出力フォルダーが無効です。詳細モードで確認してください。" },
+            { "Scene View Preview", "シーンビュープレビュー" },
+            { "This is the 1:1 framing that will be used for the icon.", "アイコンに使用される 1:1 の構図です。" },
+            { "No preview yet\\nOpen Scene View and press Refresh Preview", "プレビューはまだありません\\nシーンビューを開いて「プレビューを更新」を押してください" },
+            { "Refresh Preview", "プレビューを更新" },
+            { "Capture & Use", "キャプチャして使用" },
+            { "Cancel", "キャンセル" },
+            { "To change the framing, move the Scene View camera, then press Refresh Preview again.", "構図を変更するには、シーンビューのカメラを動かしてから、もう一度「プレビューを更新」を押してください。" },
+            { "No active Scene View was found.", "アクティブなシーンビューが見つかりません。" },
+            { "Could not create the preview.", "プレビューを作成できませんでした。" },
+            { "Preview refreshed.", "プレビューを更新しました。" },
+        };
+
+    internal static string ToJapanese(string english)
+    {
+        return JapaneseText.TryGetValue(english, out string translated)
+            ? translated
+            : english;
+    }
+
     private string T(string th, string en)
     {
-        return language == EditorLanguage.Thai ? th : en;
+        if (language == EditorLanguage.Thai)
+            return th;
+
+        return language == EditorLanguage.Japanese
+            ? ToJapanese(en)
+            : en;
     }
     private enum BlendShapeControlMode
     {
@@ -264,8 +470,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
         {
             MenuPreviewWindow window = GetWindow<MenuPreviewWindow>(
                 false,
-                source != null && source.language == EditorLanguage.Thai
-                    ? "ตัวอย่าง Menu"
+                source != null
+                    ? source.T("ตัวอย่าง Menu", "Menu Preview")
                     : "Menu Preview",
                 true
             );
@@ -1022,8 +1228,11 @@ public class MehigoHairGeneratorV4 : EditorWindow
         if (GUILayout.Toggle(language == EditorLanguage.Thai, "ไทย", EditorStyles.miniButtonLeft, GUILayout.Width(48)))
             language = EditorLanguage.Thai;
 
-        if (GUILayout.Toggle(language == EditorLanguage.English, "ENG", EditorStyles.miniButtonRight, GUILayout.Width(48)))
+        if (GUILayout.Toggle(language == EditorLanguage.English, "ENG", EditorStyles.miniButtonMid, GUILayout.Width(48)))
             language = EditorLanguage.English;
+
+        if (GUILayout.Toggle(language == EditorLanguage.Japanese, "日本語", EditorStyles.miniButtonRight, GUILayout.Width(58)))
+            language = EditorLanguage.Japanese;
 
         EditorGUILayout.EndHorizontal();
 
@@ -2427,8 +2636,10 @@ public class MehigoHairGeneratorV4 : EditorWindow
             {
                 string[] activationLabels =
                     language == EditorLanguage.Thai
-                    ? new[] { "ควบคุม Hair Root", "ควบคุม Wrapper เดิม", "ไม่ควบคุม Object" }
-                        : new[] { "Control Hair Root", "Control Existing Wrapper", "Do Not Control Object" };
+                        ? new[] { "ควบคุม Hair Root", "ควบคุม Wrapper เดิม", "ไม่ควบคุม Object" }
+                        : language == EditorLanguage.Japanese
+                            ? new[] { "Hair Root を制御", "既存の Wrapper を制御", "ゲームオブジェクトを制御しない" }
+                            : new[] { "Control Hair Root", "Control Existing Wrapper", "Do Not Control Object" };
 
                 hair.activationMode = (ActivationMode)EditorGUILayout.Popup(
                 T("Activation Mode", "Activation Mode"),
@@ -5804,7 +6015,9 @@ public class MehigoHairGeneratorV4 : EditorWindow
         string[] modeLabels =
             language == EditorLanguage.Thai
                 ? new[] { "Default", "เลือก Texture", "Capture จาก Scene View" }
-                : new[] { "Default", "Custom Texture", "Capture From Scene" };
+                : language == EditorLanguage.Japanese
+                    ? new[] { "デフォルト", "カスタムテクスチャ", "シーンビューからキャプチャ" }
+                    : new[] { "Default", "Custom Texture", "Capture From Scene" };
 
         mode = (IconMode)EditorGUILayout.Popup(
             label,
@@ -5855,7 +6068,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
                 MehigoSceneCapturePreviewWindow.Open(
                     captureBaseName,
                     GetAvatarScopedSaveFolder(),
-                    language == EditorLanguage.Thai
+                    (int)language
                 );
             }
 
@@ -6346,7 +6559,7 @@ public class MehigoSceneCapturePreviewWindow : EditorWindow
 
     private string captureBaseName;
     private string saveFolder;
-    private bool thai;
+    private int language;
 
     private Texture2D previewTexture;
     private string statusMessage = "";
@@ -6357,18 +6570,22 @@ public class MehigoSceneCapturePreviewWindow : EditorWindow
     public static void Open(
         string captureBaseName,
         string saveFolder,
-        bool thai)
+        int language)
     {
         MehigoSceneCapturePreviewWindow window =
             GetWindow<MehigoSceneCapturePreviewWindow>(
                 true,
-                thai ? "ตัวอย่าง Capture" : "Capture Preview",
+                language == 0
+                    ? "ตัวอย่าง Capture"
+                    : language == 2
+                        ? "キャプチャプレビュー"
+                        : "Capture Preview",
                 true
             );
 
         window.captureBaseName = captureBaseName;
         window.saveFolder = saveFolder;
-        window.thai = thai;
+        window.language = language;
 
         window.minSize = new Vector2(380, 470);
         window.maxSize = new Vector2(520, 620);
@@ -6391,7 +6608,12 @@ public class MehigoSceneCapturePreviewWindow : EditorWindow
 
     private string T(string th, string en)
     {
-        return thai ? th : en;
+        if (language == 0)
+            return th;
+
+        return language == 2
+            ? MehigoHairGeneratorV4.ToJapanese(en)
+            : en;
     }
 
     private void OnDisable()
