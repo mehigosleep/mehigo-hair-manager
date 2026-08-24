@@ -28,6 +28,12 @@ Version 1.3.0 uses Simple Build as the only workflow. Hair & Controls uses a sca
 
 [Changelog](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md)
 
+## Overview
+
+### Simple Build and real-time Menu Preview
+
+![mehigo Hair Manager Simple Build with real-time Menu Preview](docs/images/overview-simple-build-editor.png)
+
 ## Features
 
 - Simple Build with separate Avatar → Hair & Controls → Preview & Generate pages

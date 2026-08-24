@@ -28,6 +28,12 @@ Version 1.3.0 ใช้ Simple Build เป็น Workflow เดียว ห�
 
 [Changelog](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md)
 
+## ภาพรวม
+
+### Simple Build และ Menu Preview แบบ Real-time
+
+![mehigo Hair Manager Simple Build พร้อม Menu Preview แบบ Real-time](docs/images/overview-simple-build-editor.png)
+
 ## ความสามารถ
 
 - Simple Build แยกการทำงานเป็นหน้า Avatar → Hair & Controls → Preview & Generate
