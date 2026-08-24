@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.3.0 - 2026-08-24
+
+- Replaced the former Simple / Advanced mode switch with a single guided workflow named **Simple Build**.
+- Removed Advanced Mode from the user interface while preserving existing setup loading and the generation features used by Simple Build.
+- Redesigned Hair & Controls as a master-detail workspace: a dedicated hairstyle list on the left and the selected hairstyle editor on the right.
+- Kept the two-column Hair & Controls layout at the minimum supported window size.
+- Added independent scrolling for the hairstyle list and selected hairstyle editor so the page header and Back/Next navigation remain stable.
+- Added drag-and-drop creation directly inside the hairstyle list, including multi-object drops from the Hierarchy, and removed the separate large drop zone.
+- Added drag reordering, persistent selection, and predictable selection behavior after adding, moving, or removing hairstyles.
+- Renamed **Add Controls** to **Add BlendShape Controls** in Thai, English, and Japanese to clarify that Toggle and Radial create BlendShape controls.
+- Moved the Material Preset action and explanation into the dedicated Material Presets section.
+- Integrated Conflict Scanner and conflict details into Preview & Generate so conflict review no longer depends on Advanced Mode.
+- Preserved compatibility with existing `1.2.x` avatar setup data and generated assets.
+
 ## 1.2.1 - 2026-08-24
 
 - Added complete Japanese localization for the Editor, Menu Preview, and Scene View Capture workflow.

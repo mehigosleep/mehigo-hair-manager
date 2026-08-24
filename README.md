@@ -2,7 +2,7 @@
 
 [English](README.md) | [ภาษาไทย](README_TH.md)
 
-**Version 1.2.1**
+**Version 1.3.0**
 
 ## Install with VCC
 
@@ -16,7 +16,7 @@ Repository URL:
 
 **mehigo Hair Manager** is a community-made Unity Editor automation tool built for [Modular Avatar](https://modular-avatar.nadena.dev/). It generates Animator Controllers and Layers, Animation Clips, Expression Menus, Parameters, Material Swap controls, and the Modular Avatar components required to integrate them with a VRChat avatar.
 
-Simple Mode guides you through selecting an avatar, adding hairstyles, creating Toggle and Radial BlendShape controls, setting up Hair Material Presets, previewing the menu, and generating the complete setup. Material Presets switch existing Material assets in renderer slots; the tool does not create materials or edit their colors.
+Simple Build guides you through selecting an avatar, adding hairstyles, creating Toggle and Radial BlendShape controls, setting up Hair Material Presets, previewing the menu, checking conflicts, and generating the complete setup. Material Presets switch existing Material assets in renderer slots; the tool does not create materials or edit their colors.
 
 > **Material switching only:** Prepare each Material variant in Unity first. mehigo Hair Manager creates the VRChat menu and animations that swap those existing Materials and restore the original Default set.
 
@@ -24,28 +24,20 @@ Modular Avatar is the required core dependency and performs the non-destructive 
 
 > **Community project:** This is not an official Modular Avatar project and is not affiliated with or endorsed by bd_ or the Modular Avatar project.
 
-Advanced Mode remains available for custom activation behavior, linked objects, compatibility adjustments, conflict review, and detailed setup control.
+Version 1.3.0 uses Simple Build as the only workflow. Hair & Controls uses a scalable hairstyle list with a separate selected-item editor, independent scrolling, drag reordering, and direct Hierarchy drag and drop. Activation detection fixes, linked objects, and conflict review remain available inside this workflow.
 
-[คู่มือ Simple Mode ภาษาไทย](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_TH.md) · [Simple Mode Guide in English](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_EN.md) · [Simple Modeガイド 日本語](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_JA.md) · [คู่มือฉบับเต็ม](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_TH.md) · [Complete English Guide](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_EN.md) · [Changelog](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md)
-
-## Overview
-
-### Simple Mode and real-time Menu Preview
-
-![mehigo Hair Manager Simple Mode with real-time Menu Preview](https://raw.githubusercontent.com/mehigosleep/mehigo-hair-manager/main/docs/images/overview-simple-mode-editor.png)
-
-> The v1.2.0 screenshot uses the previous **Hair Color** label. This control is Material Preset switching: every button swaps existing Material assets.
+[Changelog](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md)
 
 ## Features
 
-- Simple Mode with separate Avatar → Hair & Controls → Preview & Generate pages
-- Advanced Mode with the complete editor controls from earlier versions
-- Add multiple Hair Objects from the Hierarchy selection or by drag and drop
+- Simple Build with separate Avatar → Hair & Controls → Preview & Generate pages
+- Master-detail Hair & Controls workspace with independent list and editor scrolling
+- Add multiple Hair Objects from the Hierarchy selection or by dropping them directly into the hairstyle list
 - Quick Toggle / Radial controls without manually selecting a Renderer first
 - One-click Hair Material Preset setup with automatic default material scanning
 - Switch existing Material assets per renderer slot, with automatic restoration of the original Default materials
 - Bundled default icons for Hair menus, hairstyles, BlendShape controls, and Material Presets
-- Default, Project Texture, or Scene Capture hairstyle icons in Simple Mode
+- Default, Project Texture, or Scene Capture hairstyle icons in Simple Build
 - Multiple hairstyle selector menu
 - Modular Avatar Merge Animator / Parameters / Menu Installer workflow
 - Linked objects per hairstyle
@@ -57,7 +49,7 @@ Advanced Mode remains available for custom activation behavior, linked objects, 
 - Existing hair animator / wrapper compatibility options
 - Conflict Scanner integrated into the Generate page
 - Avatar Optimizer (AAO) compatibility detection
-- Thai / English editor UI
+- Thai / English / Japanese editor UI
 - Editable saved setup configuration
 - Avatar-scoped generated output to prevent different avatars from overwriting each other's assets
 
@@ -100,14 +92,12 @@ Do not install the tool through both VCC and the manual method in the same proje
 
 ## Basic workflow
 
-1. Open Hair Manager in the default **Simple** mode.
+1. Open Hair Manager; **Simple Build** opens directly.
 2. On **Avatar**, select the avatar and continue to **Hair & Controls**.
-3. Add Hair Objects, then add Toggle, Radial, or **Material Preset** controls from each Hair card when needed.
-4. Continue to **Preview & Generate**, inspect Menu Preview, and press **Generate / Update Setup**.
-5. Switch to **Advanced** only when manual compatibility, parameter, folder, or detailed control settings are required.
+3. Add Hair Objects, select a hairstyle from the list, then add BlendShape Toggle/Radial controls or **Material Presets** when needed.
+4. Use **Detection Fixes / More Options** inside the selected hairstyle when activation or Linked Object adjustments are required.
+5. Continue to **Preview & Generate**, inspect Menu Preview and Conflict Scanner, then press **Generate / Update Setup**.
 6. Test the generated menu and animations before uploading the avatar.
-
-For the illustrated v1.2.0 workflow, see the [คู่มือ Simple Mode ภาษาไทย](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_TH.md) or [Simple Mode Guide in English](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/SIMPLE_MODE_GUIDE_EN.md). Advanced options remain documented in the [คู่มือฉบับเต็ม](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_TH.md) and [Complete English Guide](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/docs/USER_GUIDE_EN.md).
 
 The **Save Folder** is the shared base folder. mehigo automatically creates a stable `Avatar_<id>` subfolder for each avatar instance in the Scene, so even a copied instance of the same Prefab does not overwrite the first avatar's Controller, Animation Clips, Expression Menus, or captured Icons. A Prefab asset opened directly uses its asset GUID.
 

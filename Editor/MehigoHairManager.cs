@@ -8,6 +8,7 @@ using UnityEditor.Animations;
 using UnityEngine;
 using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Avatars.ScriptableObjects;
+using AnimatorController = UnityEditor.Animations.AnimatorController;
 
 public class MehigoHairProjectDataV4 : ScriptableObject
 {
@@ -87,8 +88,7 @@ public class MehigoHairProjectDataV4 : ScriptableObject
 public class MehigoHairGeneratorV4 : EditorWindow
 {
     public const string ToolName = "mehigo Hair Manager";
-    public const string ToolVersion = "1.2.1";
-    private const string EditorModePreferenceKey = "mehigo.HairManager.EditorMode";
+    public const string ToolVersion = "1.3.0";
     private const string SimpleStepPreferenceKey = "mehigo.HairManager.SimpleStep";
     [Serializable]
     private class MaterialSlotEntry
@@ -128,12 +128,6 @@ public class MehigoHairGeneratorV4 : EditorWindow
         Japanese
     }
 
-    private enum EditorExperienceMode
-    {
-        Simple,
-        Advanced
-    }
-
     private enum SimpleWizardStep
     {
         Avatar,
@@ -142,7 +136,6 @@ public class MehigoHairGeneratorV4 : EditorWindow
     }
 
     private EditorLanguage language = EditorLanguage.English;
-    private EditorExperienceMode editorMode = EditorExperienceMode.Simple;
     private SimpleWizardStep simpleWizardStep = SimpleWizardStep.Avatar;
     private OptimizationMode optimizationMode = OptimizationMode.Standard;
 
@@ -157,8 +150,6 @@ public class MehigoHairGeneratorV4 : EditorWindow
             { "Hair Materials", "髪のマテリアル" },
             { "Default", "デフォルト" },
             { "No menu controls yet", "メニューコントロールはまだありません" },
-            { "Simple", "シンプル" },
-            { "Advanced", "詳細" },
             { "Automation Tool for Modular Avatar • Select Avatar • Add Hair • Generate Setup", "Modular Avatar 自動化ツール • アバターを選択 • 髪を追加 • セットアップを生成" },
             { "Automation Tool for Modular Avatar • Editable Setup • Conflict Scanner", "Modular Avatar 自動化ツール • セットアップ編集 • 競合スキャナー" },
             { "Avatar Info", "アバター情報" },
@@ -179,16 +170,23 @@ public class MehigoHairGeneratorV4 : EditorWindow
             { "Menu Name", "メニュー名" },
             { "Remember Selected Hair", "選択した髪を保存" },
             { "2. Add Hair and Controls", "2. 髪とコントロールを追加" },
-            { "Select one or more hair objects in the Hierarchy and add them together.", "ヒエラルキーで髪のゲームオブジェクトを1つ以上選択し、まとめて追加します。" },
+            { "Select hair objects in the Hierarchy and add them, or drag them into the hairstyle list.", "ヒエラルキーで髪のゲームオブジェクトを選択して追加するか、ヘアスタイル一覧にドラッグ＆ドロップします。" },
             { "+ Add Selected Hair", "+ 選択した髪を追加" },
             { "+ Empty Hair", "+ 空の髪を追加" },
             { "No hair styles yet — select Hair Roots in the Hierarchy and add them.", "ヘアスタイルがありません。ヒエラルキーで Hair Root を選択して追加してください。" },
             { "Drop Hair Objects Here", "ここに髪のゲームオブジェクトをドロップ" },
+            { "Drop Hair Objects into the hairstyle list, or use Add Selected Hair.", "髪のゲームオブジェクトをヘアスタイル一覧にドロップするか、「選択した髪を追加」を使用してください。" },
             { "Hair", "髪" },
+            { "Hairstyles", "ヘアスタイル" },
+            { "Select one item to edit. Drag rows to reorder.", "編集する項目を選択してください。行をドラッグして並べ替えられます。" },
+            { "Selected Hairstyle", "選択中のヘアスタイル" },
+            { "Remove Hairstyle", "ヘアスタイルを削除" },
+            { "Move Up", "上へ移動" },
+            { "Move Down", "下へ移動" },
             { "Button Name", "ボタン名" },
             { "Hair Object", "髪のゲームオブジェクト" },
             { "Hairstyle Icon", "ヘアスタイルアイコン" },
-            { "Add Controls", "コントロールを追加" },
+            { "Add BlendShape Controls", "BlendShape コントロールを追加" },
             { "+ Toggle", "+ Toggle" },
             { "+ Radial", "+ Radial" },
             { "+ Material Preset", "+ マテリアルプリセット" },
@@ -327,7 +325,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
             { "Captures the current Scene View camera. Frame the shot before pressing Capture.", "現在のシーンビューのカメラを使用します。キャプチャする前に構図を調整してください。" },
             { "Select an Avatar with a VRChat Avatar Descriptor.", "VRChat Avatar Descriptor のあるアバターを選択してください。" },
             { "Add at least one hair style.", "ヘアスタイルを1つ以上追加してください。" },
-            { "The output folder is invalid. Review it in Advanced Mode.", "出力フォルダーが無効です。詳細モードで確認してください。" },
+            { "The output folder is invalid. Reload this avatar's setup to restore the default folder.", "出力フォルダーが無効です。このアバターのセットアップを再読み込みして、デフォルトフォルダーを復元してください。" },
             { "Scene View Preview", "シーンビュープレビュー" },
             { "This is the 1:1 framing that will be used for the icon.", "アイコンに使用される 1:1 の構図です。" },
             { "No preview yet\nOpen Scene View and press Refresh Preview", "プレビューはまだありません\nシーンビューを開いて「プレビューを更新」を押してください" },
@@ -1089,12 +1087,14 @@ public class MehigoHairGeneratorV4 : EditorWindow
     private readonly List<ConflictItem> conflicts = new List<ConflictItem>();
 
     private Vector2 scroll;
-    private int selectedTab;
     private bool scanComplete;
     private bool showAdvancedProject;
     private bool compactHairCards;
     private bool simpleShowOptionalSettings;
     private int simpleExpandedHairIndex = -1;
+    private Vector2 simpleHairListScroll;
+    private Vector2 simpleHairEditorScroll;
+    private UnityEditorInternal.ReorderableList simpleHairReorderableList;
 
     private int perfTriangles;
     private int perfRenderers;
@@ -1136,11 +1136,6 @@ public class MehigoHairGeneratorV4 : EditorWindow
     {
         minSize = new Vector2(640, 660);
         optimizationMode = OptimizationMode.Standard;
-        editorMode = (EditorExperienceMode)Mathf.Clamp(
-            EditorPrefs.GetInt(EditorModePreferenceKey, 0),
-            0,
-            1
-        );
         simpleWizardStep = (SimpleWizardStep)Mathf.Clamp(
             EditorPrefs.GetInt(SimpleStepPreferenceKey, 0),
             0,
@@ -1198,34 +1193,6 @@ public class MehigoHairGeneratorV4 : EditorWindow
         EditorGUILayout.LabelField($"{ToolName}  v{ToolVersion}", headerStyle);
         GUILayout.FlexibleSpace();
 
-        EditorExperienceMode previousMode = editorMode;
-
-        if (GUILayout.Toggle(
-            editorMode == EditorExperienceMode.Simple,
-            T("ง่าย", "Simple"),
-            EditorStyles.miniButtonLeft,
-            GUILayout.Width(64)))
-        {
-            editorMode = EditorExperienceMode.Simple;
-        }
-
-        if (GUILayout.Toggle(
-            editorMode == EditorExperienceMode.Advanced,
-            T("ขั้นสูง", "Advanced"),
-            EditorStyles.miniButtonRight,
-            GUILayout.Width(76)))
-        {
-            editorMode = EditorExperienceMode.Advanced;
-        }
-
-        if (previousMode != editorMode)
-        {
-            EditorPrefs.SetInt(EditorModePreferenceKey, (int)editorMode);
-            scroll = Vector2.zero;
-        }
-
-        GUILayout.Space(8);
-
         if (GUILayout.Toggle(language == EditorLanguage.Thai, "ไทย", EditorStyles.miniButtonLeft, GUILayout.Width(48)))
             language = EditorLanguage.Thai;
 
@@ -1238,53 +1205,15 @@ public class MehigoHairGeneratorV4 : EditorWindow
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.LabelField(
-            editorMode == EditorExperienceMode.Simple
-                ? T(
-                    "Automation Tool สำหรับ Modular Avatar • เลือก Avatar • เพิ่มทรงผม • Generate Setup",
-                    "Automation Tool for Modular Avatar • Select Avatar • Add Hair • Generate Setup"
-                )
-                : T(
-                    "Automation Tool สำหรับ Modular Avatar • แก้ไข Setup • ตรวจสอบ Conflict",
-                    "Automation Tool for Modular Avatar • Editable Setup • Conflict Scanner"
-                ),
+            "Simple Build • " + T(
+                "Automation Tool สำหรับ Modular Avatar • เลือก Avatar • เพิ่มทรงผม • Generate Setup",
+                "Automation Tool for Modular Avatar • Select Avatar • Add Hair • Generate Setup"
+            ),
             EditorStyles.miniLabel
         );
 
         EditorGUILayout.Space(6);
-
-        if (editorMode == EditorExperienceMode.Simple)
-        {
-            DrawSimpleMode();
-            return;
-        }
-
-        selectedTab = Mathf.Clamp(selectedTab, 0, 2);
-
-        selectedTab = GUILayout.Toolbar(
-            selectedTab,
-            new[]
-            {
-                T("ข้อมูล Avatar", "Avatar Info"),
-                T("ทรงผม", "Hair Styles"),
-                T("สร้าง / อัปเดต", "Generate")
-            },
-            GUILayout.Height(28)
-        );
-
-        EditorGUILayout.Space(8);
-
-        DrawTopSummary();
-
-        scroll = EditorGUILayout.BeginScrollView(scroll);
-
-        switch (selectedTab)
-        {
-            case 0: DrawProjectTab(); break;
-            case 1: DrawHairTab(); break;
-            case 2: DrawGenerateTab(); break;
-        }
-
-        EditorGUILayout.EndScrollView();
+        DrawSimpleMode();
     }
 
 
@@ -1317,7 +1246,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
     }
 
     // ---------------------------------------------------------------------
-    // SIMPLE MODE
+    // SIMPLE BUILD
     // ---------------------------------------------------------------------
 
     private void DrawSimpleMode()
@@ -1534,8 +1463,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
         DrawSectionHeader(
             T("2. เพิ่มทรงผมและปุ่ม", "2. Add Hair and Controls"),
             T(
-                "เลือกทรงผมใน Hierarchy แล้วเพิ่มได้หลายชิ้นพร้อมกัน",
-                "Select one or more hair objects in the Hierarchy and add them together."
+                "เลือก Hair Object ใน Hierarchy แล้วกดเพิ่ม หรือลากมาวางในรายการทรงผม",
+                "Select hair objects in the Hierarchy and add them, or drag them into the hairstyle list."
             )
         );
 
@@ -1558,63 +1487,240 @@ public class MehigoHairGeneratorV4 : EditorWindow
                 menuName = "Hair " + (hairs.Count + 1)
             });
             simpleExpandedHairIndex = hairs.Count - 1;
+            simpleHairEditorScroll = Vector2.zero;
             scanComplete = false;
         }
 
         EditorGUILayout.EndHorizontal();
-        DrawSimpleHairDropZone();
         EditorGUILayout.EndVertical();
-
-        int removeIndex = -1;
-
-        for (int i = 0; i < hairs.Count; i++)
-        {
-            if (DrawSimpleHairCard(hairs[i], i))
-                removeIndex = i;
-        }
-
-        if (removeIndex >= 0)
-        {
-            hairs.RemoveAt(removeIndex);
-            if (hairs.Count == 0)
-                simpleExpandedHairIndex = -1;
-            else if (simpleExpandedHairIndex == removeIndex)
-                simpleExpandedHairIndex = Mathf.Min(removeIndex, hairs.Count - 1);
-            else if (simpleExpandedHairIndex > removeIndex)
-                simpleExpandedHairIndex--;
-            scanComplete = false;
-        }
 
         if (hairs.Count == 0)
         {
+            simpleExpandedHairIndex = -1;
+        }
+        else
+        {
+            simpleExpandedHairIndex = Mathf.Clamp(
+                simpleExpandedHairIndex,
+                0,
+                hairs.Count - 1
+            );
+        }
+
+        EnsureSimpleHairReorderableList();
+
+        EditorGUILayout.BeginHorizontal();
+        DrawSimpleHairListPane();
+        GUILayout.Space(8f);
+
+        float workspaceHeight = GetSimpleHairWorkspaceHeight();
+        Rect editorScrollRect = EditorGUILayout.BeginVertical(
+            GUILayout.Height(workspaceHeight),
+            GUILayout.ExpandWidth(true)
+        );
+        simpleHairEditorScroll = EditorGUILayout.BeginScrollView(
+            simpleHairEditorScroll,
+            GUILayout.ExpandHeight(true),
+            GUILayout.ExpandWidth(true)
+        );
+
+        bool removeSelected = false;
+
+        if (simpleExpandedHairIndex >= 0)
+        {
+            removeSelected = DrawSimpleHairEditor(
+                hairs[simpleExpandedHairIndex],
+                simpleExpandedHairIndex
+            );
+        }
+        else
+        {
+            EditorGUILayout.BeginVertical(cardStyle, GUILayout.ExpandWidth(true));
             EditorGUILayout.HelpBox(
                 T(
-                    "ยังไม่มีทรงผม — เลือก Hair Root ใน Hierarchy แล้วกดเพิ่ม",
-                    "No hair styles yet — select Hair Roots in the Hierarchy and add them."
+                    "ลาก Hair Object มาวางในรายการทรงผม หรือกดเพิ่มทรงผมที่เลือก",
+                    "Drop Hair Objects into the hairstyle list, or use Add Selected Hair."
                 ),
                 MessageType.Info
             );
+            EditorGUILayout.EndVertical();
         }
+
+        EditorGUILayout.EndScrollView();
+        EditorGUILayout.EndVertical();
+        KeepMouseWheelInsideSimpleHairEditor(editorScrollRect);
+
+        EditorGUILayout.EndHorizontal();
+
+        if (removeSelected)
+            RemoveSimpleHairAt(simpleExpandedHairIndex);
     }
 
-    private void DrawSimpleHairDropZone()
+    private void EnsureSimpleHairReorderableList()
     {
-        Rect dropRect = GUILayoutUtility.GetRect(0f, 46f, GUILayout.ExpandWidth(true));
-        GUI.Box(
-            dropRect,
-            T("ลาก Hair Object มาวางที่นี่", "Drop Hair Objects Here"),
-            EditorStyles.helpBox
+        if (simpleHairReorderableList != null &&
+            ReferenceEquals(simpleHairReorderableList.list, hairs))
+        {
+            return;
+        }
+
+        simpleHairReorderableList = new UnityEditorInternal.ReorderableList(
+            hairs,
+            typeof(HairEntry),
+            true,
+            false,
+            false,
+            false
         );
 
+        simpleHairReorderableList.elementHeight = EditorGUIUtility.singleLineHeight + 6f;
+        simpleHairReorderableList.drawElementCallback = (rect, index, active, focused) =>
+        {
+            if (index < 0 || index >= hairs.Count)
+                return;
+
+            rect.y += 2f;
+            rect.height = EditorGUIUtility.singleLineHeight;
+
+            HairEntry item = hairs[index];
+            string objectStatus = item.hairObject != null
+                ? item.hairObject.name
+                : T("ยังไม่ได้เลือก GameObject", "No Object");
+
+            GUI.Label(
+                rect,
+                new GUIContent(
+                    $"{index + 1}. {SafeName(item.menuName, T("ทรงผม", "Hair"))}",
+                    objectStatus
+                )
+            );
+        };
+
+        simpleHairReorderableList.onSelectCallback = list =>
+        {
+            int nextIndex = Mathf.Clamp(list.index, 0, hairs.Count - 1);
+
+            if (simpleExpandedHairIndex != nextIndex)
+                simpleHairEditorScroll = Vector2.zero;
+
+            simpleExpandedHairIndex = nextIndex;
+            GUI.FocusControl(null);
+            Repaint();
+        };
+
+        simpleHairReorderableList.onReorderCallbackWithDetails = (list, oldIndex, newIndex) =>
+        {
+            simpleExpandedHairIndex = Mathf.Clamp(newIndex, 0, hairs.Count - 1);
+            list.index = simpleExpandedHairIndex;
+            scanComplete = false;
+            GUI.FocusControl(null);
+            Repaint();
+        };
+    }
+
+    private void DrawSimpleHairListPane()
+    {
+        float paneWidth = Mathf.Clamp(position.width * 0.29f, 210f, 285f);
+        float workspaceHeight = GetSimpleHairWorkspaceHeight();
+        float listHeight = Mathf.Max(220f, workspaceHeight - 58f);
+
+        EditorGUILayout.BeginVertical(
+            subtleBoxStyle,
+            GUILayout.Width(paneWidth),
+            GUILayout.Height(workspaceHeight)
+        );
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField(T("รายการทรงผม", "Hairstyles"), EditorStyles.boldLabel);
+        GUILayout.FlexibleSpace();
+        GUILayout.Label(hairs.Count.ToString(), badgeStyle);
+        EditorGUILayout.EndHorizontal();
+
+        simpleHairReorderableList.index = simpleExpandedHairIndex;
+        Rect listDropRect = EditorGUILayout.BeginVertical(
+            GUILayout.Height(listHeight),
+            GUILayout.ExpandWidth(true)
+        );
+        simpleHairListScroll = EditorGUILayout.BeginScrollView(
+            simpleHairListScroll,
+            GUILayout.ExpandHeight(true)
+        );
+        simpleHairReorderableList.DoLayoutList();
+        EditorGUILayout.EndScrollView();
+        EditorGUILayout.EndVertical();
+        DrawSimpleHairListDropTarget(listDropRect);
+
+        EditorGUILayout.LabelField(
+            T(
+                "เลือกหนึ่งรายการเพื่อแก้ไข ลากแถวเพื่อเรียงลำดับ",
+                "Select one item to edit. Drag rows to reorder."
+            ),
+            EditorStyles.wordWrappedMiniLabel
+        );
+        EditorGUILayout.EndVertical();
+    }
+
+    private float GetSimpleHairWorkspaceHeight()
+    {
+        return Mathf.Clamp(position.height - 275f, 300f, 580f);
+    }
+
+    private void KeepMouseWheelInsideSimpleHairEditor(Rect editorRect)
+    {
         Event evt = Event.current;
 
-        if (!dropRect.Contains(evt.mousePosition))
+        if (evt.type != EventType.ScrollWheel ||
+            !editorRect.Contains(evt.mousePosition))
+        {
+            return;
+        }
+
+        simpleHairEditorScroll.y = Mathf.Max(
+            0f,
+            simpleHairEditorScroll.y + evt.delta.y * 18f
+        );
+        evt.Use();
+        Repaint();
+    }
+
+    private void DrawSimpleHairListDropTarget(Rect dropRect)
+    {
+        Event evt = Event.current;
+        bool hasDraggedHairObjects = DragAndDrop.objectReferences.Any(
+            dragged => dragged is GameObject
+        );
+        bool pointerInside = dropRect.Contains(evt.mousePosition);
+
+        if (pointerInside && hasDraggedHairObjects && evt.type == EventType.Repaint)
+        {
+            EditorGUI.DrawRect(
+                dropRect,
+                new Color(0.25f, 0.55f, 0.85f, 0.12f)
+            );
+        }
+
+        if (hairs.Count == 0 && evt.type == EventType.Repaint)
+        {
+            GUIStyle centeredHint = new GUIStyle(EditorStyles.centeredGreyMiniLabel)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                wordWrap = true
+            };
+
+            GUI.Label(
+                dropRect,
+                T("ลาก Hair Object มาวางที่นี่", "Drop Hair Objects Here"),
+                centeredHint
+            );
+        }
+
+        if (!pointerInside || !hasDraggedHairObjects)
             return;
 
         if (evt.type == EventType.DragUpdated)
         {
             DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
             evt.Use();
+            Repaint();
         }
         else if (evt.type == EventType.DragPerform)
         {
@@ -1627,54 +1733,52 @@ public class MehigoHairGeneratorV4 : EditorWindow
                     AddHairObject(go);
             }
 
+            if (hairs.Count > 0)
+            {
+                simpleExpandedHairIndex = Mathf.Clamp(
+                    simpleExpandedHairIndex,
+                    0,
+                    hairs.Count - 1
+                );
+                simpleHairReorderableList.index = simpleExpandedHairIndex;
+            }
+
             evt.Use();
+            Repaint();
         }
     }
 
-    private bool DrawSimpleHairCard(HairEntry hair, int index)
+    private void RemoveSimpleHairAt(int index)
+    {
+        if (index < 0 || index >= hairs.Count)
+            return;
+
+        hairs.RemoveAt(index);
+        simpleHairEditorScroll = Vector2.zero;
+        simpleExpandedHairIndex = hairs.Count == 0
+            ? -1
+            : Mathf.Min(index, hairs.Count - 1);
+
+        if (simpleHairReorderableList != null)
+            simpleHairReorderableList.index = simpleExpandedHairIndex;
+
+        scanComplete = false;
+        GUI.FocusControl(null);
+    }
+
+    private bool DrawSimpleHairEditor(HairEntry hair, int index)
     {
         bool remove = false;
 
-        EditorGUILayout.BeginVertical(cardStyle);
+        EditorGUILayout.BeginVertical(cardStyle, GUILayout.ExpandWidth(true));
         EditorGUILayout.BeginHorizontal();
-
-        bool expanded = simpleExpandedHairIndex == index;
-        bool requestedExpanded = EditorGUILayout.Foldout(
-            expanded,
+        EditorGUILayout.LabelField(
             $"{index + 1}. {SafeName(hair.menuName, T("ทรงผม", "Hair"))}",
-            true,
-            EditorStyles.foldoutHeader
+            titleStyle
         );
-
-        if (requestedExpanded != expanded)
-            simpleExpandedHairIndex = requestedExpanded ? index : -1;
-
-        if (GUILayout.Button("▲", GUILayout.Width(28)) && index > 0)
-        {
-            Swap(index, index - 1);
-            simpleExpandedHairIndex = index - 1;
-            scanComplete = false;
-            GUIUtility.ExitGUI();
-        }
-
-        if (GUILayout.Button("▼", GUILayout.Width(28)) && index < hairs.Count - 1)
-        {
-            Swap(index, index + 1);
-            simpleExpandedHairIndex = index + 1;
-            scanComplete = false;
-            GUIUtility.ExitGUI();
-        }
-
-        if (GUILayout.Button("X", GUILayout.Width(28)))
-            remove = true;
-
+        GUILayout.FlexibleSpace();
+        GUILayout.Label(T("ทรงผมที่เลือก", "Selected Hairstyle"), badgeStyle);
         EditorGUILayout.EndHorizontal();
-
-        if (simpleExpandedHairIndex != index)
-        {
-            EditorGUILayout.EndVertical();
-            return remove;
-        }
 
         hair.menuName = EditorGUILayout.TextField(
             T("ชื่อปุ่ม", "Button Name"),
@@ -1713,7 +1817,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         EditorGUILayout.Space(4);
         EditorGUILayout.LabelField(
-            T("เพิ่มปุ่มปรับแต่ง", "Add Controls"),
+            T("เพิ่ม Control สำหรับ BlendShape", "Add BlendShape Controls"),
             EditorStyles.boldLabel
         );
 
@@ -1727,35 +1831,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
         if (GUILayout.Button(T("+ ปรับระดับ", "+ Radial"), GUILayout.Height(30)))
             ShowQuickBlendShapeMenu(hair, BlendShapeControlMode.RadialPuppet);
 
-        if (GUILayout.Button(T("+ Material Preset", "+ Material Preset"), GUILayout.Height(30)))
-        {
-            EnsureDefaultMaterialPreset(hair);
-
-            if (hair.materialPresets.Count > 0 &&
-                hair.materialPresets[0].slots.Count > 0)
-            {
-                AddMaterialPresetFromDefault(hair);
-                hair.materialFoldout = true;
-                scanComplete = false;
-            }
-            else
-            {
-                Debug.LogWarning(
-                    $"[mehigo] No material slots were found under {hair.hairObject.name}."
-                );
-            }
-        }
-
         GUI.enabled = true;
         EditorGUILayout.EndHorizontal();
-
-        EditorGUILayout.HelpBox(
-            T(
-                "Material Preset ใช้สลับ Material Asset ที่มีอยู่ในแต่ละ Renderer/Slot เท่านั้น ไม่ได้สร้างหรือแก้สีใน Material ระบบจะบันทึก Material ปัจจุบันเป็นปุ่ม “ค่าเริ่มต้น (Default)” ให้อัตโนมัติ",
-                "Material Presets switch existing Material assets in each renderer slot. They do not create or edit material colors. The current materials are saved automatically as a separate “Default” button."
-            ),
-            MessageType.Info
-        );
 
         DrawSimpleBlendShapeList(hair);
         DrawSimpleMaterialList(hair);
@@ -1771,6 +1848,43 @@ public class MehigoHairGeneratorV4 : EditorWindow
             DrawCompatibilitySettings(hair);
             DrawLinkedObjects(hair);
         }
+
+        EditorGUILayout.Space(8);
+        EditorGUILayout.BeginHorizontal();
+
+        if (GUILayout.Button(
+            T("ลบทรงผม", "Remove Hairstyle"),
+            GUILayout.Width(120),
+            GUILayout.Height(26)))
+        {
+            remove = true;
+        }
+
+        GUILayout.FlexibleSpace();
+        GUI.enabled = index > 0;
+
+        if (GUILayout.Button(T("เลื่อนขึ้น", "Move Up"), GUILayout.Width(90)))
+        {
+            Swap(index, index - 1);
+            simpleExpandedHairIndex = index - 1;
+            simpleHairReorderableList.index = simpleExpandedHairIndex;
+            scanComplete = false;
+            GUIUtility.ExitGUI();
+        }
+
+        GUI.enabled = index < hairs.Count - 1;
+
+        if (GUILayout.Button(T("เลื่อนลง", "Move Down"), GUILayout.Width(90)))
+        {
+            Swap(index, index + 1);
+            simpleExpandedHairIndex = index + 1;
+            simpleHairReorderableList.index = simpleExpandedHairIndex;
+            scanComplete = false;
+            GUIUtility.ExitGUI();
+        }
+
+        GUI.enabled = true;
+        EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.EndVertical();
         return remove;
@@ -1858,14 +1972,47 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
     private void DrawSimpleMaterialList(HairEntry hair)
     {
-        if (hair.materialPresets.Count <= 1)
-            return;
-
-        EditorGUILayout.Space(4);
+        EditorGUILayout.Space(8);
         EditorGUILayout.LabelField(
             T("Material Preset", "Material Presets"),
             EditorStyles.boldLabel
         );
+
+        GUI.enabled = hair.hairObject != null;
+
+        if (GUILayout.Button(
+            T("+ Material Preset", "+ Material Preset"),
+            GUILayout.Height(30)))
+        {
+            EnsureDefaultMaterialPreset(hair);
+
+            if (hair.materialPresets.Count > 0 &&
+                hair.materialPresets[0].slots.Count > 0)
+            {
+                AddMaterialPresetFromDefault(hair);
+                hair.materialFoldout = true;
+                scanComplete = false;
+            }
+            else
+            {
+                Debug.LogWarning(
+                    $"[mehigo] No material slots were found under {hair.hairObject.name}."
+                );
+            }
+        }
+
+        GUI.enabled = true;
+
+        EditorGUILayout.HelpBox(
+            T(
+                "Material Preset ใช้สลับ Material Asset ที่มีอยู่ในแต่ละ Renderer/Slot เท่านั้น ไม่ได้สร้างหรือแก้สีใน Material ระบบจะบันทึก Material ปัจจุบันเป็นปุ่ม “ค่าเริ่มต้น (Default)” ให้อัตโนมัติ",
+                "Material Presets switch existing Material assets in each renderer slot. They do not create or edit material colors. The current materials are saved automatically as a separate “Default” button."
+            ),
+            MessageType.Info
+        );
+
+        if (hair.materialPresets.Count <= 1)
+            return;
 
         int remove = -1;
 
@@ -1993,40 +2140,10 @@ public class MehigoHairGeneratorV4 : EditorWindow
                     SetSimpleStep(SimpleWizardStep.Hair);
                 }
             }
-            else
-            {
-                if (GUILayout.Button(
-                    T("เปิดการตั้งค่าขั้นสูง", "Open Advanced Settings"),
-                    GUILayout.Height(30)))
-                {
-                    editorMode = EditorExperienceMode.Advanced;
-                    selectedTab = 0;
-                    EditorPrefs.SetInt(EditorModePreferenceKey, (int)editorMode);
-                    scroll = Vector2.zero;
-                }
-            }
-        }
-
-        if (scanComplete && conflicts.Count > 0)
-        {
-            EditorGUILayout.HelpBox(
-                T(
-                    $"พบ Conflict {conflicts.Count} รายการ ระบบหยุดการสร้างไว้ก่อน",
-                    $"{conflicts.Count} potential conflict(s) found. Generation was paused."
-                ),
-                MessageType.Warning
-            );
-
-            if (GUILayout.Button(T("เปิดหน้าตรวจสอบ", "Open Conflict Review")))
-            {
-                editorMode = EditorExperienceMode.Advanced;
-                selectedTab = 2;
-                EditorPrefs.SetInt(EditorModePreferenceKey, (int)editorMode);
-                scroll = Vector2.zero;
-            }
         }
 
         EditorGUILayout.EndVertical();
+        DrawConflictScannerSection();
     }
 
     private void AddSelectedHairObjects()
@@ -2079,6 +2196,7 @@ public class MehigoHairGeneratorV4 : EditorWindow
         PrepareHairEntry(hair);
         hairs.Add(hair);
         simpleExpandedHairIndex = hairs.Count - 1;
+        simpleHairEditorScroll = Vector2.zero;
         scanComplete = false;
     }
 
@@ -4227,6 +4345,12 @@ public class MehigoHairGeneratorV4 : EditorWindow
         hairParameterName = data.hairParameterName;
         generatedRootName = data.generatedRootName;
         saveFolder = data.saveFolder;
+
+        if (string.IsNullOrWhiteSpace(saveFolder) ||
+            !saveFolder.StartsWith("Assets"))
+        {
+            saveFolder = "Assets/mehigo/HairManager";
+        }
         savedHairParameter = data.savedHairParameter;
 
         hairs.Clear();
@@ -4298,7 +4422,6 @@ public class MehigoHairGeneratorV4 : EditorWindow
 
         conflicts.Clear();
         scanComplete = false;
-        selectedTab = 1;
         Repaint();
 
         Debug.Log(
@@ -6140,8 +6263,8 @@ public class MehigoHairGeneratorV4 : EditorWindow
             !saveFolder.StartsWith("Assets"))
         {
             return T(
-                "โฟลเดอร์บันทึกไม่ถูกต้อง กรุณาตรวจใน Advanced Mode",
-                "The output folder is invalid. Review it in Advanced Mode."
+                "โฟลเดอร์บันทึกไม่ถูกต้อง กรุณาโหลด Setup ของ Avatar นี้ใหม่เพื่อคืนค่าโฟลเดอร์เริ่มต้น",
+                "The output folder is invalid. Reload this avatar's setup to restore the default folder."
             );
         }
 
