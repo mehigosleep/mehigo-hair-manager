@@ -70,8 +70,8 @@ The experimental mehigo Direct BlendTree optimization remains disabled because a
 ## Requirements
 
 - Unity project configured for VRChat Avatars
-- VRChat Avatars SDK `>=3.10.4 <3.11.0`
-- Modular Avatar `>=1.14.0 <2.0.0-a`
+- Recommended VRChat Avatars SDK: `3.10.4`
+- Recommended Modular Avatar: `1.14.0`
 
 Optional:
 

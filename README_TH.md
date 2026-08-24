@@ -70,8 +70,8 @@ Avatar Optimizer (AAO) ยังสามารถ Optimize Standard Controller 
 ## สิ่งที่ต้องมี
 
 - Unity Project ที่ตั้งค่าสำหรับ VRChat Avatars
-- VRChat Avatars SDK `>=3.10.4 <3.11.0`
-- Modular Avatar `>=1.14.0 <2.0.0-a`
+- VRChat Avatars SDK เวอร์ชันแนะนำ: `3.10.4`
+- Modular Avatar เวอร์ชันแนะนำ: `1.14.0`
 
 ตัวเลือกเสริม:
 

@@ -9,8 +9,8 @@
 ## สิ่งที่ต้องมี
 
 - Unity 2022.3 และโปรเจกต์ VRChat Avatars
-- VRChat Avatars SDK `>=3.10.4 <3.11.0`
-- Modular Avatar `>=1.14.0 <2.0.0-a`
+- VRChat Avatars SDK เวอร์ชันแนะนำ: `3.10.4`
+- Modular Avatar เวอร์ชันแนะนำ: `1.14.0`
 - Avatar ที่มี **VRC Avatar Descriptor**
 - Hair Objects ต้องอยู่ใต้ Avatar ที่เลือกใน Hierarchy
 

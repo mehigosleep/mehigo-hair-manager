@@ -9,8 +9,8 @@
 ## 必要な環境
 
 - Unity 2022.3のVRChat Avatarsプロジェクト
-- VRChat Avatars SDK `>=3.10.4 <3.11.0`
-- Modular Avatar `>=1.14.0 <2.0.0-a`
+- VRChat Avatars SDK 推奨バージョン: `3.10.4`
+- Modular Avatar 推奨バージョン: `1.14.0`
 - **VRC Avatar Descriptor**が設定されたアバター
 - 選択する髪のゲームオブジェクトがアバターのゲームオブジェクト配下に配置されていること
 
