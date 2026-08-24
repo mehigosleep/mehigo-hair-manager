@@ -26,7 +26,7 @@ Modular Avatar is the required core dependency and performs the non-destructive 
 
 Version 1.3.0 uses Simple Build as the only workflow. Hair & Controls uses a scalable hairstyle list with a separate selected-item editor, independent scrolling, drag reordering, and direct Hierarchy drag and drop. Activation detection fixes, linked objects, and conflict review remain available inside this workflow.
 
-[Changelog](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md)
+[คู่มือ Simple Build ภาษาไทย](docs/SIMPLE_MODE_GUIDE_TH.md) · [Simple Build Guide in English](docs/SIMPLE_MODE_GUIDE_EN.md) · [Simple Build ガイド 日本語](docs/SIMPLE_MODE_GUIDE_JA.md) · [Changelog](CHANGELOG.md)
 
 ## Overview
 
@@ -104,6 +104,8 @@ Do not install the tool through both VCC and the manual method in the same proje
 4. Use **Detection Fixes / More Options** inside the selected hairstyle when activation or Linked Object adjustments are required.
 5. Continue to **Preview & Generate**, inspect Menu Preview and Conflict Scanner, then press **Generate / Update Setup**.
 6. Test the generated menu and animations before uploading the avatar.
+
+For the illustrated workflow, see the [Simple Build Guide](docs/SIMPLE_MODE_GUIDE_EN.md).
 
 The **Save Folder** is the shared base folder. mehigo automatically creates a stable `Avatar_<id>` subfolder for each avatar instance in the Scene, so even a copied instance of the same Prefab does not overwrite the first avatar's Controller, Animation Clips, Expression Menus, or captured Icons. A Prefab asset opened directly uses its asset GUID.
 

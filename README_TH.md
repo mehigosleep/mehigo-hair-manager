@@ -26,7 +26,7 @@ Modular Avatar เป็น Core Dependency ที่จำเป็นและ
 
 Version 1.3.0 ใช้ Simple Build เป็น Workflow เดียว หน้า Hair & Controls แยกรายการทรงผมกับรายละเอียดของทรงที่เลือก มี Scroll แยก ลากเรียงลำดับ และลาก Hair Object จาก Hierarchy ลงรายการได้โดยตรง ส่วนการแก้ Activation detection, Linked Objects และ Conflict Review ยังคงอยู่ภายใน Workflow นี้
 
-[Changelog](https://github.com/mehigosleep/mehigo-hair-manager/blob/main/CHANGELOG.md)
+[คู่มือ Simple Build ภาษาไทย](docs/SIMPLE_MODE_GUIDE_TH.md) · [Simple Build Guide in English](docs/SIMPLE_MODE_GUIDE_EN.md) · [Simple Build ガイド 日本語](docs/SIMPLE_MODE_GUIDE_JA.md) · [Changelog](CHANGELOG.md)
 
 ## ภาพรวม
 
@@ -104,6 +104,8 @@ v1.1.0 ทดสอบกับ VRChat SDK 3.10.4 ควรทดสอบ Avata
 4. ใช้ **แก้การตรวจจับ / ตัวเลือกเพิ่มเติม** ภายในทรงที่เลือกเมื่อต้องแก้ Activation หรือ Linked Objects
 5. ไปที่ **Preview & Generate** ตรวจ Menu Preview และ Conflict Scanner แล้วกด **Generate / Update Setup**
 6. ทดสอบ Menu และ Animation ที่ Generate ก่อน Upload Avatar
+
+ดูขั้นตอนพร้อมภาพประกอบได้ใน [คู่มือ Simple Build ภาษาไทย](docs/SIMPLE_MODE_GUIDE_TH.md)
 
 **Save Folder** เป็นโฟลเดอร์ฐานร่วม mehigo จะสร้างโฟลเดอร์ย่อย `Avatar_<id>` ที่คงที่สำหรับ Avatar แต่ละ Instance ใน Scene โดยอัตโนมัติ แม้จะ Copy Instance จาก Prefab เดียวกัน ไฟล์ Controller, Animation Clips, Expression Menus และ Captured Icons ก็จะไม่เขียนทับกัน ส่วน Prefab Asset ที่เปิดโดยตรงจะใช้ Asset GUID เป็นตัวระบุ
 

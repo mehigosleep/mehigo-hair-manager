@@ -1,8 +1,8 @@
-# シンプルモードガイド — mehigo Hair Manager 1.2.1
+# Simple Build ガイド — mehigo Hair Manager 1.3.0
 
 [English](SIMPLE_MODE_GUIDE_EN.md) · [ภาษาไทย](SIMPLE_MODE_GUIDE_TH.md) · [プロジェクトページ](../README.md)
 
-> このガイドでは、バージョン1.2.1の**シンプルモード**を使って、VRChatアバターの髪型切り替えメニュー、ブレンドシェイプコントロール、髪のマテリアルプリセットを作成し、プレビュー後にセットアップを生成する手順を説明します。
+> このガイドでは、バージョン1.3.0の**Simple Build**を使って、VRChatアバターの髪型切り替えメニュー、ブレンドシェイプコントロール、髪のマテリアルプリセットを作成し、プレビュー後にセットアップを生成する手順を説明します。
 
 > **mehigo Hair Manager は[Modular Avatar](https://modular-avatar.nadena.dev/)向けのコミュニティ製自動化ツールです。** アニメーターコントローラーとレイヤー、アニメーションクリップ、Expression Menu、パラメーター、マテリアル切り替えコントロール、必要な Modular Avatar コンポーネントを生成します。Modular Avatar は必須のコア依存関係であり、非破壊な統合をビルド時に実行します。本プロジェクトはModular Avatarの公式プロジェクトではなく、開発者との提携・推奨を示すものではありません。
 
@@ -16,7 +16,7 @@
 
 [Gesture Manager](https://github.com/BlackStartx/VRC-Gesture-Manager)は任意です。インストール済みの場合、メニュープレビューはユーザーがインストールしたパッケージからUIアセットを読み込めます。Gesture Manager はmehigo Hair Managerに同梱されず、生成されるアバターアセットにも影響しません。Gesture Manager UI assets © 2019–2023 BlackStartx — [MIT License](https://github.com/BlackStartx/VRC-Gesture-Manager/blob/master/LICENSE.md)。
 
-## シンプルモードの流れ
+## Simple Build の流れ
 
 1. **アバター** — アバターを選択
 2. **髪とコントロール** — 髪型、ブレンドシェイプ、マテリアルプリセットを追加
@@ -28,19 +28,19 @@ Avatar Descriptor、Hair Root または Wrapper、レンダラー、ブレンド
 
 Unity のメニューから **Tools > mehigo > Hair Manager** を選択します。
 
-![ToolsメニューからHair Managerを開く](images/simple-mode-v1.2.0/01-open-hair-manager.png)
+![ToolsメニューからHair Managerを開く](images/simple-build-v1.3.0/01-open-hair-manager.png)
 
-右上で **シンプル** を選びます。**ไทย / ENG / 日本語**はいつでも切り替えられ、設定中のデータには影響しません。
+Hair Manager は **Simple Build** で直接開きます。**ไทย / ENG / 日本語**はいつでも切り替えられ、設定中のデータには影響しません。
 
 ## 2. アバターページ
 
 アバターが未選択の場合、**アバター**欄は空で、**次へ**ボタンは無効です。
 
-![アバター選択前のアバターページ](images/simple-mode-v1.2.0/02-select-avatar-empty.png)
+![アバター選択前のアバターページ](images/simple-build-v1.3.0/02-select-avatar-empty.png)
 
 Hierarchy ウィンドウからアバターのルートを**アバター**欄にドラッグするか、右端のオブジェクトピッカーから選択します。VRC Avatar Descriptor が見つかると**Ready**と表示され、次のページへ進めます。
 
-![アバターの選択完了](images/simple-mode-v1.2.0/03-select-avatar-ready.png)
+![アバターの選択完了](images/simple-build-v1.3.0/03-select-avatar-ready.png)
 
 ### メニューオプション
 
@@ -53,28 +53,28 @@ Hierarchy ウィンドウからアバターのルートを**アバター**欄に
 
 ## 3. 髪とコントロールページ
 
-髪型は次の3通りで追加できます。
+左側に髪型リスト、右側に選択中の髪型エディターが表示され、それぞれ個別にスクロールできます。髪型は次の3通りで追加できます。
 
-![髪型追加前の髪とコントロールページ](images/simple-mode-v1.2.0/04-add-hair-empty.png)
+![髪型追加前の髪とコントロールページ](images/simple-build-v1.3.0/04-add-hair-empty.png)
 
 - Hierarchy ウィンドウで1つまたは複数の髪のゲームオブジェクトを選択し、**+ 選択した髪を追加**を押す
-- **ここに髪のゲームオブジェクトをドロップ**へドラッグ＆ドロップする
+- 1つまたは複数の髪のゲームオブジェクトを**髪型リスト**へ直接ドラッグ＆ドロップする
 - **+ 空の髪を追加**を押し、髪のゲームオブジェクトを後から指定する
 
 髪のゲームオブジェクトは選択中のアバター配下に置く必要があります。ボタン名、マテリアル、髪型の表示切り替え方法は自動で準備されます。
 
-## 4. 髪のカードを設定する
+## 4. 選択中の髪型を設定する
 
-髪のカードでは次の内容を編集できます。
+**髪型リスト**の行をクリックすると、右側で次の内容を編集できます。
 
 - **ボタン名** — メニューに表示する髪型名
 - **髪のゲームオブジェクト** — 髪型のルートゲームオブジェクト
 - **ヘアスタイルアイコン** — 髪型ボタンのアイコン
 - 自動検出された表示切り替え方法
-- Toggle、Radial、マテリアルプリセットボタン
-- `▲` / `▼`で順番変更、`X`でセットアップから削除
+- **BlendShape コントロールを追加**の Toggle / Radial ボタン
+- 追加ボタンと説明をまとめた独立した**マテリアルプリセット**セクション
 
-![髪型追加後の髪のカード](images/simple-mode-v1.2.0/05-hair-card.png)
+![髪型追加後の選択中エディター](images/simple-build-v1.3.0/05-selected-hairstyle-editor.png)
 
 `X`を押してもHierarchy ウィンドウ内の元のゲームオブジェクトは削除されません。
 
@@ -82,7 +82,7 @@ Hierarchy ウィンドウからアバターのルートを**アバター**欄に
 
 **ヘアスタイルアイコン**には3つのモードがあります。
 
-![3種類の髪型アイコン設定](images/simple-mode-v1.2.0/06-hairstyle-icon-modes.png)
+![3種類の髪型アイコン設定](images/simple-build-v1.3.0/06-hairstyle-icon-modes.png)
 
 - **デフォルト** — mehigo Hair Manager付属の髪型アイコンを使用
 - **カスタムテクスチャ** — Project ウィンドウ内のテクスチャ (Texture2D)を選択
@@ -90,7 +90,7 @@ Hierarchy ウィンドウからアバターのルートを**アバター**欄に
 
 シーンキャプチャを使う場合は、Scene ビューで構図を決め、**プレビュー / キャプチャ**を開きます。角度を変えた後は**プレビューを更新**、確定時は**キャプチャして使用**を押します。
 
-![Scene ビューから髪型アイコンを撮影](images/simple-mode-v1.2.0/07-scene-capture.png)
+![Scene ビューから髪型アイコンを撮影](images/simple-build-v1.3.0/07-scene-capture.png)
 
 撮影したアイコンはアバター専用の出力フォルダに保存されるため、別のアバターのアイコンを上書きしません。
 
@@ -106,11 +106,11 @@ Hierarchy ウィンドウからアバターのルートを**アバター**欄に
 
 レンダラーとブレンドシェイプは髪のゲームオブジェクト配下から自動で一覧化されます。
 
-![ブレンドシェイプを一覧から選択](images/simple-mode-v1.2.0/08-blendshape-picker.png)
+![ブレンドシェイプを一覧から選択](images/simple-build-v1.3.0/08-blendshape-picker.png)
 
 追加後はボタン名を編集できます。各項目には**Toggle**または**Radial**の種類と、元のレンダラー・ブレンドシェイプ名が表示されます。
 
-![追加されたToggle と Radial](images/simple-mode-v1.2.0/09-toggle-radial-controls.png)
+![追加されたToggle と Radial](images/simple-build-v1.3.0/09-toggle-radial-controls.png)
 
 ## 7. 髪のマテリアルプリセットを追加する
 
@@ -120,19 +120,17 @@ Hierarchy ウィンドウからアバターのルートを**アバター**欄に
 
 **マテリアルプリセット**でボタン名を`Pink`、`White`、`Black`などに変更し、切り替えたいレンダラーのマテリアルスロットへ既存のマテリアルアセットを割り当てます。
 
-![髪のマテリアルプリセットとマテリアルスロット](images/simple-mode-v1.2.0/10-material-preset.png)
+![髪のマテリアルプリセットとマテリアルスロット](images/simple-build-v1.3.0/10-material-preset.png)
 
-デフォルトは髪のカード内の編集欄には表示されませんが、メニュープレビューと生成後の髪のマテリアルサブメニューには独立したボタンとして表示されます。
+デフォルトは編集欄には表示されませんが、メニュープレビューと生成後の髪のマテリアルサブメニューには独立したボタンとして表示されます。
 
 ## 8. 複数の髪型を管理する
 
-髪のカードは複数追加できます。1枚を開くと、他の髪のカードは自動で閉じるため、画面が長くなりすぎません。`▲`と`▼`でメニューの表示順を変更できます。
+髪型は複数追加できます。行をクリックして編集対象を選び、行をドラッグしてメニューの表示順を変更します。髪型リストと右側のエディターは個別にスクロールでき、ページ全体は移動しません。
 
-![複数の髪のカード](images/simple-mode-v1.2.0/11-multiple-hairs.png)
+![複数の髪型とドラッグによる並べ替え](images/simple-build-v1.3.0/11-multiple-hairstyles.png)
 
-髪型ごとに異なるアイコン、Toggle、Radial、マテリアルプリセットを設定できます。
-
-![コントロールとマテリアルプリセットを設定した髪のカード](images/simple-mode-v1.2.0/12-complete-hair-card.png)
+髪型ごとに異なるアイコン、Toggle、Radial、マテリアルプリセットを設定でき、選択中の髪型は右側のエディターに表示されます。
 
 ### 検出の修正 / その他のオプション
 
@@ -142,7 +140,7 @@ Hierarchy ウィンドウからアバターのルートを**アバター**欄に
 
 設定が完了したら**次へ**で3ページ目へ進みます。髪型、コントロール、マテリアルプリセットの数が表示されます。
 
-![プレビューと生成ページ](images/simple-mode-v1.2.0/13-preview-generate.png)
+![プレビューと生成ページ](images/simple-build-v1.3.0/13-preview-generate.png)
 
 必要な情報が不足している場合は**生成**ボタンが無効になり、問題箇所と修正ボタンが表示されます。
 
@@ -152,17 +150,21 @@ Hierarchy ウィンドウからアバターのルートを**アバター**欄に
 
 ### ルートメニュー
 
-髪のカードの順番で全髪型が表示されます。
+髪型リストの順番で全髪型が表示されます。
 
-![Hair Styleのルートメニュー](images/simple-mode-v1.2.0/14-menu-preview-root.png)
+![Hair Styleのルートメニュー](images/simple-build-v1.3.0/14-menu-preview-root.png)
+
+キャプチャまたは設定したカスタムアイコンはプレビューへすぐに反映されます。
+
+![キャプチャしたアイコンを表示するルートメニュー](images/simple-build-v1.3.0/14-menu-preview-root-custom-icons.png)
 
 ### 髪型サブメニュー
 
 髪型を選ぶと、髪型使用ボタン、Toggle、Radial、髪のマテリアルサブメニューが表示されます。
 
-![1つ目の髪型サブメニュー](images/simple-mode-v1.2.0/15-menu-preview-hair-one.png)
+![1つ目の髪型サブメニュー](images/simple-build-v1.3.0/15-menu-preview-hair-one.png)
 
-![2つ目の髪型サブメニュー](images/simple-mode-v1.2.0/16-menu-preview-hair-two.png)
+![2つ目の髪型サブメニュー](images/simple-build-v1.3.0/16-menu-preview-hair-two.png)
 
 プレビュー内の操作はシーン内のアバターを変更しません。ボタン数が1ページを超えると、ページ切り替えボタンが自動で追加されます。
 
@@ -170,7 +172,7 @@ Hierarchy ウィンドウからアバターのルートを**アバター**欄に
 
 **デフォルト**と追加したすべてのマテリアルプリセットが表示されます。ボタンを選択するとマテリアルアセットが切り替わり、色が生成されるわけではありません。各プリセットには同じマテリアルプリセット用デフォルトアイコンが使用されます。
 
-![デフォルトと追加したマテリアルプリセット](images/simple-mode-v1.2.0/17-menu-preview-materials.png)
+![デフォルトと追加したマテリアルプリセット](images/simple-build-v1.3.0/17-menu-preview-materials.png)
 
 ## 11. セットアップを生成・更新する
 
@@ -183,16 +185,18 @@ Hierarchy ウィンドウからアバターのルートを**アバター**欄に
 5. ビルド時に使用するModular Avatar Merge Animator、Modular Avatar Parameters、Menu Installer Componentを作成・設定
 6. 編集用設定ファイルを保存
 
-![生成されたmehigo Hair Selector](images/simple-mode-v1.2.0/18-generated-setup.png)
+![生成されたmehigo Hair Selector](images/simple-build-v1.3.0/18-generated-setup.png)
 
 生成ファイルはアバターごとの`Avatar_<id>`フォルダに保存されます。同じアバターで再生成するとそのアバターのファイルだけを更新し、別のアバターのファイルは上書きしません。非破壊マージは引き続きModular Avatarがビルド時に実行します。
+
+競合が検出された場合は生成を一時停止し、同じページの**競合スキャナー**に確認内容を表示します。
 
 ## 12. 既存セットアップを編集する
 
 1. Hair Managerを開く
 2. 元のアバターを選択
 3. **このアバターの既存セットアップを読み込む**を押す
-4. 髪のカード、コントロール、マテリアルプリセットを編集
+4. 髪型を選び、設定、コントロール、マテリアルプリセットを編集
 5. メニュープレビューで確認
 6. **セットアップを生成 / 更新**を押す
 
