@@ -43,7 +43,7 @@ Version 1.3.0 uses Simple Build as the only workflow. Hair & Controls uses a sca
 - One-click Hair Material Preset setup with automatic default material scanning
 - Switch existing Material assets per renderer slot, with automatic restoration of the original Default materials
 - Bundled default icons for Hair menus, hairstyles, BlendShape controls, and Material Presets
-- Default, Project Texture, or Scene Capture hairstyle icons in Simple Build
+- Default, Custom Texture, or Capture From Scene hairstyle icons in Simple Build
 - Multiple hairstyle selector menu
 - Modular Avatar Merge Animator / Parameters / Menu Installer workflow
 - Linked objects per hairstyle
@@ -61,7 +61,7 @@ Version 1.3.0 uses Simple Build as the only workflow. Hair & Controls uses a sca
 
 ## Animator optimization
 
-Version 1.1.0 enforces the stable Standard Animator layout for all generated BlendShape controls. The Performance tab and experimental optimization mode are temporarily hidden.
+Version 1.3.0 uses the stable Standard Animator layout for all generated BlendShape controls. Simple Build does not expose the former Performance tab or experimental optimization mode.
 
 Avatar Optimizer (AAO) can still optimize the generated Standard controller later in the avatar build pipeline.
 
@@ -78,7 +78,7 @@ Optional:
 - Avatar Optimizer (AAO)
 - Gesture Manager (for its familiar radial-menu UI assets in Menu Preview; not bundled)
 
-v1.1.0 was tested with VRChat SDK 3.10.4. Test your avatar after changing SDK or package versions.
+v1.3.0 was tested with VRChat SDK 3.10.4. Test your avatar after changing SDK or package versions.
 
 ## Install with VCC
 

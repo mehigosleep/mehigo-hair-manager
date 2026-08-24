@@ -43,7 +43,7 @@ Version 1.3.0 ใช้ Simple Build เป็น Workflow เดียว ห�
 - ตั้งค่า Hair Material Preset ในคลิกเดียว พร้อม Scan Default Materials อัตโนมัติ
 - สลับ Material Assets ที่มีอยู่ตาม Renderer slot และคืนค่า Material ชุด Default เดิมโดยอัตโนมัติ
 - มี Default Icons สำหรับ Hair Menu, ทรงผม, BlendShape controls และ Material Presets
-- เลือกไอคอนทรงผมแบบ Default, Project Texture หรือ Scene Capture ใน Simple Build
+- เลือกไอคอนทรงผมแบบ Default, Custom Texture หรือ Capture From Scene ใน Simple Build
 - สร้างเมนูเลือกทรงผมหลายแบบ
 - ใช้งานผ่าน Modular Avatar Merge Animator / Parameters / Menu Installer
 - ตั้งค่า Linked Objects แยกตามทรงผม
@@ -61,7 +61,7 @@ Version 1.3.0 ใช้ Simple Build เป็น Workflow เดียว ห�
 
 ## การ Optimize Animator
 
-ตั้งแต่ Version 1.1.0 ระบบบังคับใช้ Standard Animator Layout ที่เสถียรสำหรับ BlendShape controls ที่ Generate ทั้งหมด โดยซ่อนแท็บ Performance และโหมด Optimize แบบทดลองไว้ชั่วคราว
+Version 1.3.0 ใช้ Standard Animator Layout ที่เสถียรสำหรับ BlendShape controls ที่ Generate ทั้งหมด โดย Simple Build ไม่มีแท็บ Performance และโหมด Optimize แบบทดลองเดิม
 
 Avatar Optimizer (AAO) ยังสามารถ Optimize Standard Controller ที่ Generate ได้ภายหลังใน Avatar Build Pipeline
 
@@ -78,7 +78,7 @@ Avatar Optimizer (AAO) ยังสามารถ Optimize Standard Controller 
 - Avatar Optimizer (AAO)
 - Gesture Manager สำหรับ UI assets แบบ Radial Menu ที่คุ้นเคยใน Menu Preview โดยไม่ได้ bundle มากับ mehigo
 
-v1.1.0 ทดสอบกับ VRChat SDK 3.10.4 ควรทดสอบ Avatar ใหม่ทุกครั้งหลังเปลี่ยน SDK หรือ Package Version
+v1.3.0 ทดสอบกับ VRChat SDK 3.10.4 ควรทดสอบ Avatar ใหม่ทุกครั้งหลังเปลี่ยน SDK หรือ Package Version
 
 ## ติดตั้งด้วย VCC
 
